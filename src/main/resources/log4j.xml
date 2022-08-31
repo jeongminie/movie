@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.junefw.infra">
+	<logger name="com.jeongmini.movie">
 		<level value="info" />
 	</logger>
 	
