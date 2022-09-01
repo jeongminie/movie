@@ -3,15 +3,14 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jeongmini.movie.modules.codeGroup.CodeGroupMapper">
+<mapper namespace="com.jeongmini.movie.modules.codegroup.CodeGroupMapper">
 
-    <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codeGroup.CodeGroup"></resultMap>
+    <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
 	                                   
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
 			*
 		FROM codeGroup
-
 	</select>
 
 </mapper>	

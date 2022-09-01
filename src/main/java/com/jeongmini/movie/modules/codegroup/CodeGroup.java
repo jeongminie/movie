@@ -1,4 +1,4 @@
-package com.jeongmini.movie.modules.codeGroup;
+package com.jeongmini.movie.modules.codegroup;
 
 import java.util.Date;
 

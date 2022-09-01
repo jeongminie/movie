@@ -1,4 +1,4 @@
-package com.jeongmini.movie.modules.codeGroup;
+package com.jeongmini.movie.modules.codegroup;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class CodeGroupDAO {
 	@Resource(name = "sqlSession")
 	private SqlSession sqlSession;
 	
-	private static String namespace = "com.jeongmini.movie.modules.codeGroup.CodeGroupMapper";
+	private static String namespace = "com.jeongmini.movie.modules.codegroup.CodeGroupMapper";
 	
 	public List<CodeGroup> selectList(){ return sqlSession.selectList(namespace + ".selectList", ""); }
 			
