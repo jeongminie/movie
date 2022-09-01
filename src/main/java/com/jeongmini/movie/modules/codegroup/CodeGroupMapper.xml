@@ -6,11 +6,11 @@
 <mapper namespace="com.jeongmini.movie.modules.codegroup.CodeGroupMapper">
 
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
-	                                   
+	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
-			*
-		FROM codeGroup
+			a.*
+		FROM codeGroup a
 	</select>
 
 </mapper>	

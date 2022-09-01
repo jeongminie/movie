@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CodeGroupServiceImpl implements CodeGroupService {
-//CodeGroupService는 인터페이스로 아무 역할을 못함 여기서 상속받아서 함수 사용
+	//CodeGroupService는 인터페이스로 아무 역할을 못함 여기서 상속받아서 함수 사용
 	
 	@Autowired
 	CodeGroupDAO dao;
@@ -16,4 +16,5 @@ public class CodeGroupServiceImpl implements CodeGroupService {
 	public List<CodeGroup> selectList() throws Exception {
 		return dao.selectList();
 	}
+
 }

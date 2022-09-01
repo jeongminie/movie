@@ -8,12 +8,13 @@ public class CodeGroup {
 	private Integer cgSeq;
 	private Integer userSeq;
 	private String cgName;
-	private String chNameEng;
+	private String cgNameEng;
 	private Integer useNy;
 	private Integer delNy;
 	private Date createdAt;
 	private Date updatedAt;
 	
+
 	public Integer getCgSeq() {
 		return cgSeq;
 	}
@@ -32,11 +33,11 @@ public class CodeGroup {
 	public void setCgName(String cgName) {
 		this.cgName = cgName;
 	}
-	public String getChNameEng() {
-		return chNameEng;
+	public String getCgNameEng() {
+		return cgNameEng;
 	}
-	public void setChNameEng(String chNameEng) {
-		this.chNameEng = chNameEng;
+	public void setCgNameEng(String cgNameEng) {
+		this.cgNameEng = cgNameEng;
 	}
 	public Integer getUseNy() {
 		return useNy;
@@ -62,5 +63,7 @@ public class CodeGroup {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
 
 }
