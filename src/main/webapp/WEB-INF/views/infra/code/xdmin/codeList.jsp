@@ -65,8 +65,8 @@
 				<aside class="col-2">
 					<nav class="main-nav">
 						<ul class="nav flex-column">
-							<li class="nav-item"><a href="#" class="nav-link">코드그룹관리</a></li>				
-							<li class="nav-item"><a href="#" class="nav-link">코드관리</a></li>
+							<li class="nav-item"><a href="#" class="nav-link">코드그룹 관리</a></li>				
+							<li class="nav-item"><a href="#" class="nav-link">코드 관리</a></li>
 							<li class="nav-item"><a href="memberList.html" class="nav-link">회원관리</a></li>
 						</ul>
 					</nav>
@@ -88,7 +88,7 @@
 						</div>
 					</div>
  -->				
- 					<span class="m-4"><b>코드그룹 관리</b></span>
+ 					<span class="m-4"><b>코드 관리</b></span>
 					<div id="searchSection">
 						<div class="d-flex">
 							<select class="form-select text-input">
@@ -107,8 +107,8 @@
 						<div class="d-flex">
 							<select class="form-select text-input">
 								<option>검색구분</option>
-								<option>코드그룹 이름</option>
-								<option>코드그룹 코드</option>
+								<option>코드 이름</option>
+								<option>코드 코드</option>
 							</select>
 							<input type="text" class="form-control text-input" placeholder="검색어">
 							<button type="button" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -133,8 +133,11 @@
 									<th scope="col">No</th>
 									<th scope="col">코드그룹 코드</th>
 									<th scope="col">코드그룹 이름(한글)</th>
-									<th scope="col">코드그룹 이름(영문)</th>
-									<th scope="col">코드 갯수</th>
+									<th scope="col">코드</th>
+									<th scope="col">대체 코드</th>
+									<th scope="col">코드 이름(한글)</th>
+									<th scope="col">코드 이름(영문)</th>
+									<th scope="col">사용</th>
 									<th scope="col">등록일</th>
 									<th scope="col">수정일</th>
 								</tr>
@@ -146,8 +149,16 @@
 										<th scope="row">${status.count }</th>
 										<td>${list.cgSeq }</td>
 										<td>${list.cgName }</td>
-										<td>${list.cgNameEng }</td>
-										<td>${list.cnt }</td>
+										<td>${list.seq }</td>
+										<td>${list.ccAnother }</td>
+										<td>${list.ccName }</td>
+										<td>${list.ccNameEng }</td>
+										<td>
+											<c:choose>
+												<c:when test="${list.useNy eq 1 }">Y</c:when>
+												<c:otherwise>N</c:otherwise>
+											</c:choose>
+										</td>
 										<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 										<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 									</tr>
@@ -178,7 +189,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content" role="document">
 					<div class="modal-header">
-						<h5 class="modal-title">코드그룹 삭제</h5>
+						<h5 class="modal-title">코드 삭제</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body d-flex align-items-center">
@@ -209,11 +220,11 @@
 				if($(".chk").is(":checked") == false) {
 					modal.find('.modal-body p').text('삭제할 항목을 선택해주세요.');
 					modal.find('.closeBtn').text('확인');
-					$(".modalDeleteBtn").css("display", "none");
+					$(".modalDeleteBtn").hide();
 				} else {
 					modal.find('.modal-body p').text('삭제하시겠습니까?');
 					modal.find('.closeBtn').text('취소');
-					$(".modalDeleteBtn").css("display", "inline");
+					$(".modalDeleteBtn").show();
 				}
 			});
 

@@ -8,9 +8,12 @@
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT
-			a.*
-		FROM codeGroup a
+		SELECT 
+			a.*,
+			(SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
+		FROM 
+			codeGroup a;
+		
 	</select>
 
 </mapper>	

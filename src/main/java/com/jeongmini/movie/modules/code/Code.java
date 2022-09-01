@@ -1,28 +1,28 @@
-package com.jeongmini.movie.modules.codegroup;
+package com.jeongmini.movie.modules.code;
 
 import java.util.Date;
 
-public class CodeGroup {
+public class Code {
 	//DTO
 	
+	private Integer seq;
 	private Integer cgSeq;
-	private Integer userSeq;
 	private String cgName;
-	private String cgNameEng;
+	private Integer ccAnother;
+	private String ccName;
+	private String ccNameEng;
 	private Integer useNy;
 	private Integer delNy;
 	private Date createdAt;
 	private Date updatedAt;
-	private Integer cnt;
-	
 	
 	
 
-	public Integer getCnt() {
-		return cnt;
+	public Integer getSeq() {
+		return seq;
 	}
-	public void setCnt(Integer cnt) {
-		this.cnt = cnt;
+	public void setSeq(Integer seq) {
+		this.seq = seq;
 	}
 	public Integer getCgSeq() {
 		return cgSeq;
@@ -30,23 +30,29 @@ public class CodeGroup {
 	public void setCgSeq(Integer cgSeq) {
 		this.cgSeq = cgSeq;
 	}
-	public Integer getUserSeq() {
-		return userSeq;
-	}
-	public void setUserSeq(Integer userSeq) {
-		this.userSeq = userSeq;
-	}
 	public String getCgName() {
 		return cgName;
 	}
 	public void setCgName(String cgName) {
 		this.cgName = cgName;
 	}
-	public String getCgNameEng() {
-		return cgNameEng;
+	public Integer getCcAnother() {
+		return ccAnother;
 	}
-	public void setCgNameEng(String cgNameEng) {
-		this.cgNameEng = cgNameEng;
+	public void setCcAnother(Integer ccAnother) {
+		this.ccAnother = ccAnother;
+	}
+	public String getCcName() {
+		return ccName;
+	}
+	public void setCcName(String ccName) {
+		this.ccName = ccName;
+	}
+	public String getCcNameEng() {
+		return ccNameEng;
+	}
+	public void setCcNameEng(String ccNameEng) {
+		this.ccNameEng = ccNameEng;
 	}
 	public Integer getUseNy() {
 		return useNy;
