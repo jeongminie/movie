@@ -6,14 +6,21 @@
 <mapper namespace="com.jeongmini.movie.modules.codegroup.CodeGroupMapper">
 
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
+    
+    
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
-			a.*,
-			(SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
+			a.*
+			, (SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
 		FROM 
-			codeGroup a;
-		
+			codeGroup a
+		WHERE 1=1
+			<choose>
+				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
+				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+			</choose>
 	</select>
 
 </mapper>	

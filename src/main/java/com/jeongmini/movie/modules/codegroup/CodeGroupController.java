@@ -15,10 +15,13 @@ public class CodeGroupController {
 	CodeGroupServiceImpl service;
 	
 	@RequestMapping(value="codeGroupList")
-	public String codeGroupList(Model model) throws Exception {
+	public String codeGroupList(Model model, CodeGroupVO vo) throws Exception {
 		
-		List<CodeGroup> list = service.selectList();
+		List<CodeGroup> list = service.selectList(vo);
 		model.addAttribute("list", list); //list에 담아서 jsp에 전달
+		
+		System.out.println(vo.getShOption());
+		System.out.println(vo.getShValue());
 		
 		return "infra/codeGroup/xdmin/codeGroupList";
 		

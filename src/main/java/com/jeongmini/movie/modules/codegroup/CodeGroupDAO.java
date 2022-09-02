@@ -17,5 +17,6 @@ public class CodeGroupDAO {
 	
 	private static String namespace = "com.jeongmini.movie.modules.codegroup.CodeGroupMapper";
 	
-	public List<CodeGroup> selectList(){ return sqlSession.selectList(namespace + ".selectList", ""); }
+	public List<CodeGroup> selectList(CodeGroupVO vo){ return sqlSession.selectList(namespace + ".selectList", vo); }
+	
 }

@@ -14,9 +14,6 @@ public class CodeGroup {
 	private Date createdAt;
 	private Date updatedAt;
 	private Integer cnt;
-	
-	
-	
 
 	public Integer getCnt() {
 		return cnt;

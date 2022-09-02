@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -25,7 +25,7 @@
 	
 	<link rel="stylesheet" href="/resources/static/css/style.css">
 	
-	<title>코드그룹 관리</title>
+	<title>회원관리</title>
 	
 	<style>
 		.text-input {
@@ -88,96 +88,107 @@
 						</div>
 					</div>
  -->				
- 					<span class="m-4"><b>코드그룹 관리</b></span>
- 					<form method="post" action="/codeGroup/codeGroupList">
-						<div id="searchSection">
-							<div class="d-flex">
-								<select id="delNy" class="form-select text-input">
-									<option value="selected">삭제여부</option>
-									<option value="0">N</option>
-									<option value="1">Y</option>
-								</select>
-								<select class="form-select text-input">
-									<option>날짜구분</option>
-									<option>수정일</option>
-									<option>등록일</option>
-								</select>
-								<input type="text" class="form-control text-input" placeholder="시작일" id="startDate">
-								<input type="text" class="form-control text-input" placeholder="종료일" id="endDate">
-							</div>
-							<div class="d-flex">
-								<select name="shOption" class="form-select text-input">
-									<option value="0">검색구분</option>
-									<option value="1">코드그룹 코드</option>
-									<option value="2">코드그룹 이름(한글)</option>
-									<option value="3">코드그룹 이름(영문)</option>
-								</select>
-								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="${vo.shValue }">
-								<input type="submit" class="btn searchBtn">
-								<!-- <button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button> -->
-								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
-							</div>
+ 					<span class="m-4"><b>회원관리</b></span>
+					<div id="searchSection">
+						<div class="d-flex">
+							<select class="form-select text-input">
+								<option>삭제여부</option>
+								<option>N</option>
+								<option>Y</option>
+							</select>
+							<select class="form-select text-input">
+								<option>날짜구분</option>
+								<option>가입일</option>
+								<option>마지막접속일</option>
+							</select>
+							<input type="text" class="form-control text-input" placeholder="시작일" id="startDate">
+							<input type="text" class="form-control text-input" placeholder="종료일" id="endDate">
 						</div>
-					</form>
+						<div class="d-flex">
+							<select class="form-select text-input">
+								<option>검색구분</option>
+								<option>이름</option>
+								<option>제목</option>
+							</select>
+							<input type="text" class="form-control text-input" placeholder="검색어">
+							<button type="button" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
+						</div>
+					</div>
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
-								<span class="p-2">검색 결과 : N</span>
-								<span class="p-2 totalCount">Total : N</span>
+								<span class="p-2">검색 결과 회원수 : N</span>
+								<span class="p-2 memberCount">총 회원수 : N</span>
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
 								<a href="memberRegForm.html" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
 						</div>
-						<table class="table text-center codeGroupTable">
+						<table class="table text-center memberTable">
 							<thead>
 								<tr>
 									<th scope="col"><input type="checkbox" id="chkAll"></th>
 									<th scope="col">No</th>
-									<th scope="col">코드그룹 코드</th>
-									<th scope="col">코드그룹 이름(한글)</th>
-									<th scope="col">코드그룹 이름(영문)</th>
-									<th scope="col">코드 갯수</th>
-									<th scope="col">등록일</th>
-									<th scope="col">수정일</th>
+									<th scope="col">이름</th>
+									<th scope="col">성별</th>
+									<th scope="col">생년월일</th>
+									<th scope="col">이메일</th>
+									<th scope="col">전화번호</th>
+									<th scope="col">가입날짜</th>
+									<th scope="col">마지막 접속 날짜</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:choose>
-									<c:when test="${fn:length(list) eq 0}">
-										<tr class="memberView">
-											<td colspan="8">There is no data</td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="memberView">
-												<th scope="col"><input type="checkbox" class="chk"></th>
-												<th scope="row">${status.count }</th>
-												<td>${list.cgSeq }</td>
-												<td>${list.cgName }</td>
-												<td>${list.cgNameEng }</td>
-												<td>${list.cnt }</td>
-												<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-												<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
+								<c:forEach items="${list }" var="list" varStatus="status">
+									<tr class="memberView">
+										<th scope="col"><input type="checkbox" class="chk"></th>
+										<th scope="row">${status.count }</th>
+										<td>${list.name }</td>
+										<td>
+											<c:choose>
+												<c:when test="${list.gender eq 0}">남</c:when>
+												<c:otherwise>여</c:otherwise>
+											</c:choose>
+										</td>
+										<td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td>
+										<td>${list.email }</td>
+										<td>
+											<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
+											<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />
+											<c:set var="phone3" value="${fn:substring(list.phone,7,11)}" />
+											${phone1 }-${phone2 }-${phone3 }
+										</td>
+										<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
 							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true" class="text-dark">&laquo;</span>
+										<span class="sr-only">Previous</span>
+									</a>
+								</li>
 								<li class="page-item"><a class="page-link" href="#">1</a></li>
 								<li class="page-item"><a class="page-link" href="#">2</a></li>
 								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">	
+									<a class="page-link" href="#" aria-label="Next">
+										<span aria-hidden="true" class="text-dark">&raquo;</span>
+										<span class="sr-only">Next</span>
+									</a>
+								</li>
 							</ul>
 						</nav>
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#codeGroupDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
+								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#memberDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></a>
 							</div>
 						</div>
 					</div>
@@ -187,48 +198,43 @@
 	</div>
 	
 	<!-- modal -->
-		<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content" role="document">
-					<div class="modal-header">
-						<h5 class="modal-title">코드그룹 삭제</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body d-flex align-items-center">
-						<p></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-						<button type="button" class="btn deleteBtn modalDeleteBtn">삭제</button>
-					</div>
+	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" role="document">
+				<div class="modal-header">
+					<h5 class="modal-title">회원삭제</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body d-flex align-items-center">
+					<p>삭제하시겠습니까?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn deleteBtn">삭제하기</button>
 				</div>
 			</div>
 		</div>
+	</div>
 	
 	<script>
 		$(document).ready(function(){
-			
 			var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
 			
-			var totalCount = document.getElementsByClassName('totalCount');
-			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>';
+			var memberCount = document.getElementsByClassName('memberCount');
+			memberCount[0].innerHTML='<span class="p-2 memberCount">총 회원수 : ' + (tableRowCount) + '</span>';
 		
-			$('#codeGroupDeleteModal').on('shown.bs.modal', function() {
-				var button = $(event.relatedTarget);
-				var recipient = button.data('whatever');
-				var modal = $(this);
-				
+			$('#memberDeleteModal').on('show.bs.modal', function () {
 				if($(".chk").is(":checked") == false) {
+					var button = $(event.relatedTarget);
+					var recipient = button.data('whatever');
+					var modal = $(this);
 					modal.find('.modal-body p').text('삭제할 항목을 선택해주세요.');
-					modal.find('.closeBtn').text('확인');
-					$(".modalDeleteBtn").css("display", "none");
-				} else {
-					modal.find('.modal-body p').text('삭제하시겠습니까?');
-					modal.find('.closeBtn').text('취소');
-					$(".modalDeleteBtn").css("display", "inline");
-				}
+					modal.find('.btn').text('확인');
+					modal.find('.deleteBtn').remove();
+					
+				} 
 			});
 
 			$("#startDate").datepicker({
@@ -269,7 +275,7 @@
 				console.log(chkValue); */
 				
 				if(chkValue == false) {
-					alert("hi")
+					alert("dd")
 				}
 			});
 			
