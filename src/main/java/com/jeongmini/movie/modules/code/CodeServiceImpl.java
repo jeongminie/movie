@@ -10,11 +10,16 @@ public class CodeServiceImpl implements CodeService {
 	//CodeGroupService는 인터페이스로 아무 역할을 못함 여기서 상속받아서 함수 사용
 	
 	@Autowired
-	CodeDAO dao;
+	CodeDao dao;
 	
 	@Override
-	public List<Code> selectList() throws Exception {
-		return dao.selectList();
+	public List<Code> selectList(CodeVo vo) throws Exception {
+		return dao.selectList(vo);
+	}
+	
+	@Override
+	public int insert(Code dto) throws Exception {
+		return dao.insert(dto);
 	}
 
 }

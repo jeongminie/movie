@@ -22,8 +22,44 @@
 			commonCode a 
 		JOIN 
 			codeGroup b
-		WHERE
-			a.cgSeq = b.cgSeq
+		WHERE 1=1
+			AND a.cgSeq = b.cgSeq
+			<choose>
+				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+				<otherwise>AND a.delNy = 0</otherwise>
+			</choose>
+			<if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if> 
+			<choose>
+				<when test="shOption == 1">AND seq = #{shValue}</when>
+				<when test="shOption == 2">AND ccName LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 3">AND ccNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+			</choose>
+			<choose>
+ 				<when test="shDate == 1">AND date(a.createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+				<when test="shDate == 2">AND date(a.updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			</choose>
 	</select>
+	
+	<insert id="insert">
+		INSERT INTO commonCode (
+			cgSeq
+			, ccAnother
+		    , ccName
+		    , ccNameEng
+		    , useNy
+		    , delNy
+		) VALUES (
+			#{cgSeq}
+			, #{ccAnother}
+		    , #{ccName}
+		    , #{ccNameEng}
+		    , #{useNy}
+		    , #{delNy}
+		)
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+		
+	</insert>
 
 </mapper>	

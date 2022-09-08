@@ -12,5 +12,26 @@
 			* 
 		FROM user;
 	</select>
+	
+	<insert id="insert">
+		INSERT INTO user (
+		   	loginId
+		    , password
+		    , phone
+		    , name
+		    , birth
+		    , emailFull
+		) VALUES (
+		    #{loginId}
+		    , #{password}
+		    , #{phone}
+		    , #{name}
+		    , #{birth}
+		    , CONCAT(#{email},'@',(SELECT cc.ccNameEng FROM commonCode cc WHERE cc.seq = #{domain}))
+		)
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 
 </mapper>	

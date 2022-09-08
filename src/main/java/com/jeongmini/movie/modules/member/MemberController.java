@@ -23,5 +23,27 @@ public class MemberController {
 		return "infra/member/xdmin/memberList";
 		
 	}
+	
+	@RequestMapping(value="signup")
+	public String signupView() throws Exception {
+		
+		return "infra/member/user/signupForm";
+	}
+	
+	@RequestMapping(value="signupCompleted")
+	public String signupCompletedView() throws Exception {
+		
+		return "infra/member/user/signupCompleted";
+		
+	}
+	
+	@RequestMapping(value="memberInst")
+	public String memberInst(Member dto) throws Exception {
+		
+		int result = service.insert(dto);
+		System.out.println("insert 성공 : " + result);
+		
+		return "redirect:/member/signupCompleted"; 
+	}
 
 }

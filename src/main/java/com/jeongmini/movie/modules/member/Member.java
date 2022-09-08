@@ -2,18 +2,24 @@ package com.jeongmini.movie.modules.member;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Member {
 	
 	private Integer seq;
-	private String userId;
+	private String loginId;
 	private String password;
 	private String phone;
 	private String name;
 	private Integer gender;
+	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date birth;
-	private String email;
+	private String emailFull;
+	private Integer marketingAgree;
 	private Date createdAt;
 	private Date updatedAt;
+	private String email;
+	private String domain;
 	
 	public Integer getSeq() {
 		return seq;
@@ -21,11 +27,11 @@ public class Member {
 	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
-	public String getUserId() {
-		return userId;
+	public String getLoginId() {
+		return loginId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	public String getPassword() {
 		return password;
@@ -51,11 +57,11 @@ public class Member {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public String getEmail() {
-		return email;
+	public Integer getMarketingAgree() {
+		return marketingAgree;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMarketingAgree(Integer marketingAgree) {
+		this.marketingAgree = marketingAgree;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -75,7 +81,23 @@ public class Member {
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-	
-	
+	public String getEmailFull() {
+		return emailFull;
+	}
+	public void setEmailFull(String emailFull) {
+		this.emailFull = emailFull;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
 
 }

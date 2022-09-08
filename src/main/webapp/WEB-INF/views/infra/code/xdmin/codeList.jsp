@@ -10,10 +10,13 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
+	<!-- bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<!-- 제이쿼리 ui css -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- 제이쿼리 js -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<!-- datepicker -->
+	<!-- 제이쿼리 ui js -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!-- fontawesome -->
@@ -23,9 +26,9 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="/resources/static/css/style.css">
+	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
 	
-	<title>회원관리</title>
+	<title>코드관리</title>
 	
 	<style>
 		.text-input {
@@ -51,70 +54,38 @@
 <body>
 	<div id="wrap">
 		<div>
-			<header class="d-flex">
-				<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
-				<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
-					<ul class="nav">
-					    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-					    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-					    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
-					</ul>                        
-				</nav>
-			</header>
-			<section class="d-flex">
-				<aside class="col-2">
-					<nav class="main-nav">
-						<ul class="nav flex-column">
-							<li class="nav-item"><a href="#" class="nav-link">코드그룹 관리</a></li>				
-							<li class="nav-item"><a href="#" class="nav-link">코드 관리</a></li>
-							<li class="nav-item"><a href="memberList.html" class="nav-link">회원관리</a></li>
-						</ul>
-					</nav>
-				</aside>
-				<section class="col-10">
-<!-- 				
-					<div class="noticeSection d-flex justify-content-around">
-						<div class="box">
-							<span>공지사항</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-					</div>
- -->				
+			<jsp:include page="../../../include/jsp/menu.jsp" />				
  					<span class="m-4"><b>코드 관리</b></span>
-					<div id="searchSection">
-						<div class="d-flex">
-							<select class="form-select text-input">
-								<option>삭제여부</option>
-								<option>N</option>
-								<option>Y</option>
-							</select>
-							<select class="form-select text-input">
-								<option>날짜구분</option>
-								<option>수정일</option>
-								<option>등록일</option>
-							</select>
-							<input type="text" class="form-control text-input" placeholder="시작일" id="startDate">
-							<input type="text" class="form-control text-input" placeholder="종료일" id="endDate">
+ 					<form method="post" action="/code/codeList" autocomplete="off">
+						<div id="searchSection">
+							<div class="d-flex">
+								<select id="shDelNy" name="shDelNy" class="form-select text-input">
+									<option value="">삭제여부</option>
+									<option value="0">N</option>
+									<option value="1">Y</option>
+								</select>
+								<select id="shDate" name="shDate" class="form-select text-input">
+									<option value="0">날짜구분</option>
+									<option value="1">등록일</option>
+									<option value="2">수정일</option>
+								</select>
+								<input type="text" name="shStartDate" class="form-control text-input" placeholder="시작일" id="startDate">
+								<input type="text" name="shEndDate" class="form-control text-input" placeholder="종료일" id="endDate">
+							</div>
+							<div class="d-flex">
+								<select id="shOption" name="shOption" class="form-select text-input" data-selected="${vo.shOption }">
+									<option value="0">검색구분</option>
+									<option value="1">코드</option>
+									<option value="2">코드 이름(한글)</option>
+									<option value="3">코드 이름(영문)</option>
+								</select>
+								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="${vo.shValue }">
+								<!-- <input type="submit" class="btn searchBtn"> -->
+								<button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
+							</div>
 						</div>
-						<div class="d-flex">
-							<select class="form-select text-input">
-								<option>검색구분</option>
-								<option>코드 이름</option>
-								<option>코드 코드</option>
-							</select>
-							<input type="text" class="form-control text-input" placeholder="검색어">
-							<button type="button" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-							<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
-						</div>
-					</div>
+					</form>
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
@@ -123,7 +94,7 @@
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="memberRegForm.html" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
+								<a href="codeRegForm" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
 						</div>
 						<table class="table text-center codeGroupTable">
@@ -143,26 +114,35 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${list }" var="list" varStatus="status">
-									<tr class="memberView">
-										<th scope="col"><input type="checkbox" class="chk"></th>
-										<th scope="row">${status.count }</th>
-										<td>${list.cgSeq }</td>
-										<td>${list.cgName }</td>
-										<td>${list.seq }</td>
-										<td>${list.ccAnother }</td>
-										<td>${list.ccName }</td>
-										<td>${list.ccNameEng }</td>
-										<td>
-											<c:choose>
-												<c:when test="${list.useNy eq 1 }">Y</c:when>
-												<c:otherwise>N</c:otherwise>
-											</c:choose>
-										</td>
-										<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-									</tr>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${fn:length(list) eq 0}">
+										<tr class="memberView">
+											<td colspan="8">There is no data</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${list }" var="list" varStatus="status">
+											<tr class="memberView">
+												<th scope="col"><input type="checkbox" class="chk"></th>
+												<th scope="row">${status.count }</th>
+												<td>${list.cgSeq }</td>
+												<td>${list.cgName }</td>
+												<td>${list.seq }</td>
+												<td>${list.ccAnother }</td>
+												<td>${list.ccName }</td>
+												<td>${list.ccNameEng }</td>
+												<td>
+													<c:choose>
+														<c:when test="${list.useNy eq 1 }">Y</c:when>
+														<c:otherwise>N</c:otherwise>
+													</c:choose>
+												</td>
+												<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+												<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
@@ -229,16 +209,22 @@
 			});
 
 			$("#startDate").datepicker({
-                showButtonPanel: true, 
-                currentText: '오늘',
                 dateFormat: "yy-mm-dd",
-                dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
+                dayNamesMin:['월', '화', '수', '목', '금', '토', '일'],
+                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                showMonthAfterYear: true,
+                yearSuffix: '년',
+                onSelect:function (dateText) { 
+                    $( "#endDate" ).datepicker('option', 'minDate', dateText);
+                }
 			});
 			
 			$("#endDate").datepicker({
-                showButtonPanel: true, 
                 dateFormat: "yy-mm-dd",
-                dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
+                dayNamesMin:['월', '화', '수', '목', '금', '토', '일'],
+                monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                showMonthAfterYear: true,
+                yearSuffix: '년'
 			});
 			
 			$("#chkAll").on("click", function(){

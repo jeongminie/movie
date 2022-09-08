@@ -23,7 +23,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="/resources/static/css/style.css">
+	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
 	
 	<title>회원관리</title>
 	

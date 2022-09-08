@@ -23,7 +23,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="/resources/static/css/style.css">
+	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
 	
 	<title>코드그룹 관리</title>
 	
@@ -51,70 +51,34 @@
 <body>
 	<div id="wrap">
 		<div>
-			<header class="d-flex">
-				<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
-				<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
-					<ul class="nav">
-					    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-					    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-					    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
-					</ul>                        
-				</nav>
-			</header>
-			<section class="d-flex">
-				<aside class="col-2">
-					<nav class="main-nav">
-						<ul class="nav flex-column">
-							<li class="nav-item"><a href="#" class="nav-link">코드그룹관리</a></li>				
-							<li class="nav-item"><a href="#" class="nav-link">코드관리</a></li>
-							<li class="nav-item"><a href="memberList.html" class="nav-link">회원관리</a></li>
-						</ul>
-					</nav>
-				</aside>
-				<section class="col-10">
-<!-- 				
-					<div class="noticeSection d-flex justify-content-around">
-						<div class="box">
-							<span>공지사항</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-					</div>
- -->				
+			<jsp:include page="../../../include/jsp/menu.jsp" />
  					<span class="m-4"><b>코드그룹 관리</b></span>
- 					<form method="post" action="/codeGroup/codeGroupList">
+ 					<form method="post" action="/codeGroup/codeGroupList" autocomplete="off">
 						<div id="searchSection">
 							<div class="d-flex">
-								<select id="delNy" class="form-select text-input">
-									<option value="selected">삭제여부</option>
-									<option value="0">N</option>
-									<option value="1">Y</option>
+								<select id="shDelNy" name="shDelNy" class="form-select text-input">
+									<option value="">삭제여부</option>
+									<option value="0" <c:if test="${vo.shDelNy eq 0 }">selected</c:if>>N</option>
+									<option value="1" <c:if test="${vo.shDelNy eq 1 }">selected</c:if>>Y</option>
 								</select>
-								<select class="form-select text-input">
-									<option>날짜구분</option>
-									<option>수정일</option>
-									<option>등록일</option>
+								<select id="shDate" name="shDate" class="form-select text-input">
+									<option value="0">날짜구분</option>
+									<option value="1">등록일</option>
+									<option value="2">수정일</option>
 								</select>
-								<input type="text" class="form-control text-input" placeholder="시작일" id="startDate">
-								<input type="text" class="form-control text-input" placeholder="종료일" id="endDate">
+								<input type="text" name="shStartDate" class="form-control text-input" placeholder="시작일" id="startDate">
+								<input type="text" name="shEndDate" class="form-control text-input" placeholder="종료일" id="endDate">
 							</div>
 							<div class="d-flex">
-								<select name="shOption" class="form-select text-input">
+								<select id="shOption" name="shOption" class="form-select text-input">
 									<option value="0">검색구분</option>
-									<option value="1">코드그룹 코드</option>
-									<option value="2">코드그룹 이름(한글)</option>
-									<option value="3">코드그룹 이름(영문)</option>
+									<option value="1" <c:if test="${vo.shOption eq 1 }">selected</c:if>>코드그룹 코드</option>
+									<option value="2" <c:if test="${vo.shOption eq 2 }">selected</c:if>>코드그룹 이름(한글)</option>
+									<option value="3" <c:if test="${vo.shOption eq 3 }">selected</c:if>>코드그룹 이름(영문)</option>
 								</select>
-								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="${vo.shValue }">
-								<input type="submit" class="btn searchBtn">
-								<!-- <button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button> -->
+								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.value }"/>">
+								<!-- <input type="submit" class="btn searchBtn"> -->
+								<button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
 							</div>
 						</div>
@@ -127,7 +91,7 @@
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="memberRegForm.html" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
+								<a href="#" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
 						</div>
 						<table class="table text-center codeGroupTable">
@@ -146,13 +110,13 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(list) eq 0}">
-										<tr class="memberView">
+										<tr class="codeGroupView">
 											<td colspan="8">There is no data</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="memberView">
+											<tr class="codeGroupView" onclick="location.href='codeGroupView?cgSeq=${list.cgSeq}'">
 												<th scope="col"><input type="checkbox" class="chk"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
@@ -206,14 +170,46 @@
 		</div>
 	
 	<script>
+		$("#startDate").datepicker({
+			dateFormat: "yy-mm-dd",
+	        dayNamesMin:['월', '화', '수', '목', '금', '토', '일'],
+	        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년',
+	        onSelect:function (dateText) { //날짜가 선택되었을때 발생하는 이벤트
+	            $("#endDate").datepicker('option', 'minDate', dateText);
+	        }
+		});
+		
+		$("#endDate").datepicker({
+			minDate : 0, //minDate에 0을 주면 오늘날짜부터 선택
+	        dateFormat: "yy-mm-dd",
+	        dayNamesMin:['월', '화', '수', '목', '금', '토', '일'],
+	        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	        showMonthAfterYear: true, // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔줌
+	        yearSuffix: '년'
+		});
+		
 		$(document).ready(function(){
 			
-			var tableRow = document.getElementsByTagName('tr');
+ 			var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
 			
 			var totalCount = document.getElementsByClassName('totalCount');
 			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>';
+			
+			/* $(".searchBtn").on("click", function(){
+				var shDate = $("#shDate option:selected").val()
+				var startDate = $("#startDate").val();
+				var endDate = $("#endDate").val();
+				alert(startDate)
+				
+				if(shDate == 0 && !startDate.equals("")) {
+					alert("날짜구분선택")
+				}
+			}); */
+			
 		
 			$('#codeGroupDeleteModal').on('shown.bs.modal', function() {
 				var button = $(event.relatedTarget);
@@ -230,19 +226,6 @@
 					$(".modalDeleteBtn").css("display", "inline");
 				}
 			});
-
-			$("#startDate").datepicker({
-                showButtonPanel: true, 
-                currentText: '오늘',
-                dateFormat: "yy-mm-dd",
-                dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
-			});
-			
-			$("#endDate").datepicker({
-                showButtonPanel: true, 
-                dateFormat: "yy-mm-dd",
-                dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
-			});
 			
 			$("#chkAll").on("click", function(){
 				if ($(this).is(":checked")) {
@@ -253,12 +236,13 @@
 				console.log($(this).prop("checked"))
 			});
 			
-			$(".chk").on("click", function(){
-				event.cancelBubble=true;
+			$(".chk").on("click", function(e){
+				//event.cancelBubble=true;
+				e.stopPropagation();
 			});
 			
-			$("#createBtn").on("click", function(){
-				location.href = 'create.html'
+			$(".createBtn").on("click", function(){
+				location.href = 'codeGroupRegForm';
 			});
 			
 			$(".deleteBtn").on("click", function(e){
@@ -272,11 +256,6 @@
 					alert("hi")
 				}
 			});
-			
-			$(".memberView").on("click",function(){
-				location.href="memberView.html";
-			});
-			
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

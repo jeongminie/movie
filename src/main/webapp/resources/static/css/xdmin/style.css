@@ -1,0 +1,131 @@
+#wrap {
+		padding-left : 20px;
+		padding-right : 20px;
+		font-family: 'Noto Sans KR', sans-serif;
+}
+
+.modal {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#logo {
+	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration: none;
+}
+
+body {
+	background-color : #F3F7FA;
+}
+
+aside {
+	padding-top : 50px;
+	padding-left : 20px;
+}
+
+.main-nav{
+	font-size: 20px;
+}
+
+.nav-link {
+	color: #4C637E;
+	padding: 5px;
+}
+
+.nav-link:hover {
+	color: #4C637E;
+	font-weight: bold;
+}
+		
+.fa-circle-user {
+	font-size: 25px;
+	margin-right: 5px;
+}
+
+.box {
+	background-color : white;
+	border : 1px solid #dee2e6;
+	box-shadow : 2px 2px 1px #E8EAEB;
+	width : 200px;
+	height : 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.noticeSection {
+	padding : 30px;
+	border-bottom: 1px solid #dee2e6;
+}
+
+#searchSection {
+	background-color : white;
+	border : 1px solid #dee2e6;
+	box-shadow : 2px 2px 1px #E8EAEB;
+	padding : 20px;
+	margin: 20px;
+}
+
+.memberList {
+	background-color : white;
+	border : 1px solid #dee2e6;
+	box-shadow : 2px 2px 1px #E8EAEB;
+	/* padding : 20px; */
+	margin: 20px;
+}
+
+.btn {
+	border-radius : 45px;
+	border : 0px;
+}
+
+.btn:hover {
+	background-color: #F0F0F0;
+}
+
+.searchBtn {
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+.resetBtn {
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+#banner {
+	width : 100%;
+	height : 300px;
+}
+
+.codeGroupTable {
+	width : 100%;
+}
+
+thead {
+	background-color: #F5F5F5;
+}
+
+tr {
+	cursor:pointer;
+}
+
+tbody > tr:hover {
+	box-shadow: 1px 1px 20px #ddd;
+}
+
+.cancelBtn, .deleteBtn, .excelBtn, .createBtn, .prevBtn {
+	/* padding-top : 1px; */
+	font-size: 15px;
+}
+
+.cancelBtn:hover, .deleteBtn:hover, .prevBtn:hover {
+	background-color: #FF7070 !important;
+}
+
+.excelBtn:hover, .createBtn:hover {
+	background-color: #93ECAF !important;
+}
+
+.modal-content {
+	border : 0px;
+}

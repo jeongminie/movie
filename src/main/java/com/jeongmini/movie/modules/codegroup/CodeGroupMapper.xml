@@ -17,10 +17,58 @@
 			codeGroup a
 		WHERE 1=1
 			<choose>
+				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+				<otherwise>AND a.delNy = 0</otherwise>
+			</choose>
+			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
+			<choose>
 				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
 				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
 				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
 			</choose>
+ 			<choose>
+ 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			</choose>
 	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			a.*
+		FROM
+			codeGroup a
+		WHERE 1=1
+			AND a.cgSeq = #{cgSeq};
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO codeGroup (
+		    cgName
+		    , cgNameEng
+		    , delNy
+		    , useNy
+		) VALUES (
+		    #{cgName}
+		    , #{cgNameEng}
+		    , #{useNy}
+		    , #{useNy}
+		)
+		<selectKey resultType="int" keyProperty="cgSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+		
+	</insert>
+	
+	<update id="update">
+		UPDATE 
+			codeGroup a
+		SET 
+			a.cgName = #{cgName}
+			, a.cgNameEng = #{cgNameEng}
+			, a.useNy = #{useNy}
+			, a.delNy = #{delNy}
+			, a.updatedAt = now() 
+		WHERE cgSeq = #{cgSeq};
+	</update>
 
 </mapper>	
