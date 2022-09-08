@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,10 +120,11 @@
 								<div class="d-flex">
 									<input type="text" class="text-input col-5" name="email">
 									<span style="margin : 0 4px 0 4px;">@</span>
-									<select class="text-input col-5" name="domain">
-										<option value="16">naver.com</option>
-										<option value="17">nate.com</option>
-									</select>
+										<select class="text-input col-5" name="domain">
+											<c:forEach items="${code }" var="code" varStatus="status">
+												<option value="${code.seq }">${code.ccNameEng }</option>
+											</c:forEach>
+										</select>
 								</div>
 							</td>
 						</tr>

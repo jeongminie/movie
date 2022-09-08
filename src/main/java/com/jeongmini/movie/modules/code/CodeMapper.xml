@@ -40,6 +40,16 @@
 			</choose>
 	</select>
 	
+	<select id="emailSelectList" resultMap="resultMapObj">
+		SELECT
+			seq
+			, ccNameEng
+		FROM 
+			commonCode
+		WHERE 
+			cgSeq = 14;
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO commonCode (
 			cgSeq

@@ -7,12 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jeongmini.movie.modules.code.Code;
+import com.jeongmini.movie.modules.code.CodeServiceImpl;
+
 @Controller
 @RequestMapping(value="/member/")
 public class MemberController {
 	
 	@Autowired
 	MemberServiceImpl service;
+	
+	@Autowired
+	CodeServiceImpl codeServiceImpl;
 	
 	@RequestMapping(value="memberList")
 	public String memberList(Model model) throws Exception {
@@ -25,7 +31,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="signup")
-	public String signupView() throws Exception {
+	public String signupView(Model model) throws Exception {
+		
+		List<Code> codeList = codeServiceImpl.emailSelectList();
+		model.addAttribute("code", codeList);
 		
 		return "infra/member/user/signupForm";
 	}
