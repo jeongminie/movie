@@ -380,7 +380,7 @@ ul {
 	margin-right:5px;
 }
 
-.login, .signup {
+.login, .signup, .userName, .logout {
 	font-size: 13px;
 }
 

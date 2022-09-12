@@ -132,16 +132,18 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body d-flex justify-content-center">
+				<form method="post" action="member/login" id="login">
 					<div>
-						<input type="text" class="form-control mb-2" placeholder="아이디">
-						<input type="password" class="form-control mb-3" placeholder="비밀번호">
-						<button type="button" class="btn login-btn w-100 mb-3">로그인</button>
+						<input type="text" id="loginId" name="loginId" class="form-control mb-2" placeholder="아이디">
+						<input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호">
+						<button type="button" id="loginBtn" class="btn login-btn w-100 mb-3">로그인</button>
 						<p class="d-flex justify-content-center">
 							<a href="#" class="text-dark">ID/PW 찾기</a>
 							<span class="mr-3 ml-3">|</span>
 							<a href="#" class="text-dark">회원가입</a>
 						</p>
 					</div>
+				</form>
 				</div>
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn" data-bs-dismiss="modal">취소</button>
@@ -162,6 +164,27 @@
 			$(".rank-item").on("mouseleave", function(){
 				$(".fade-wrap").fadeOut();
 			});
+			
+			$("#loginBtn").on("click", function(){
+				var loginId = $("#loginId").val();
+				var password = $("#password").val();
+				
+				if(loginId == null || loginId == "") {
+					alert("아이디를 입력해주세요");
+					
+					return;
+				}
+				
+				if(password == null || password == "") {
+					alert("비밀번호를 입력해주세요");
+					
+					return;
+				}
+				
+				$("#login").submit();
+				
+				
+			})
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

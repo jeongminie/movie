@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$(".signup").on("click", function(){
-		location.href="/signup";
+		location.href="member/signup";
 	});
 	
 	$(".nav-txt-community").on("click", function(){

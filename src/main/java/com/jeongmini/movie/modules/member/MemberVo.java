@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Member {
+public class MemberVo {
 	
 	private Integer seq;
 	private String loginId;
@@ -12,11 +12,14 @@ public class Member {
 	private String phone;
 	private String name;
 	private Integer gender;
+	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date birth;
 	private String emailFull;
 	private Integer marketingAgree;
 	private Date createdAt;
 	private Date updatedAt;
+	private String email;
+	private String domain;
 	
 	public Integer getSeq() {
 		return seq;
@@ -48,11 +51,23 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public Integer getGender() {
+		return gender;
+	}
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
 	public Date getBirth() {
 		return birth;
 	}
 	public void setBirth(Date birth) {
 		this.birth = birth;
+	}
+	public String getEmailFull() {
+		return emailFull;
+	}
+	public void setEmailFull(String emailFull) {
+		this.emailFull = emailFull;
 	}
 	public Integer getMarketingAgree() {
 		return marketingAgree;
@@ -72,17 +87,19 @@ public class Member {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public Integer getGender() {
-		return gender;
+	public String getEmail() {
+		return email;
 	}
-	public void setGender(Integer gender) {
-		this.gender = gender;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getEmailFull() {
-		return emailFull;
+	public String getDomain() {
+		return domain;
 	}
-	public void setEmailFull(String emailFull) {
-		this.emailFull = emailFull;
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
+
+	
 
 }
