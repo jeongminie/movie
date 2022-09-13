@@ -153,7 +153,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-					<button type="button" class="btn deleteBtn" id="deleteBtn">삭제</button>
+					<button type="button" class="btn deleteBtn" id="cgDeleteBtn">삭제</button>
 				</div>
 			</div>
 		</div>
@@ -210,7 +210,7 @@
 				modal.modal('show');
 			});
 			
-			$("#deleteBtn").on("click", function(e){
+			$("#cgDeleteBtn").on("click", function(e){
 				if(action == "uelete") {
 					$.ajax({
 						type:"post"
