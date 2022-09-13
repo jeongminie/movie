@@ -1,12 +1,15 @@
 package com.jeongmini.movie.modules.codegroup;
 
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value="/codeGroup/")
@@ -32,21 +35,14 @@ public class CodeGroupController {
 		
 	}
 	
-	@RequestMapping(value="codeGroupView")
-	public String codeGroup(Model model, CodeGroupVo vo) throws Exception {
-		
+	@RequestMapping(value="codeGroupForm")
+	public String codeGroupForm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
 		CodeGroup codeGroup = service.selectOne(vo);
 		model.addAttribute("item", codeGroup);
 		
-		System.out.println(vo.getCgSeq());
+		System.out.println("vo.getCgSeq : " + vo.getCgSeq());
 		
-		return "infra/codeGroup/xdmin/codeGroupView";
-		
-	}
-	
-	@RequestMapping(value="codeGroupRegForm")
-	public String codeGroupRegForm() {
-		return "infra/codeGroup/xdmin/codeGroupRegForm";
+		return "infra/codeGroup/xdmin/codeGroupForm";
 	}
 	
 	/*
@@ -70,6 +66,39 @@ public class CodeGroupController {
 		System.out.println("update 성공 : " + result);
 		
 		return "redirect:/codeGroup/codeGroupList";
+	}
+	
+	@RequestMapping(value="codeGroupDelete")
+	@ResponseBody 
+	public Map<String, Boolean> codeGroupDelete(CodeGroupVo vo) throws Exception {
+		Map<String, Boolean> result = new HashMap<>(); 
+		
+		if(service.delete(vo)) {
+			result.put("result", true);
+		} else {
+			result.put("result", false);
+		}
+		
+		System.out.println("delete 성공 : " + result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="codeGroupUelete")
+	@ResponseBody
+	public Map<String, Boolean> codeGroupUelete(CodeGroupVo vo) throws Exception {
+		Map<String, Boolean> result = new HashMap<>(); 
+		
+		if(service.uelete(vo)) {
+			result.put("result", true);
+		} else {
+			result.put("result", false);
+		}
+		
+		System.out.println("uelete 성공 : " + result);
+		
+		return result;
+		
 	}
 
 }

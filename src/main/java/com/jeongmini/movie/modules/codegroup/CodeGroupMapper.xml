@@ -50,7 +50,7 @@
 		) VALUES (
 		    #{cgName}
 		    , #{cgNameEng}
-		    , #{useNy}
+		    , #{delNy}
 		    , #{useNy}
 		)
 		<selectKey resultType="int" keyProperty="cgSeq" order="AFTER">
@@ -69,6 +69,20 @@
 			, a.delNy = #{delNy}
 			, a.updatedAt = now() 
 		WHERE cgSeq = #{cgSeq};
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM codeGroup
+		WHERE cgSeq = #{cgSeq};
+	</delete>
+	
+	<update id="uelete">
+		UPDATE
+			codeGroup a
+		SET
+			a.delNy = 1
+		WHERE
+			a.cgSeq = #{cgSeq}
 	</update>
 
 </mapper>	

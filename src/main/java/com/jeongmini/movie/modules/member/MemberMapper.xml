@@ -21,6 +21,7 @@
 		    , name
 		    , birth
 		    , emailFull
+		    , marketingAgree
 		) VALUES (
 		    #{loginId}
 		    , #{password}
@@ -28,6 +29,7 @@
 		    , #{name}
 		    , #{birth}
 		    , CONCAT(#{email},'@',(SELECT cc.ccNameEng FROM commonCode cc WHERE cc.seq = #{domain}))
+		    , #{marketingAgree}
 		)
 		<selectKey resultType="int" keyProperty="seq" order="AFTER">
 			SELECT last_insert_id()
@@ -47,6 +49,15 @@
 		WHERE 1=1
 			AND a.loginId = #{loginId}
 			AND a.password = #{password}
+	</select>
+	
+	<select id="idCheck" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user
+		WHERE
+			loginId = #{loginId}
 	</select>
 	
 

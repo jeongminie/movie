@@ -44,5 +44,24 @@ public class CodeGroupServiceImpl implements CodeGroupService {
 		return result;
 	}
 	
+	@Override
+	public boolean uelete(CodeGroupVo vo) throws Exception {
+		if(dao.uelete(vo) == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	@Override
+	public boolean delete(CodeGroupVo vo) throws Exception {
+		if(dao.delete(vo) == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	
 
 }

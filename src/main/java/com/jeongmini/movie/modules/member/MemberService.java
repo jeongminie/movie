@@ -6,8 +6,10 @@ public interface MemberService {
 	
 	public List<Member> selectList() throws Exception;
 	
-	public int insert(MemberVo vo) throws Exception;
+	public int insert(Member dto) throws Exception;
 	
 	public Member login(Member dto) throws Exception;
+	
+	public boolean idCheck(MemberVo vo) throws Exception;
 
 }

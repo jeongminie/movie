@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -56,7 +60,7 @@
 <body>
 	<div id="wrap">
 		<header class="d-flex">
-			<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
+			<a href="#" class="display-4 text-dark col-1" id="logo">Title</a>
 			<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
 				<ul class="nav">
 				    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
@@ -81,16 +85,17 @@
 					<span>STEP2.등록완료</span>
 					<h4 class="mt-4">코드그룹 정보를 입력해주세요</h4>
 				</div>
-				<form method="post" id="codeGroupRegForm" action="/codeGroup/codeGroupInst">
+				<form method="post">
+					<input type="hidden" name="cgSeq" value="${vo.cgSeq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
-							<div>코드그룹 코드<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
-							<div>코드그룹 이름 (한글)<input type="text" name="cgName" id="cgName" class="form-control text-input" placeholder="코드그룹 코드"></div>
+							<div>코드그룹 코드<input type="text" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgSeq }">value="${item.cgSeq  }"</c:if>></div>
+							<div>코드그룹 이름 (한글)<input type="text" name="cgName" id="cgName" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgName }">value="${item.cgName  }"</c:if>></div>
 							<div>
 								<span>사용여부</span>
 								<select class="form-select text-input" name="useNy" id="useNy">
-									<option value="1">Y</option>
-									<option value="0">N</option>
+									<option value="1" <c:if test="${item.useNy eq 1 }">selected</c:if>>Y</option>
+									<option value="0" <c:if test="${item.useNy eq 0 }">selected</c:if>>N</option>
 								</select>
 							</div>
 							<div>설명<textarea cols="30" class="form-control text-input"></textarea></div>
@@ -101,13 +106,13 @@
 						</div>
 						<div class="codeInfo col-6">
 							<div>코드그룹 코드 (Another)<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
-							<div>코드그룹 이름 (영문)<input type="text" name="cgNameEng" id="cgNameEng" class="form-control text-input" placeholder="코드그룹 코드"></div>
+							<div>코드그룹 이름 (영문)<input type="text" name="cgNameEng" id="cgNameEng" class="form-control text-input" <c:if test="${not empty item.cgNameEng }">value="${item.cgNameEng  }"</c:if> placeholder="코드그룹 코드"></div>
 							<div>순서<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
 							<div>
 								<span>삭제여부</span>
 								<select class="form-select text-input" name="delNy" id="delNy">
-									<option value="0">N</option>
-									<option value="1">Y</option>
+									<option value="0" <c:if test="${item.delNy eq 0 }">selected</c:if>>N</option>
+									<option value="1" <c:if test="${item.delNy eq 1 }">selected</c:if>>Y</option>
 								</select>
 							</div>
 							<div style="margin-top:35px">예비2 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
@@ -116,7 +121,18 @@
 					</div>
 					<div class="d-flex justify-content-between" style="padding-bottom: 10px;">
 						<button type="button" class="btn prevBtn">이전</button>
-						<button type="button" class="btn createBtn" onClick="test();">등록하기</button>
+						<c:choose>
+							<c:when test="${not empty item.cgSeq }">
+								<div class="d-flex">
+									<button type="button" class="btn ueleteBtn" id="uelete">X</button>
+									<button type="button" class="btn deleteBtn" id="delete">삭제</button>
+									<button type="submit" class="btn updateBtn">수정</button>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<button type="submit" class="btn createBtn">등록</button>
+							</c:otherwise>
+						</c:choose>
 						<!-- <button type="submit" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
 					</div>
 				</form>
@@ -125,49 +141,103 @@
 	</div>
 	
 	<!-- modal -->
-	<div class="modal fade" id="memberRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content" role="document">
 				<div class="modal-header">
-					<h5 class="modal-title">회원등록</h5>
+					<h5 class="modal-title">코드그룹 삭제</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<p>등록하시겠습니까?</p>
+				<div class="modal-body d-flex align-items-center">
+					<p>삭제하시겠습니까?</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn cancelBtn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn createBtn">등록하기</button>
+					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn deleteBtn" id="deleteBtn">삭제</button>
 				</div>
 			</div>
 		</div>
 	</div>
 		
 	<script>
-		function test(){
-			var cgName = $("#cgName").val();
-			var cgNameEng = $("#cgNameEng").val();
-			var useNy = $("#useNy").val();
-			var delNy = $("#delNy").val();
-
-			if(cgName == '' || cgName == null) {
-				alert("코드 이름을 입력하세요.");
-				$("#cgName").focus();
-				
-				return;
-			}
-			if(cgNameEng == '' || cgNameEng == null) {
-				alert("코드영문 이름을 입력하세요.");
-				$("#cgNameEng").focus();
-				
-				return;
-			}
-						
-			$("#codeGroupRegForm").submit();
-			
-		}	
-	
 		$(document).ready(function(){
+			var action;
+			var modal = $("#codeGroupDeleteModal");
+			var deleteurl = "codeGroupDelete";
+			var ueleteurl = "codeGroupUelete";
+			
+			/* var submitType = $("button[type=submit]").val(); //0수정 1등록 */
+			var seq = $("input:hidden[name=cgSeq]").val();
+			console.log(seq)
+			
+			$("form").on("submit", function(e){
+				e.preventdefault;
+				
+				var cgName = $("#cgName").val();
+				var cgNameEng = $("#cgNameEng").val();
+				var useNy = $("#useNy").val();
+				var delNy = $("#delNy").val();
+				
+				if(cgName == '' || cgName == null) {
+					alert("코드 이름을 입력하세요.");
+					$("#cgName").focus();
+					
+					return false;
+				}
+				
+				if(cgNameEng == '' || cgNameEng == null) {
+					alert("코드영문 이름을 입력하세요.");
+					$("#cgNameEng").focus();
+					
+					return false;
+				}
+				
+				if(seq == 0 || seq == "") { //insert
+					$("form").attr("action", "/codeGroup/codeGroupInst");
+				} else { //update
+					$("form").attr("action", "/codeGroup/codeGroupUpdate");
+				}
+				
+			});
+			
+			$("#uelete").on("click", function(){
+				action = "uelete";
+				modal.modal('show');
+			});
+			
+			$("#delete").on("click", function(){
+				action = "delete"
+				modal.modal('show');
+			});
+			
+			$("#deleteBtn").on("click", function(e){
+				if(action == "uelete") {
+					$.ajax({
+						type:"post"
+						, url:ueleteurl
+						, data:{"cgSeq":seq}
+						, success:function(data){
+							if(data.result) {
+								alert("삭제 완료");
+								location.href="codeGroupList";
+							}
+						}
+					});
+				} else if(action == "delete") {
+					$.ajax({
+						type:"post"
+						, url:deleteurl
+						, data:{"cgSeq":seq}
+						, success:function(data){
+							if(data.result) {
+								alert("삭제 완료");
+								location.href="codeGroupList";
+							}
+						}
+					});
+				}
+			});
+			
 			$("#birth").datepicker({
 				changeYear: true //option값 년 선택 가능
 		        , changeMonth: true //option값  월 선택 가능   
@@ -177,16 +247,6 @@
                 , dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
 			});
 			
-			$(".passwordRe").on("mouseleave", function(){
-				var password = $(".password").val().trim();
-				var passwordRe = $(".passwordRe").val().trim();
-				
-				if(password != passwordRe) {
-					$(".passwordError").removeClass("d-none");
-				} else {
-					$(".passwordError").addClass("d-none");
-				}
-			});
 			
 			$(".modal .createBtn").on("click",function(){
 				location.href="memberList.html"

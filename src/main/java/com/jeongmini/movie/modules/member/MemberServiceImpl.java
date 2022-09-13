@@ -16,14 +16,22 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int insert(MemberVo vo) throws Exception {
-		return dao.insert(vo);
+	public int insert(Member dto) throws Exception {
+		return dao.insert(dto);
 	}
 	
 	@Override
 	public Member login(Member dto) throws Exception {
 		return dao.selectOne(dto);
-		
+	}
+	
+	@Override
+	public boolean idCheck(MemberVo vo) throws Exception {
+		if(dao.idCheck(vo) == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 }

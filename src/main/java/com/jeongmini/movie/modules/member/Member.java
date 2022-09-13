@@ -12,11 +12,14 @@ public class Member {
 	private String phone;
 	private String name;
 	private Integer gender;
+	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date birth;
 	private String emailFull;
 	private Integer marketingAgree;
 	private Date createdAt;
 	private Date updatedAt;
+	private String email;
+	private String domain;
 	
 	public Integer getSeq() {
 		return seq;
@@ -84,5 +87,17 @@ public class Member {
 	public void setEmailFull(String emailFull) {
 		this.emailFull = emailFull;
 	}
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+	
 }

@@ -116,7 +116,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="codeGroupView" onclick="location.href='codeGroupView?cgSeq=${list.cgSeq}'">
+											<tr class="codeGroupView" onclick="location.href='codeGroupForm?cgSeq=${list.cgSeq}'">
 												<th scope="col"><input type="checkbox" class="chk"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
@@ -242,7 +242,7 @@
 			});
 			
 			$(".createBtn").on("click", function(){
-				location.href = 'codeGroupRegForm';
+				location.href = 'codeGroupForm';
 			});
 			
 			$(".deleteBtn").on("click", function(e){

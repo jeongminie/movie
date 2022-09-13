@@ -13,4 +13,8 @@ public interface CodeGroupService {
 	
 	public int update(CodeGroup dto) throws Exception;
 	
+	public boolean uelete(CodeGroupVo vo) throws Exception;
+	
+	public boolean delete(CodeGroupVo vo) throws Exception;
+	
 }

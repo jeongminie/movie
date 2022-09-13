@@ -40,7 +40,18 @@ public class CodeGroupDao {
 		int result = sqlSession.update(namespace + ".update", dto);
 		
 		return result;
+	}
+	
+	public int uelete(CodeGroupVo vo) {
+		int result = sqlSession.update(namespace + ".uelete", vo);
 		
+		return result;
+	}
+	
+	public int delete(CodeGroupVo vo) {
+		int result = sqlSession.delete(namespace + ".delete", vo);
+		
+		return result;
 	}
 	
 }

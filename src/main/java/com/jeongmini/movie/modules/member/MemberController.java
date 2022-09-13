@@ -1,6 +1,8 @@
 package com.jeongmini.movie.modules.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeongmini.movie.HomeController;
 import com.jeongmini.movie.modules.code.Code;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
 
@@ -50,13 +52,12 @@ public class MemberController {
 	public String signupCompletedView() throws Exception {
 		
 		return "infra/member/user/signupCompleted";
-		
 	}
 	
 	@RequestMapping(value="memberInst")
-	public String memberInst(MemberVo vo) throws Exception {
+	public String memberInst(Member dto) throws Exception {
 		
-		int result = service.insert(vo);
+		int result = service.insert(dto);
 		System.out.println("insert 성공 : " + result);
 		
 		return "redirect:/member/signupCompleted"; 
@@ -76,6 +77,33 @@ public class MemberController {
 		} else {
 			logger.info("로그인 실패 " );
 		}
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="idCheck")
+	@ResponseBody
+	public Map<String, Boolean> idCheck(Model model, MemberVo vo) throws Exception {
+		Map<String, Boolean> result = new HashMap<>();
+		
+		if(service.idCheck(vo)) {
+			result.put("duplication", true);
+		} else {
+			result.put("duplication", false);
+		}
+		System.out.println(result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("loginId");
+		session.removeAttribute("name");
+		
+		logger.info("로그아웃 완료");
 		
 		return "redirect:/";
 	}

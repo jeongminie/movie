@@ -19,13 +19,16 @@ public class MemberDAO {
 	
 	public List<Member> selectList(){ return sqlSession.selectList(namespace + ".selectList", ""); }
 	
-	public int insert(MemberVo vo) {
-		return sqlSession.insert(namespace + ".insert", vo);
+	public int insert(Member dto) {
+		return sqlSession.insert(namespace + ".insert", dto);
 	}
 	
 	public Member selectOne(Member dto) {
 		return sqlSession.selectOne(namespace + ".login", dto); 
+	}
 	
+	public int idCheck(MemberVo vo) {
+		return sqlSession.selectOne(namespace + ".idCheck", vo);
 	}
 
 }

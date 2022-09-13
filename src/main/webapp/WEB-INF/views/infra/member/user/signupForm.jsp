@@ -40,7 +40,7 @@
   			text-align: center;
   		}
   		
-  		.id-check {
+  		#idCheck {
   			display:block;
   			border : 1px solid #DADADA;
   			height: 26px;
@@ -54,7 +54,7 @@
   			padding: inherit;
   		}
   		
-  		.signup-btn {
+  		.signupBtn {
   			border : 1px solid #BEB4AF;
   			width : 200px;
   			color : white;
@@ -62,7 +62,7 @@
   			border : 0px;
   		}
   		
-  		.signup-btn:hover {
+  		.signupBtn:hover {
 			color : white;
   			background-color : #BEB4AF;
   			border : 0px;
@@ -81,46 +81,53 @@
 					<li class="step">STEP4. 가입완료</li>
 				</ul>
 			</section>
-			<form method="post" action="memberInst">
+			<form method="post" action="memberInst" id="signupForm">
 				<section class="d-flex justify-content-center input-box">
 					<table class="table">
 						<caption>회원정보를 입력해주세요.</caption>
 						<tr>
 							<th class="col-5">이름</th>
-							<td><input type="text" class="text-input" name="name"></td>
+							<td><input type="text" class="text-input" name="name" id="name" autocomplete="off"></td>
 						</tr>
 						<tr>
 							<th>생년월일</th>
-							<td><input type="text" class="text-input" placeholder="YYYYMMDD" name="birth"></td>
+							<td><input type="text" class="text-input" placeholder="YYYYMMDD" name="birth" id="birth" autocomplete="off"></td>
 						</tr>
 						<tr>
 							<th>휴대폰 번호</th>
-							<td><input type="text" class="text-input" name="phone"></td>
+							<td><input type="text" class="text-input" name="phone" id="phone" autocomplete="off"></td>
 						</tr>
 						<tr>
 							<th>아이디</th>
 							<td>
 								<div class="d-flex">
-									<input type="text" class="text-input mr-2" name="loginId">
-									<button type="button" class="btn btn-sm id-check">중복확인</button>
+									<input type="text" class="text-input mr-2" name="loginId" id="loginId" autocomplete="off">
+									<button type="button" id="idCheck" class="btn btn-sm">중복확인</button>
 								</div>
+								<small class="text-danger d-none idFail">중복된 아이디 입니다.</small>
+								<small class="text-success d-none idSuccess">사용가능한 아이디 입니다.</small>
 							</td>
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="password" class="text-input" name="password"></td>
+							<td><input type="password" class="text-input" name="password" id="password"></td>
 						</tr>
 						<tr>
 							<th>비밀번호 확인</th>
-							<td><input type="password" class="text-input"></td>
+							<td>
+								<input type="password" class="text-input" id="passwordRe">
+								<small class="text-danger d-none pwFail">비밀번호가 일치하지 않습니다.</small>
+							</td>
+							
 						</tr>
 						<tr>
 							<th>이메일 주소</th>
 							<td>
 								<div class="d-flex">
-									<input type="text" class="text-input col-5" name="email">
+									<input type="text" class="text-input col-5" name="email" id="email" autocomplete="off">
 									<span style="margin : 0 4px 0 4px;">@</span>
-										<select class="text-input col-5" name="domain">
+										<select class="text-input col-5" name="domain" id="domain">
+											<option value="0">선택</option>
 											<c:forEach items="${code }" var="code" varStatus="status">
 												<option value="${code.seq }">${code.ccNameEng }</option>
 											</c:forEach>
@@ -131,14 +138,14 @@
 						<tr>
 							<th>마케팅 활용을 위한 개인정보 수집 이용 안내(선택)</th>
 							<td>
-								<label class="mr-2">동의<input type="radio" class="ml-1" name="agreement"></label>
-								<label>비동의<input type="radio" class="ml-1" name="agreement"></label>
+								<label class="mr-2">동의<input type="radio" class="ml-1" name="marketingAgree" value="1"></label>
+								<label>비동의<input type="radio" class="ml-1" name="marketingAgree" value="0"></label>
 							</td>
 						</tr>
 					</table>
 				</section>
 				<section class="d-flex justify-content-center">
-					<button type="submit" class="btn signup-btn">회원가입</button>
+					<button type="submit" class="btn signupBtn">회원가입</button>
 				</section>
 			</form>
 		</div>
@@ -146,6 +153,113 @@
 	
 	<script>
 		$(document).ready(function(){
+			//체크안함 
+			var isIdCheck = false;
+			//중복
+			var isIdDuplicate = true;
+
+			$("#signupForm").on("submit", function(e){
+				e.preventDefault();
+				
+				var name = $("#name").val().trim();
+				var birth = $("#birth").val().trim();
+				var phone = $("#phone").val().trim();
+				var loginId = $("#loginId").val().trim();
+				var password = $("#password").val().trim();
+				var passwordRe = $("#passwordRe").val().trim();
+				var email = $("#email").val().trim();
+				var domain = $("#domain").val().trim();
+				
+				if(name == null || name == "") {
+					alert("이름을 입력하세요");
+					$("#name").focus();
+					
+					return false;
+				}
+				
+				if(birth == null || birth == "") {
+					alert("생년월일을 입력하세요");
+					$("#birth").focus();
+					
+					return false;
+				}
+				
+				if(phone == null || phone == "") {
+					alert("휴대폰 번호를 입력하세요");
+					$("#phone").focus();
+					
+					return false;
+				}
+				
+				if(loginId == null || loginId == "") {
+					alert("아이디를 입력하세요");
+					$("#loginId").focus();
+					
+					return false;
+				}
+				
+				if(isIdCheck == false) {
+					alert("아이디 중복체크를 해주세요.");
+					return;
+				}
+				
+				if(password == null || password == "") {
+					alert("비밀번호를 입력하세요");
+					$("#password").focus();
+					
+					return false;
+				}
+				
+				if(password != passwordRe) {
+					$(".pwFail").removeClass("d-none");
+					
+					return false;
+				} 
+				
+				if(email == null || email == "" || domain == 0) {
+					alert("이메일을 입력하세요");
+					$("#email").focus();
+					
+					return false;
+				}
+				
+				return false;
+				
+			});
+			
+			$("#idCheck").on("click", function(){
+				var loginId = $("#loginId").val().trim();
+				
+				if(loginId == null || loginId == "") {
+					alert("아이디를 입력하세요");
+					$("#loginId").focus();
+					
+					return false;
+				}
+				
+				$.ajax({
+					type:"get"
+					, url:"idCheck"
+					, data:{"loginId":loginId}
+					, success:function(data) {
+						isIdCheck = true;
+						
+						if(data.duplication) {
+							isIdDuplicate = true;
+							$(".idFail").removeClass("d-none");
+							$(".idSuccess").addClass("d-none");
+						} else {
+							isIdDuplicate = false;
+							$(".idSuccess").removeClass("d-none");
+							$(".idFail").addClass("d-none");
+						}
+					}
+					, error:function(e){
+						alert("에러")
+					}
+				});
+				
+			});
 		});
 	</script>
 </body>

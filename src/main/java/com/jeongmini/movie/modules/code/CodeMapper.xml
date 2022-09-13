@@ -69,7 +69,32 @@
 		<selectKey resultType="int" keyProperty="seq" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
-		
 	</insert>
+	
+	<update id="update">
+		UPDATE 
+			commonCode a
+		SET 
+			a.cgName = #{cgName}
+			, a.cgNameEng = #{cgNameEng}
+			, a.useNy = #{useNy}
+			, a.delNy = #{delNy}
+			, a.updatedAt = now() 
+		WHERE seq = #{seq};
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM commonCode
+		WHERE seq = #{seq};
+	</delete>
+	
+	<update id="uelete">
+		UPDATE
+			commonCode a
+		SET
+			a.delNy = 1
+		WHERE
+			a.seq = #{seq}
+	</update>
 
 </mapper>	

@@ -14,7 +14,7 @@
 			<c:choose>
 				<c:when test="${not empty loginId}" >
 					<a href="#" class="mr-3 userName">${name } 님</a>
-					<a href="#" class="logout">로그아웃</a>
+					<a href="member/logout" class="logout">로그아웃</a>
 				</c:when>
 				<c:otherwise>
 					<a href="#" class="mr-3 login" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</a>
