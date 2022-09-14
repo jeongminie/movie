@@ -5,6 +5,7 @@ import java.util.Date;
 public class CodeGroup {
 	//DTO
 	
+	private Integer seq;
 	private Integer cgSeq;
 	private Integer userSeq;
 	private String cgName;
@@ -15,6 +16,12 @@ public class CodeGroup {
 	private Date updatedAt;
 	private Integer cnt;
 
+	public Integer getSeq() {
+		return seq;
+	}
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
 	public Integer getCnt() {
 		return cnt;
 	}

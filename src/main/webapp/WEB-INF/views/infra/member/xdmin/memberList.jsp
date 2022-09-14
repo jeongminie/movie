@@ -153,7 +153,7 @@
 											</c:choose>
 										</td>
 										<td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td>
-										<td>${list.email }</td>
+										<td>${list.emailFull }</td>
 										<td>
 											<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
 											<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />

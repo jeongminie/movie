@@ -6,13 +6,34 @@
 <mapper namespace="com.jeongmini.movie.modules.codegroup.CodeGroupMapper">
 
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
-    
-    
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
 			a.*
 			, (SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
+		FROM 
+			codeGroup a
+		WHERE 1=1
+			<choose>
+				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+				<otherwise>AND a.delNy = 0</otherwise>
+			</choose>
+			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
+			<choose>
+				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
+				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+			</choose>
+ 			<choose>
+ 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			</choose>
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="selectBoardCount" resultType="Integer">
+		SELECT
+			count(*) as total
 		FROM 
 			codeGroup a
 		WHERE 1=1
@@ -38,42 +59,44 @@
 		FROM
 			codeGroup a
 		WHERE 1=1
-			AND a.cgSeq = #{cgSeq};
+			AND a.seq = #{seq};
 	</select>
 	
 	<insert id="insert">
 		INSERT INTO codeGroup (
-		    cgName
+			cgSeq
+		    , cgName
 		    , cgNameEng
 		    , delNy
 		    , useNy
 		) VALUES (
-		    #{cgName}
+			#{cgSeq}
+		    , #{cgName}
 		    , #{cgNameEng}
 		    , #{delNy}
 		    , #{useNy}
 		)
-		<selectKey resultType="int" keyProperty="cgSeq" order="AFTER">
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
-		
 	</insert>
 	
 	<update id="update">
 		UPDATE 
 			codeGroup a
 		SET 
-			a.cgName = #{cgName}
+			a.cgSeq = #{cgSeq}
+			, a.cgName = #{cgName}
 			, a.cgNameEng = #{cgNameEng}
 			, a.useNy = #{useNy}
 			, a.delNy = #{delNy}
 			, a.updatedAt = now() 
-		WHERE cgSeq = #{cgSeq};
+		WHERE seq = #{seq};
 	</update>
 	
 	<delete id="delete">
 		DELETE FROM codeGroup
-		WHERE cgSeq = #{cgSeq};
+		WHERE seq = #{seq};
 	</delete>
 	
 	<update id="uelete">
@@ -82,7 +105,7 @@
 		SET
 			a.delNy = 1
 		WHERE
-			a.cgSeq = #{cgSeq}
+			a.seq = #{seq}
 	</update>
 
 </mapper>	

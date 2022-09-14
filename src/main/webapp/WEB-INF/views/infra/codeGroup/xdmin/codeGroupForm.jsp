@@ -86,10 +86,10 @@
 					<h4 class="mt-4">코드그룹 정보를 입력해주세요</h4>
 				</div>
 				<form method="post">
-					<input type="hidden" name="cgSeq" value="${vo.cgSeq }">
+					<input type="hidden" name="seq" value="${vo.seq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
-							<div>코드그룹 코드<input type="text" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgSeq }">value="${item.cgSeq  }"</c:if>></div>
+							<div>코드그룹 코드<input type="text" name="cgSeq" id="cgSeq" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgSeq }">value="${item.cgSeq  }"</c:if>></div>
 							<div>코드그룹 이름 (한글)<input type="text" name="cgName" id="cgName" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgName }">value="${item.cgName  }"</c:if>></div>
 							<div>
 								<span>사용여부</span>
@@ -167,16 +167,24 @@
 			var ueleteurl = "codeGroupUelete";
 			
 			/* var submitType = $("button[type=submit]").val(); //0수정 1등록 */
-			var seq = $("input:hidden[name=cgSeq]").val();
+			var seq = $("input:hidden[name=seq]").val();
 			console.log(seq)
 			
 			$("form").on("submit", function(e){
 				e.preventdefault;
 				
+				var cgSeq = $("#cgSeq").val();
 				var cgName = $("#cgName").val();
 				var cgNameEng = $("#cgNameEng").val();
 				var useNy = $("#useNy").val();
 				var delNy = $("#delNy").val();
+				
+				if(cgSeq == '' || cgSeq == null) {
+					alert("코드그룹 코드를 입력하세요.");
+					$("#cgSeq").focus();
+					
+					return false;
+				}
 				
 				if(cgName == '' || cgName == null) {
 					alert("코드 이름을 입력하세요.");
@@ -196,15 +204,18 @@
 					$("form").attr("action", "/codeGroup/codeGroupInst");
 				} else { //update
 					$("form").attr("action", "/codeGroup/codeGroupUpdate");
+					alert("수정완료");
 				}
 				
 			});
 			
+			/* uelete 버튼 */
 			$("#uelete").on("click", function(){
 				action = "uelete";
 				modal.modal('show');
 			});
 			
+			/* delete 버튼 */
 			$("#delete").on("click", function(){
 				action = "delete"
 				modal.modal('show');
@@ -215,7 +226,7 @@
 					$.ajax({
 						type:"post"
 						, url:ueleteurl
-						, data:{"cgSeq":seq}
+						, data:{"seq":seq}
 						, success:function(data){
 							if(data.result) {
 								alert("삭제 완료");
@@ -227,7 +238,7 @@
 					$.ajax({
 						type:"post"
 						, url:deleteurl
-						, data:{"cgSeq":seq}
+						, data:{"seq":seq}
 						, success:function(data){
 							if(data.result) {
 								alert("삭제 완료");

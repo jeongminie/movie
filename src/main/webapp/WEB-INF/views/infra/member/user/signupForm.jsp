@@ -91,11 +91,11 @@
 						</tr>
 						<tr>
 							<th>생년월일</th>
-							<td><input type="text" class="text-input" placeholder="YYYYMMDD" name="birth" id="birth" autocomplete="off"></td>
+							<td><input type="text" class="text-input" name="birth" id="birth" autocomplete="off" placeholder="YYYYMMDD"></td>
 						</tr>
 						<tr>
 							<th>휴대폰 번호</th>
-							<td><input type="text" class="text-input" name="phone" id="phone" autocomplete="off"></td>
+							<td><input type="text" class="text-input"name="phone" id="phone" autocomplete="off"></td>
 						</tr>
 						<tr>
 							<th>아이디</th>
@@ -115,7 +115,7 @@
 						<tr>
 							<th>비밀번호 확인</th>
 							<td>
-								<input type="password" class="text-input" id="passwordRe">
+								<input type="password" class="text-input" id="passwordRe"><br>
 								<small class="text-danger d-none pwFail">비밀번호가 일치하지 않습니다.</small>
 							</td>
 							
@@ -145,7 +145,7 @@
 					</table>
 				</section>
 				<section class="d-flex justify-content-center">
-					<button type="submit" class="btn signupBtn">회원가입</button>
+					<button type="button" class="btn signupBtn">회원가입</button>
 				</section>
 			</form>
 		</div>
@@ -158,7 +158,7 @@
 			//중복
 			var isIdDuplicate = true;
 
-			$("#signupForm").on("submit", function(e){
+			$(".signupBtn").click(function(e){
 				e.preventDefault();
 				
 				var name = $("#name").val().trim();
@@ -203,6 +203,11 @@
 					return;
 				}
 				
+				if(isIdDuplicate == true) {
+					alert("아이디가 중복되었습니다.");
+					return;
+				}
+				
 				if(password == null || password == "") {
 					alert("비밀번호를 입력하세요");
 					$("#password").focus();
@@ -223,9 +228,9 @@
 					return false;
 				}
 				
-				return false;
+				$("#signupForm").submit();
 				
-			});
+			})
 			
 			$("#idCheck").on("click", function(){
 				var loginId = $("#loginId").val().trim();
@@ -257,10 +262,10 @@
 					, error:function(e){
 						alert("에러")
 					}
-				});
+				})
 				
-			});
-		});
+			})
+		})
 	</script>
 </body>
 </html>

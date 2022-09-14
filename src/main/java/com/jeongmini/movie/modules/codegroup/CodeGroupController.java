@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeongmini.movie.common.util.Criteria;
+import com.jeongmini.movie.common.util.PageMaker;
+
 @Controller
 @RequestMapping(value="/codeGroup/")
 public class CodeGroupController {
@@ -19,17 +22,22 @@ public class CodeGroupController {
 	CodeGroupServiceImpl service;
 	
 	@RequestMapping(value="codeGroupList")
-	public String codeGroupList(Model model, CodeGroupVo vo) throws Exception {
-		
+	public String codeGroupList(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
 		List<CodeGroup> list = service.selectList(vo);
-		model.addAttribute("list", list); //list에 담아서 jsp에 전달
 		
-		System.out.println("vo.getShOption()" + vo.getShOption());
-		System.out.println("vo.getShValue()" + vo.getShValue());
-		System.out.println("vo.getShDelNy()" + vo.getShDelNy());
-		System.out.println("vo.getShDate()" + vo.getShDate());
-		System.out.println(vo.getShStartDate());
-		System.out.println(vo.getShEndDate());
+		PageMaker pageMaker = new PageMaker();
+
+		int total = service.selectBoardCount(vo);
+		
+		pageMaker.setCodeGroupVo(vo);
+		pageMaker.setTotalCount(total);
+		
+		model.addAttribute("list", list); //list에 담아서 jsp에 전달
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("total", total);
+		
+		System.out.println(pageMaker.getStartPage());
+		System.out.println(pageMaker.getEndPage());
 		
 		return "infra/codeGroup/xdmin/codeGroupList";
 		
@@ -40,7 +48,7 @@ public class CodeGroupController {
 		CodeGroup codeGroup = service.selectOne(vo);
 		model.addAttribute("item", codeGroup);
 		
-		System.out.println("vo.getCgSeq : " + vo.getCgSeq());
+		System.out.println("vo.getSeq : " + vo.getSeq());
 		
 		return "infra/codeGroup/xdmin/codeGroupForm";
 	}
@@ -65,11 +73,11 @@ public class CodeGroupController {
 		
 		System.out.println("update 성공 : " + result);
 		
-		return "redirect:/codeGroup/codeGroupList";
+		return "redirect:/codeGroup/codeGroupForm?seq="+dto.getSeq();
 	}
 	
 	@RequestMapping(value="codeGroupDelete")
-	@ResponseBody 
+	@ResponseBody
 	public Map<String, Boolean> codeGroupDelete(CodeGroupVo vo) throws Exception {
 		Map<String, Boolean> result = new HashMap<>(); 
 		

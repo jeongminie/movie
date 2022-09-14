@@ -58,13 +58,18 @@ public class MemberController {
 	public String memberInst(Member dto) throws Exception {
 		
 		int result = service.insert(dto);
-		System.out.println("insert 성공 : " + result);
 		
+		if(result == 0) {
+			System.out.println("insert 실패 : " + result);
+		} else {
+			System.out.println("insert 성공 : " + result);
+		}
+
 		return "redirect:/member/signupCompleted"; 
 	}
 	
 	@RequestMapping(value="login")
-	public String login(Model model, Member dto, HttpServletRequest request) throws Exception {
+	public String login(Member dto, Model model, HttpServletRequest request) throws Exception {
 		Member member = service.login(dto);
 		
 		if(member != null) {
@@ -75,7 +80,7 @@ public class MemberController {
 			session.setAttribute("loginId", member.getLoginId());
 			session.setAttribute("name", member.getName());
 		} else {
-			logger.info("로그인 실패 " );
+			logger.info("로그인 실패 ");
 		}
 		
 		return "redirect:/";

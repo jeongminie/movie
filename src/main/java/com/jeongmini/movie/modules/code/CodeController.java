@@ -39,7 +39,7 @@ public class CodeController {
 	
 	@RequestMapping(value="codeRegForm")
 	public String codeGroupRegView(Model model, CodeGroupVo vo) throws Exception {
-		List<CodeGroup> list = codeGroupServiceImpl.selectList(vo);
+		List<CodeGroup> list = codeGroupServiceImpl.selectList();
 		model.addAttribute("list", list);
 		
 		return "infra/code/xdmin/codeRegForm";

@@ -63,11 +63,11 @@
 								</select>
 								<select id="shDate" name="shDate" class="form-select text-input">
 									<option value="0">날짜구분</option>
-									<option value="1">등록일</option>
-									<option value="2">수정일</option>
+									<option value="1" <c:if test="${vo.shDate eq 1 }">selected</c:if>>등록일</option>
+									<option value="2" <c:if test="${vo.shDate eq 2 }">selected</c:if>>수정일</option>
 								</select>
-								<input type="text" name="shStartDate" class="form-control text-input" placeholder="시작일" id="startDate">
-								<input type="text" name="shEndDate" class="form-control text-input" placeholder="종료일" id="endDate">
+								<input type="text" name="shStartDate" class="form-control text-input" placeholder="시작일" id="startDate" value="<c:out value="${vo.shStartDate }"/>">
+								<input type="text" name="shEndDate" class="form-control text-input" placeholder="종료일" id="endDate" value="<c:out value="${vo.shEndDate }"/>">
 							</div>
 							<div class="d-flex">
 								<select id="shOption" name="shOption" class="form-select text-input">
@@ -76,7 +76,7 @@
 									<option value="2" <c:if test="${vo.shOption eq 2 }">selected</c:if>>코드그룹 이름(한글)</option>
 									<option value="3" <c:if test="${vo.shOption eq 3 }">selected</c:if>>코드그룹 이름(영문)</option>
 								</select>
-								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.value }"/>">
+								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.shValue }"/>">
 								<!-- <input type="submit" class="btn searchBtn"> -->
 								<button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
@@ -87,7 +87,7 @@
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
 								<span class="p-2">검색 결과 : N</span>
-								<span class="p-2 totalCount">Total : N</span>
+								<span class="p-2 totalCount">Total : ${total }</span>
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
@@ -116,8 +116,8 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="codeGroupView" onclick="location.href='codeGroupForm?cgSeq=${list.cgSeq}'">
-												<th scope="col"><input type="checkbox" class="chk"></th>
+											<tr class="codeGroupView" onclick="location.href='codeGroupForm?seq=${list.seq}'">
+												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.cgSeq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
 												<td>${list.cgName }</td>
@@ -133,9 +133,21 @@
 						</table>
 						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
 							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<c:if test="${pageMaker.prev }">
+									<li class="page-item">
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.startPage-1 }' />">시작</a>
+									</li>
+								</c:if>
+								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
+									<li class="page-item">
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageNum}'/>">${pageNum}</a>
+									</li>
+								</c:forEach>
+								<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+									<li class="page-item">
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.endPage+1 }' />">다음</a>
+									</li>
+								</c:if>
 							</ul>
 						</nav>
 						<div class="d-flex justify-content-end">				
@@ -163,7 +175,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-						<button type="button" class="btn deleteBtn modalDeleteBtn">삭제</button>
+						<button type="button" class="btn deleteBtn modalDeleteBtn" id="cgDeleteBtn">삭제</button>
 					</div>
 				</div>
 			</div>
@@ -192,12 +204,12 @@
 		
 		$(document).ready(function(){
 			
- 			var tableRow = document.getElementsByTagName('tr');
+ 			/* var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
 			
 			var totalCount = document.getElementsByClassName('totalCount');
-			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>';
+			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>'; */
 			
 			/* $(".searchBtn").on("click", function(){
 				var shDate = $("#shDate option:selected").val()
@@ -237,24 +249,34 @@
 			});
 			
 			$(".chk").on("click", function(e){
-				//event.cancelBubble=true;
 				e.stopPropagation();
+				
+				var chkSeq = $(this).data("cg-seq");
+				$("#cgDeleteBtn").data("cg-seq", chkSeq);
 			});
 			
 			$(".createBtn").on("click", function(){
 				location.href = 'codeGroupForm';
 			});
 			
-			$(".deleteBtn").on("click", function(e){
-				var chkValue = $(this).data("chk-id");
-				console.log(chkValue);
+			$(".resetBtn").on("click", function(){
+				location.href="codeGroupList";
+			});
+			
+			$("#cgDeleteBtn").on("click", function(e){
+				var chkSeq = $(this).data("cg-seq");
 				
-				/* var chkValue = $(".chk").is(":checked");
-				console.log(chkValue); */
-				
-				if(chkValue == false) {
-					alert("hi")
-				}
+				$.ajax({
+					type:"post"
+					, url:"codeGroupDelete"
+					, data:{"cgSeq":chkSeq}
+					, success:function(data){
+						if(data.result) {
+							alert("삭제 완료");
+							location.href="codeGroupList";
+						}
+					}
+				});
 			});
 		});
 	</script>
