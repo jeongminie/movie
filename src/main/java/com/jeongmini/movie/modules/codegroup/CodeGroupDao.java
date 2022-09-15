@@ -33,6 +33,10 @@ public class CodeGroupDao {
 		return (Integer) sqlSession.selectOne(namespace + ".selectBoardCount", vo);
 	}
 	
+	public int selectBoardTotalCount(CodeGroupVo vo) {
+		return (Integer) sqlSession.selectOne(namespace + ".selectBoardTotalCount", vo);
+	}
+	
 	public CodeGroup selectOne(CodeGroupVo vo) {
 		CodeGroup codeGroup = sqlSession.selectOne(namespace + ".selectOne", vo);
 		

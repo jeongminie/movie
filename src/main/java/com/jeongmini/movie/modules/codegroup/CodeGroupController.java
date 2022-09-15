@@ -27,17 +27,25 @@ public class CodeGroupController {
 		
 		PageMaker pageMaker = new PageMaker();
 
-		int total = service.selectBoardCount(vo);
+		int shTotal = service.selectBoardCount(vo);
+		int total = service.selectBoardTotalCount(vo);
 		
 		pageMaker.setCodeGroupVo(vo);
-		pageMaker.setTotalCount(total);
+		pageMaker.setTotalCount(shTotal);
+//		pageMaker.setShPageNum(vo.getShPageNum());
 		
 		model.addAttribute("list", list); //list에 담아서 jsp에 전달
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("shTotal", shTotal);
 		model.addAttribute("total", total);
 		
-		System.out.println(pageMaker.getStartPage());
-		System.out.println(pageMaker.getEndPage());
+		System.out.println("vo.getNowPage()" + vo.getNowPage());
+		System.out.println("vo.getPageStart()" + vo.getPageStart());
+		System.out.println("vo.getPerPageNum()" + vo.getPerPageNum());
+		System.out.println("ShPageNum : " + vo.getShPageNum());
+		System.out.println("pageMaker.getStartPage()" + pageMaker.getStartPage());
+		System.out.println("pageMaker.getEndPage()" + pageMaker.getEndPage());
+		System.out.println("pageMaker.getTatalCount()" + pageMaker.getTatalCount());
 		
 		return "infra/codeGroup/xdmin/codeGroupList";
 		

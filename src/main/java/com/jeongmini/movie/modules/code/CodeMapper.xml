@@ -6,6 +6,23 @@
 <mapper namespace="com.jeongmini.movie.modules.code.CodeMapper">
 
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.code.Code"></resultMap>
+    
+    <sql id="where">
+		<choose>
+			<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+			<otherwise>AND a.delNy = 0</otherwise>
+		</choose>
+		<if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if> 
+		<choose>
+			<when test="shOption == 1">AND seq = #{shValue}</when>
+			<when test="shOption == 2">AND ccName LIKE CONCAT('%',#{shValue},'%')</when>
+			<when test="shOption == 3">AND ccNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>
+		<choose>
+				<when test="shDate == 1">AND date(a.createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			<when test="shDate == 2">AND date(a.updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+		</choose>
+	</sql>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
@@ -24,20 +41,16 @@
 			codeGroup b
 		WHERE 1=1
 			AND a.cgSeq = b.cgSeq
-			<choose>
-				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
-				<otherwise>AND a.delNy = 0</otherwise>
-			</choose>
-			<if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if> 
-			<choose>
-				<when test="shOption == 1">AND seq = #{shValue}</when>
-				<when test="shOption == 2">AND ccName LIKE CONCAT('%',#{shValue},'%')</when>
-				<when test="shOption == 3">AND ccNameEng LIKE CONCAT('%',#{shValue},'%')</when>
-			</choose>
-			<choose>
- 				<when test="shDate == 1">AND date(a.createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-				<when test="shDate == 2">AND date(a.updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-			</choose>
+		<include refid="where" />
+		ORDER BY seq DESC
+		limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM commonCode a 
+		WHERE 1=1
+		<include refid="where" />
 	</select>
 	
 	<select id="emailSelectList" resultMap="resultMapObj">

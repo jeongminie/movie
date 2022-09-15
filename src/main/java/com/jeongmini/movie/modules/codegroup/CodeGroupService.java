@@ -11,6 +11,7 @@ public interface CodeGroupService {
 	public List<CodeGroup> selectList() throws Exception;
 	
 	public int selectBoardCount(CodeGroupVo vo) throws Exception;
+	public int selectBoardTotalCount(CodeGroupVo vo) throws Exception;
 	
 	public CodeGroup selectOne(CodeGroupVo vo) throws Exception;
 	

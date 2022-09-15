@@ -30,6 +30,12 @@ public class PageMaker {
 		calc();
 	}
 	
+	public void setShPageNum(int shPageNum) {
+		codeGroupVo.setPerPageNum(shPageNum);
+		
+		System.out.println("pageMaker : " + shPageNum);
+	}
+	
 	//페이징의 버튼들을 생성하는 계산식. 끝 페이지 번호, 시작 페이지 번호, 이전, 다음 버튼들을 구한다.
 	public void calc() {
 		endPage = (int) (Math.ceil(codeGroupVo.getNowPage() / (double) displayPageNum) * displayPageNum);
@@ -38,6 +44,7 @@ public class PageMaker {
 		if(startPage <= 0 ) startPage = 1;
 		
 		int tempEndPage = (int) (Math.ceil(totalCount / (double) codeGroupVo.getPerPageNum()));
+		System.out.println("----------------" + tempEndPage + "---------------");
 		if(endPage > tempEndPage) endPage = tempEndPage;
 		
 		prev = startPage == 1 ? false : true;

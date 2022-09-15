@@ -45,13 +45,25 @@
 		.page-link:hover {
 			color : black;
 		}
+		
+		#shPageNum {
+			width : 15px;
+			height: 36px;
+  			margin-right: 10px;
+  			padding-left: 10px;
+    		width: 68px;
+		}
+		
+		.fa-circle-plus {
+			margin-top: 6px;
+		}
 	</style>
 	
 </head>
 <body>
 	<div id="wrap">
 		<div>
-			<jsp:include page="../../../include/jsp/menu.jsp" />
+			<%@include file="../../../include/jsp/menu.jsp" %>
  					<span class="m-4"><b>코드그룹 관리</b></span>
  					<form method="post" action="/codeGroup/codeGroupList" autocomplete="off">
 						<div id="searchSection">
@@ -82,14 +94,18 @@
 								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
 							</div>
 						</div>
-					</form>
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
-								<span class="p-2">검색 결과 : N</span>
+								<span class="p-2">검색 결과 : ${shTotal }</span>
 								<span class="p-2 totalCount">Total : ${total }</span>
 							</div>
-							<div>
+							<div class="d-flex">
+								<select name="shPageNum" id="shPageNum" class="form-select">
+									<option value="5" <c:if test="${vo.shPageNum eq 5 }">selected</c:if>>5</option>
+									<option value="10" <c:if test="${vo.shPageNum eq 10 }">selected</c:if>>10</option>
+									<option value="15" <c:if test="${vo.shPageNum eq 15 }">selected</c:if>>15</option>
+								</select>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
 								<a href="#" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
@@ -117,7 +133,7 @@
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr class="codeGroupView" onclick="location.href='codeGroupForm?seq=${list.seq}'">
-												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.cgSeq }"></th>
+												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
 												<td>${list.cgName }</td>
@@ -135,17 +151,17 @@
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev }">
 									<li class="page-item">
-										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.startPage-1 }' />">시작</a>
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.startPage-1 }&shPageNum=${vo.shPageNum }' />">이전</a>
 									</li>
 								</c:if>
 								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
 									<li class="page-item">
-										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageNum}'/>">${pageNum}</a>
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageNum}&shPageNum=${vo.shPageNum }'/>">${pageNum}</a>
 									</li>
 								</c:forEach>
 								<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
 									<li class="page-item">
-										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.endPage+1 }' />">다음</a>
+										<a class="page-link" href="<c:url value='codeGroupList?nowPage=${pageMaker.endPage+1 }&shPageNum=${vo.shPageNum }' />">다음</a>
 									</li>
 								</c:if>
 							</ul>
@@ -157,6 +173,7 @@
 							</div>
 						</div>
 					</div>
+					</form>
 				</section>
 			</section>
 		</div>
@@ -204,7 +221,11 @@
 		
 		$(document).ready(function(){
 			
- 			/* var tableRow = document.getElementsByTagName('tr');
+			$("#shPageNum").on("change", function(){
+				$("form").submit();
+			});
+
+			/* var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
 			
@@ -265,11 +286,11 @@
 			
 			$("#cgDeleteBtn").on("click", function(e){
 				var chkSeq = $(this).data("cg-seq");
-				
+				alert(chkSeq)
 				$.ajax({
 					type:"post"
 					, url:"codeGroupDelete"
-					, data:{"cgSeq":chkSeq}
+					, data:{"seq":chkSeq}
 					, success:function(data){
 						if(data.result) {
 							alert("삭제 완료");

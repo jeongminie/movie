@@ -11,6 +11,8 @@ public class CodeGroupVo {
 	private Integer seq;
 	private Integer cgSeq;
 	private Integer total;
+	private Integer shTotal;
+	private int shPageNum;
 	
 	public Integer getShOption() {
 		return shOption;
@@ -66,20 +68,34 @@ public class CodeGroupVo {
 	public void setTotal(Integer total) {
 		this.total = total;
 	}
+	public int getShPageNum() {
+		return shPageNum;
+	}
+	public void setShPageNum(int shPageNum) {
+		this.shPageNum = shPageNum;
+	}
+	public Integer getShTotal() {
+		return shTotal;
+	}
+	public void setShTotal(Integer shTotal) {
+		this.shTotal = shTotal;
+	}
 
 
 	//페이징
 	private int nowPage;
 	private int perPageNum; //한 페이지당 보여지는 게시글 수
 	
+	
 	public int getPageStart() {
 		//       p2-1=1*10개 10행 부터 시작
-		return (this.nowPage-1)*perPageNum;
+		return (this.nowPage-1)*shPageNum;
 	}
 	
 	CodeGroupVo() {
+		this.shPageNum = 5;
 		this.nowPage = 1;
-		this.perPageNum = 10;
+		this.perPageNum = this.shPageNum;
 	}
 
 	public int getNowPage() {
@@ -98,15 +114,20 @@ public class CodeGroupVo {
 	public int getPerPageNum() {
 		return perPageNum;
 	}
+	public void setPerPageNum(int perPageNum) {
+		this.perPageNum = perPageNum;
+	}
 	
 	//페이지당 보여줄 게시글 수가 변하지 않게 설정.
-	public void setPerPageNum(int pageCount) {
-		int cnt = this.perPageNum;
-		if(pageCount != cnt) {
-			this.perPageNum = cnt;
-		} else {
-			this.perPageNum = pageCount;
-		}
-	}
+//	public void setPerPageNum(int pageCount) {
+//		int cnt = this.perPageNum;
+//		if(pageCount != cnt) {
+//			this.perPageNum = cnt;
+//		} else {
+//			this.perPageNum = pageCount;
+//		}
+//	}
+	
+	
 	
 }

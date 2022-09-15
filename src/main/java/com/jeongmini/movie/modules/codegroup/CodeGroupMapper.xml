@@ -4,8 +4,26 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jeongmini.movie.modules.codegroup.CodeGroupMapper">
-
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.codegroup.CodeGroup"></resultMap>
+    
+    <sql id="where">
+		WHERE 1=1
+			<choose>
+				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+				<otherwise>AND a.delNy = 0</otherwise>
+			</choose>
+			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
+			<choose>
+				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
+				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+			</choose>
+ 			<choose>
+ 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			</choose>
+		ORDER BY seq DESC
+	</sql>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
@@ -13,44 +31,26 @@
 			, (SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
 		FROM 
 			codeGroup a
-		WHERE 1=1
-			<choose>
-				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
-				<otherwise>AND a.delNy = 0</otherwise>
-			</choose>
-			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
-			<choose>
-				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
-				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
-				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
-			</choose>
- 			<choose>
- 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-			</choose>
-		LIMIT #{pageStart}, #{perPageNum}
+		<include refid="where"></include>	
+		LIMIT #{pageStart}, #{shPageNum}
 	</select>
 	
 	<select id="selectBoardCount" resultType="Integer">
+		SELECT
+			count(*) as shTotal
+		FROM 
+			codeGroup a
+		<include refid="where"></include>
+	</select>
+	
+	<select id="selectBoardTotalCount" resultType="Integer">
 		SELECT
 			count(*) as total
 		FROM 
 			codeGroup a
 		WHERE 1=1
-			<choose>
-				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
-				<otherwise>AND a.delNy = 0</otherwise>
-			</choose>
-			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
-			<choose>
-				<when test="shOption == 1">AND cgSeq = #{shValue}</when>
-				<when test="shOption == 2">AND cgName LIKE CONCAT('%',#{shValue},'%')</when>
-				<when test="shOption == 3">AND cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
-			</choose>
- 			<choose>
- 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
-			</choose>
+			AND a.delNy = 0
+		
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

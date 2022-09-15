@@ -21,6 +21,8 @@ public class CodeGroupServiceImpl implements CodeGroupService {
 	
 	@Override
 	public List<CodeGroup> selectList(CodeGroupVo vo) throws Exception {
+		vo.setPerPageNum(vo.getShPageNum());
+		
 		List<CodeGroup> list = dao.selectList(vo);
 		return list;
 	}
@@ -34,6 +36,11 @@ public class CodeGroupServiceImpl implements CodeGroupService {
 	@Override
 	public int selectBoardCount(CodeGroupVo vo) throws Exception {
 		return dao.selectBoardCount(vo);
+	}
+	
+	@Override
+	public int selectBoardTotalCount(CodeGroupVo vo) throws Exception {
+		return dao.selectBoardTotalCount(vo);
 	}
 	
 	@Override

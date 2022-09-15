@@ -56,7 +56,7 @@
 		<div>
 			<jsp:include page="../../../include/jsp/menu.jsp" />				
  					<span class="m-4"><b>코드 관리</b></span>
- 					<form method="post" action="/code/codeList" autocomplete="off">
+ 					<form method="post" action="/code/codeList" autocomplete="off" id="form">
 						<div id="searchSection">
 							<div class="d-flex">
 								<select id="shDelNy" name="shDelNy" class="form-select text-input">
@@ -85,12 +85,10 @@
 								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
 							</div>
 						</div>
-					</form>
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
-								<span class="p-2">검색 결과 : N</span>
-								<span class="p-2 totalCount">Total : N</span>
+								<span class="p-2"><c:out value="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + status.index) }"/></span>
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
@@ -145,13 +143,9 @@
 								</c:choose>
 							</tbody>
 						</table>
-						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
-							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-							</ul>
-						</nav>
+						<!-- pagination s -->
+						<%@include file="../../../include/jsp/pagination.jsp"%>
+						<!-- pagination e -->
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -159,6 +153,9 @@
 							</div>
 						</div>
 					</div>
+					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage }" default="1"/>">
+					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow }"/>">
+				</form>
 				</section>
 			</section>
 		</div>
@@ -182,8 +179,17 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- form -->
+
 	
 	<script>
+		goList = function(thisPage) {
+			$("input:hidden[name=thisPage]").val(thisPage);
+			$("#form").submit();
+		}
+	
+	
 		$(document).ready(function(){
 			var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
