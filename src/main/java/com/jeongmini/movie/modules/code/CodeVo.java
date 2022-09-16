@@ -12,6 +12,7 @@ public class CodeVo {
 	private Integer shDate;
 	private String shStartDate;
 	private String shEndDate;
+	private Integer seq;
 	
 	public Integer getShOption() {
 		return shOption;
@@ -49,7 +50,14 @@ public class CodeVo {
 	public void setShEndDate(String shEndDate) {
 		this.shEndDate = shEndDate;
 	}
-	
+	public Integer getSeq() {
+		return seq;
+	}
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
+
+
 	//	paging
 	private int thisPage = 1;									// 현재 페이지
 	private int rowNumToShow = Constants.ROW_NUM_TO_SHOW;		// 화면에 보여줄 데이터 줄 갯수

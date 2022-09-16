@@ -6,7 +6,7 @@ public class CodeGroup {
 	//DTO
 	
 	private Integer seq;
-	private Integer cgSeq;
+	private String cgSeq;
 	private Integer userSeq;
 	private String cgName;
 	private String cgNameEng;
@@ -28,10 +28,10 @@ public class CodeGroup {
 	public void setCnt(Integer cnt) {
 		this.cnt = cnt;
 	}
-	public Integer getCgSeq() {
+	public String getCgSeq() {
 		return cgSeq;
 	}
-	public void setCgSeq(Integer cgSeq) {
+	public void setCgSeq(String cgSeq) {
 		this.cgSeq = cgSeq;
 	}
 	public Integer getUserSeq() {

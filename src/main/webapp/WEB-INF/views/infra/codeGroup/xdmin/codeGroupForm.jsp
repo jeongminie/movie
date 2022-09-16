@@ -85,7 +85,7 @@
 					<span>STEP2.등록완료</span>
 					<h4 class="mt-4">코드그룹 정보를 입력해주세요</h4>
 				</div>
-				<form method="post">
+				<form method="post" name="form" id="form">
 					<input type="hidden" name="seq" value="${vo.seq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
@@ -119,6 +119,8 @@
 							<div style="margin-top:85px">예비2 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 						</div>
 					</div>
+					<%@include file="codeGroupVo.jsp"%>
+				</form>
 					<div class="d-flex justify-content-between" style="padding-bottom: 10px;">
 						<button type="button" class="btn prevBtn">이전</button>
 						<c:choose>
@@ -130,12 +132,11 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<button type="submit" class="btn createBtn">등록</button>
+								<button type="button" class="btn createBtn" id="createBtn">등록</button>
 							</c:otherwise>
 						</c:choose>
 						<!-- <button type="submit" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
 					</div>
-				</form>
 			</section>
 		</section>
 	</div>
@@ -158,6 +159,11 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- form -->
+	<form method="post" name="formVo" id="formVo">
+		<%@include file="codeGroupVo.jsp"%>
+	</form>
 		
 	<script>
 		$(document).ready(function(){
@@ -166,12 +172,14 @@
 			var deleteurl = "codeGroupDelete";
 			var ueleteurl = "codeGroupUelete";
 			
+			var form = $("form[name=form]");
+			var formVo = $("form[name=formVo]");
+			
 			/* var submitType = $("button[type=submit]").val(); //0수정 1등록 */
 			var seq = $("input:hidden[name=seq]").val();
 			console.log(seq)
 			
-			$("form").on("submit", function(e){
-				e.preventdefault;
+			$("#createBtn").on("click", function(){
 				
 				var cgSeq = $("#cgSeq").val();
 				var cgName = $("#cgName").val();
@@ -201,9 +209,10 @@
 				}
 				
 				if(seq == 0 || seq == "") { //insert
-					$("form").attr("action", "/codeGroup/codeGroupInst");
+					form.attr("action", "/codeGroup/codeGroupInst").submit();
+					alert("저장완료");
 				} else { //update
-					$("form").attr("action", "/codeGroup/codeGroupUpdate");
+					form.attr("action", "/codeGroup/codeGroupUpdate").submit();
 					alert("수정완료");
 				}
 				
@@ -264,7 +273,7 @@
 			});
 			
 			$(".prevBtn").click(function(){
-				location.href="codeGroupList";
+				formVo.attr("action", "/codeGroup/codeGroupList").submit();
 			});
 		});
 	</script>

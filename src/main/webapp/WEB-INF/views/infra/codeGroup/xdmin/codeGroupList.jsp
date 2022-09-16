@@ -65,7 +65,7 @@
 		<div>
 			<%@include file="../../../include/jsp/menu.jsp" %>
  					<span class="m-4"><b>코드그룹 관리</b></span>
- 					<form method="post" action="/codeGroup/codeGroupList" autocomplete="off">
+ 					<form method="post" action="/codeGroup/codeGroupList">
 						<div id="searchSection">
 							<div class="d-flex">
 								<select id="shDelNy" name="shDelNy" class="form-select text-input">
@@ -225,13 +225,6 @@
 				$("form").submit();
 			});
 
-			/* var tableRow = document.getElementsByTagName('tr');
-			tableRowCount = tableRow.length -1;
-			console.log(tableRowCount);
-			
-			var totalCount = document.getElementsByClassName('totalCount');
-			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>'; */
-			
 			/* $(".searchBtn").on("click", function(){
 				var shDate = $("#shDate option:selected").val()
 				var startDate = $("#startDate").val();

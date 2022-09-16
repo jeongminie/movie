@@ -46,6 +46,15 @@
 		limit #{rowNumToShow} offset #{startRnumForMysql}
 	</select>
 	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			a.*
+		FROM
+			commonCode a
+		WHERE 1=1
+			AND a.seq = #{seq};
+	</select>
+	
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM commonCode a 

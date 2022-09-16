@@ -56,18 +56,21 @@
 		<div>
 			<jsp:include page="../../../include/jsp/menu.jsp" />				
  					<span class="m-4"><b>코드 관리</b></span>
- 					<form method="post" action="/code/codeList" autocomplete="off" id="form">
+ 					<form method="post" id="form" name="form">
+ 					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
+					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow}"/>">
+					<input type="hidden" name="seq" value="<c:out value="${vo.seq}"/>"/>
 						<div id="searchSection">
 							<div class="d-flex">
 								<select id="shDelNy" name="shDelNy" class="form-select text-input">
 									<option value="">삭제여부</option>
-									<option value="0">N</option>
-									<option value="1">Y</option>
+									<option value="0" <c:if test="${vo.shDelNy eq 0 }">selected</c:if>>N</option>
+									<option value="1" <c:if test="${vo.shDelNy eq 1 }">selected</c:if>>Y</option>
 								</select>
 								<select id="shDate" name="shDate" class="form-select text-input">
 									<option value="0">날짜구분</option>
-									<option value="1">등록일</option>
-									<option value="2">수정일</option>
+									<option value="1" <c:if test="${vo.shDate eq 1 }">selected</c:if>>등록일</option>
+									<option value="2" <c:if test="${vo.shDate eq 2 }">selected</c:if>>수정일</option>
 								</select>
 								<input type="text" name="shStartDate" class="form-control text-input" placeholder="시작일" id="startDate">
 								<input type="text" name="shEndDate" class="form-control text-input" placeholder="종료일" id="endDate">
@@ -75,11 +78,11 @@
 							<div class="d-flex">
 								<select id="shOption" name="shOption" class="form-select text-input" data-selected="${vo.shOption }">
 									<option value="0">검색구분</option>
-									<option value="1">코드</option>
-									<option value="2">코드 이름(한글)</option>
-									<option value="3">코드 이름(영문)</option>
+									<option value="1" <c:if test="${vo.shOption eq 1 }">selected</c:if>>코드</option>
+									<option value="2" <c:if test="${vo.shOption eq 2 }">selected</c:if>>코드 이름(한글)</option>
+									<option value="3" <c:if test="${vo.shOption eq 3 }">selected</c:if>>코드 이름(영문)</option>
 								</select>
-								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="${vo.shValue }">
+								<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.shValue }"/>">
 								<!-- <input type="submit" class="btn searchBtn"> -->
 								<button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 								<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
@@ -88,11 +91,11 @@
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
-								<span class="p-2"><c:out value="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + status.index) }"/></span>
+								<span class="p-2"><c:out value="Total : ${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + status.index) }"/></span>
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="codeRegForm" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
+								<button type="button" id="createBtn" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></button>
 							</div>
 						</div>
 						<table class="table text-center codeGroupTable">
@@ -120,7 +123,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="memberView">
+											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
 												<th scope="col"><input type="checkbox" class="chk"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
@@ -153,8 +156,6 @@
 							</div>
 						</div>
 					</div>
-					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage }" default="1"/>">
-					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow }"/>">
 				</form>
 				</section>
 			</section>
@@ -184,19 +185,16 @@
 
 	
 	<script>
-		goList = function(thisPage) {
-			$("input:hidden[name=thisPage]").val(thisPage);
-			$("#form").submit();
-		}
-	
-	
 		$(document).ready(function(){
-			var tableRow = document.getElementsByTagName('tr');
+			var form = $("form[name=form]");
+			var seq = $("input:hidden[name=seq]");
+			
+			/* var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
 			
 			var totalCount = document.getElementsByClassName('totalCount');
-			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>';
+			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>'; */
 		
 			$('#codeGroupDeleteModal').on('shown.bs.modal', function() {
 				var button = $(event.relatedTarget);
@@ -246,8 +244,23 @@
 				event.cancelBubble=true;
 			});
 			
-			$("#createBtn").on("click", function(){
-				location.href = 'create.html'
+			$('#createBtn').on("click", function() {
+				goForm(0);                
+			});
+			
+			goForm = function(keyValue) {
+		    	/* if(keyValue != 0) seq.val(btoa(keyValue)); */
+		    	seq.val(keyValue);
+				form.attr("action", "codeForm").submit();
+			}
+
+			goList = function(thisPage) {
+				$("input:hidden[name=thisPage]").val(thisPage);
+				form.submit();
+			}
+			
+			$(".resetBtn").on("click", function(){
+				location.href="codeList";
 			});
 			
 			$(".deleteBtn").on("click", function(e){
@@ -260,10 +273,6 @@
 				if(chkValue == false) {
 					alert("hi")
 				}
-			});
-			
-			$(".memberView").on("click",function(){
-				location.href="memberView.html";
 			});
 			
 		});

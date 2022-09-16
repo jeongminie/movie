@@ -31,8 +31,8 @@
 			, (SELECT COUNT(*) FROM commonCode b where a.cgSeq = b.cgSeq) as cnt
 		FROM 
 			codeGroup a
-		<include refid="where"></include>	
-		LIMIT #{pageStart}, #{shPageNum}
+		<include refid="where"></include>
+		<if test="pageStart != null and !pageStart.equals('')">LIMIT #{pageStart}, #{shPageNum}</if>
 	</select>
 	
 	<select id="selectBoardCount" resultType="Integer">
@@ -50,7 +50,6 @@
 			codeGroup a
 		WHERE 1=1
 			AND a.delNy = 0
-		
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

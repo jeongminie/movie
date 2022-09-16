@@ -84,7 +84,9 @@
 					<span>STEP2.등록완료</span>
 					<h4 class="mt-4">코드 정보를 입력해주세요</h4>
 				</div>
-				<form method="post" id="codeRegForm" action="/code/codeInst">
+				<form method="post" name="form" id="form">
+				<input type="hidden" name="seq" value="${vo.seq }">
+				<%@include file="codeVo.jsp"%>	
 					<div class="d-flex">
 						<div class="codeInfo col-6">
 							<div>
@@ -97,7 +99,7 @@
 								</select>
 							</div>
 							<div>코드<input type="text" class="form-control text-input" placeholder="자동생성" disabled></div>
-							<div>코드 이름 (한글)<input type="text" name="ccName" id="ccName" class="form-control text-input"></div>
+							<div>코드 이름 (한글)<input type="text" name="ccName" id="ccName" class="form-control text-input" <c:if test="${not empty item.ccName }">value="${item.ccName  }"</c:if>></div>
 							<div>
 								<span>사용여부</span>
 								<select name="useNy" id="useNy" class="form-select text-input">
@@ -127,14 +129,18 @@
 						</div>
 					</div>
 					<div class="d-flex justify-content-between">
-						<button type="button" id="" class="btn prevBtn" onClick="">이전</button>
-						<button type="button" id="" class="btn createBtn" onClick="test();">등록하기</button>
+						<button type="button" id="prevBtn" class="btn prevBtn">이전</button>
+						<button type="button" id="createBtn" class="btn createBtn">등록하기</button>
 						<!-- <button type="button" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
 					</div>
 				</form>
 			</section>
 		</section>
 	</div>
+	
+	<form name="formVo" id="formVo" method="post">
+		<%@include file="codeVo.jsp"%>		<!-- #-> -->
+	</form>
 	
 	<!-- modal -->
 	<div class="modal fade" id="memberRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -199,11 +205,30 @@
 				return;
 			}
 			
-			$("#codeRegForm").submit();
-			
 		}
 		
 		$(document).ready(function(){
+			
+			var form = $("form[name=form]");
+			var formVo = $("form[name=formVo]");
+			
+			var seq = $("input:hidden[name=seq]").val();
+			console.log(seq)
+			
+			$("#createBtn").on("click", function(){
+				if(seq == 0 || seq == "") { //insert
+					form.attr("action", "/code/codeInst").submit();
+					alert("저장완료");
+				} else { //update
+					form.attr("action", "/codeGroup/codeGroupUpdate").submit();
+					alert("수정완료");
+				}
+			});
+			
+			$("#prevBtn").on("click", function(){
+				formVo.attr("action", "codeList").submit();
+			});
+			
 			$("#birth").datepicker({
 				changeYear: true //option값 년 선택 가능
 		        , changeMonth: true //option값  월 선택 가능   
@@ -224,9 +249,6 @@
 				}
 			});
 			
-			$(".modal .createBtn").on("click",function(){
-				location.href="memberList.html"
-			});
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

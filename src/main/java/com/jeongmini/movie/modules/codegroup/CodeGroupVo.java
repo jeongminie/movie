@@ -9,7 +9,7 @@ public class CodeGroupVo {
 	private String shStartDate;
 	private String shEndDate;
 	private Integer seq;
-	private Integer cgSeq;
+	private String cgSeq;
 	private Integer total;
 	private Integer shTotal;
 	private int shPageNum;
@@ -56,10 +56,10 @@ public class CodeGroupVo {
 	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
-	public Integer getCgSeq() {
+	public String getCgSeq() {
 		return cgSeq;
 	}
-	public void setCgSeq(Integer cgSeq) {
+	public void setCgSeq(String cgSeq) {
 		this.cgSeq = cgSeq;
 	}
 	public Integer getTotal() {
@@ -127,7 +127,5 @@ public class CodeGroupVo {
 //			this.perPageNum = pageCount;
 //		}
 //	}
-	
-	
 	
 }

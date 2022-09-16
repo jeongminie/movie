@@ -1,5 +1,6 @@
 package com.jeongmini.movie.modules.codegroup;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.jeongmini.movie.common.util.Criteria;
 import com.jeongmini.movie.common.util.PageMaker;
 
 @Controller
@@ -21,11 +23,34 @@ public class CodeGroupController {
 	@Autowired
 	CodeGroupServiceImpl service;
 	
+	public String nowDate() {
+		LocalDate nowDate = LocalDate.now();
+		
+		return nowDate.toString();
+	}
+	
+	public String oneWeek() {
+		LocalDate oneWeek = LocalDate.now().plusDays(7);
+		
+		return oneWeek.toString();
+	}
+
+	public void setShearch(CodeGroupVo vo) throws Exception {
+		
+		vo.setShDelNy(vo.getShDelNy() == null ? 0 : vo.getShDelNy());
+//		vo.setShDate(vo.getShDate() == null ? 1 : vo.getShDate());
+//		vo.setShOption(vo.getShOption() == null ? 2 : vo.getShOption());
+//		vo.setShStartDate(vo.getShStartDate() == null || vo.getShStartDate() == "" ? nowDate() : vo.getShStartDate());
+//		vo.setShEndDate(vo.getShEndDate() == null || vo.getShEndDate() == "" ? oneWeek() : vo.getShEndDate());
+	}
+	
+	
 	@RequestMapping(value="codeGroupList")
 	public String codeGroupList(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
 		List<CodeGroup> list = service.selectList(vo);
 		
 		PageMaker pageMaker = new PageMaker();
+		setShearch(vo);
 
 		int shTotal = service.selectBoardCount(vo);
 		int total = service.selectBoardTotalCount(vo);
@@ -42,10 +67,12 @@ public class CodeGroupController {
 		System.out.println("vo.getNowPage()" + vo.getNowPage());
 		System.out.println("vo.getPageStart()" + vo.getPageStart());
 		System.out.println("vo.getPerPageNum()" + vo.getPerPageNum());
-		System.out.println("ShPageNum : " + vo.getShPageNum());
+		System.out.println("shPageNum : " + vo.getShPageNum());
 		System.out.println("pageMaker.getStartPage()" + pageMaker.getStartPage());
 		System.out.println("pageMaker.getEndPage()" + pageMaker.getEndPage());
 		System.out.println("pageMaker.getTatalCount()" + pageMaker.getTatalCount());
+		
+		System.out.println("vo.getShValue() : " + vo.getShValue());
 		
 		return "infra/codeGroup/xdmin/codeGroupList";
 		
@@ -57,6 +84,7 @@ public class CodeGroupController {
 		model.addAttribute("item", codeGroup);
 		
 		System.out.println("vo.getSeq : " + vo.getSeq());
+		System.out.println("vo.getShValue() : " + vo.getShValue());
 		
 		return "infra/codeGroup/xdmin/codeGroupForm";
 	}
@@ -67,21 +95,28 @@ public class CodeGroupController {
 	 */
 	
 	@RequestMapping(value="codeGroupInst")
-	public String codeGroupInst(CodeGroup dto) throws Exception {
+	public String codeGroupInst(CodeGroup dto, CodeGroupVo vo, RedirectAttributes redirectAttributes) throws Exception {
 		int result = service.insert(dto);
 		
+		vo.setSeq(dto.getSeq());
+		redirectAttributes.addFlashAttribute("vo", vo);
+		
+		System.out.println(vo.getSeq());
 		System.out.println("insert 성공 : " + result);
 		
-		return "redirect:/codeGroup/codeGroupList";
+		return "redirect:/codeGroup/codeGroupForm";
 	}
 	
 	@RequestMapping(value="codeGroupUpdate")
-	public String codeGroupUpdate(CodeGroup dto) throws Exception {
+	public String codeGroupUpdate(CodeGroup dto, CodeGroupVo vo, RedirectAttributes redirectAttributes) throws Exception {
 		int result = service.update(dto);
+		
+		vo.setSeq(dto.getSeq());
+		redirectAttributes.addFlashAttribute("vo", vo);
 		
 		System.out.println("update 성공 : " + result);
 		
-		return "redirect:/codeGroup/codeGroupForm?seq="+dto.getSeq();
+		return "redirect:/codeGroup/codeGroupForm";
 	}
 	
 	@RequestMapping(value="codeGroupDelete")

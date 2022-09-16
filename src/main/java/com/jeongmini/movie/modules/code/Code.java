@@ -6,7 +6,7 @@ public class Code {
 	//DTO
 	
 	private Integer seq;
-	private Integer cgSeq;
+	private String cgSeq;
 	private String cgName;
 	private Integer ccAnother;
 	private String ccName;
@@ -24,10 +24,10 @@ public class Code {
 	public void setSeq(Integer seq) {
 		this.seq = seq;
 	}
-	public Integer getCgSeq() {
+	public String getCgSeq() {
 		return cgSeq;
 	}
-	public void setCgSeq(Integer cgSeq) {
+	public void setCgSeq(String cgSeq) {
 		this.cgSeq = cgSeq;
 	}
 	public String getCgName() {
