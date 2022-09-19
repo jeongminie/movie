@@ -47,31 +47,19 @@ public class CodeGroupController {
 	
 	@RequestMapping(value="codeGroupList")
 	public String codeGroupList(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
-		List<CodeGroup> list = service.selectList(vo);
-		
-		PageMaker pageMaker = new PageMaker();
+		vo.setParamsPaging(service.selectBoardCount(vo));
 		setShearch(vo);
+
+		List<CodeGroup> list = service.selectList(vo);
 
 		int shTotal = service.selectBoardCount(vo);
 		int total = service.selectBoardTotalCount(vo);
 		
-		pageMaker.setCodeGroupVo(vo);
-		pageMaker.setTotalCount(shTotal);
-//		pageMaker.setShPageNum(vo.getShPageNum());
-		
 		model.addAttribute("list", list); //list에 담아서 jsp에 전달
-		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("shTotal", shTotal);
 		model.addAttribute("total", total);
 		
-		System.out.println("vo.getNowPage()" + vo.getNowPage());
-		System.out.println("vo.getPageStart()" + vo.getPageStart());
-		System.out.println("vo.getPerPageNum()" + vo.getPerPageNum());
-		System.out.println("shPageNum : " + vo.getShPageNum());
-		System.out.println("pageMaker.getStartPage()" + pageMaker.getStartPage());
-		System.out.println("pageMaker.getEndPage()" + pageMaker.getEndPage());
-		System.out.println("pageMaker.getTatalCount()" + pageMaker.getTatalCount());
-		
+		System.out.println("vo.getSeq() : " + vo.getSeq());
 		System.out.println("vo.getShValue() : " + vo.getShValue());
 		
 		return "infra/codeGroup/xdmin/codeGroupList";
@@ -101,7 +89,7 @@ public class CodeGroupController {
 		vo.setSeq(dto.getSeq());
 		redirectAttributes.addFlashAttribute("vo", vo);
 		
-		System.out.println(vo.getSeq());
+		System.out.println("vo.getSeq() : " + vo.getSeq());
 		System.out.println("insert 성공 : " + result);
 		
 		return "redirect:/codeGroup/codeGroupForm";

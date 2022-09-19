@@ -65,7 +65,10 @@
 		<div>
 			<%@include file="../../../include/jsp/menu.jsp" %>
  					<span class="m-4"><b>코드그룹 관리</b></span>
- 					<form method="post" action="/codeGroup/codeGroupList">
+ 					<form method="post" id="form" name="form">
+ 					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
+					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow}"/>">
+					<input type="hidden" name="seq" value="<c:out value="${vo.seq}"/>"/>	
 						<div id="searchSection">
 							<div class="d-flex">
 								<select id="shDelNy" name="shDelNy" class="form-select text-input">
@@ -101,11 +104,11 @@
 								<span class="p-2 totalCount">Total : ${total }</span>
 							</div>
 							<div class="d-flex">
-								<select name="shPageNum" id="shPageNum" class="form-select">
+								<%-- <select name="shPageNum" id="shPageNum" class="form-select">
 									<option value="5" <c:if test="${vo.shPageNum eq 5 }">selected</c:if>>5</option>
 									<option value="10" <c:if test="${vo.shPageNum eq 10 }">selected</c:if>>10</option>
 									<option value="15" <c:if test="${vo.shPageNum eq 15 }">selected</c:if>>15</option>
-								</select>
+								</select> --%>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
 								<a href="#" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
@@ -132,7 +135,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="codeGroupView" onclick="location.href='codeGroupForm?seq=${list.seq}'">
+											<tr class="codeGroupView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
 												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
@@ -147,7 +150,10 @@
 								</c:choose>
 							</tbody>
 						</table>
-						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+						<!-- pagination s -->
+						<%@include file="../../../include/jsp/pagination.jsp"%>
+						<!-- pagination e -->
+<%-- 						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev }">
 									<li class="page-item">
@@ -165,7 +171,7 @@
 									</li>
 								</c:if>
 							</ul>
-						</nav>
+						</nav> --%>
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -221,9 +227,12 @@
 		
 		$(document).ready(function(){
 			
-			$("#shPageNum").on("change", function(){
-				$("form").submit();
-			});
+			var form = $("form[name=form]");
+			var seq = $("input:hidden[name=seq]");
+			
+/* 			$("#shPageNum").on("change", function(){
+				form.submit();
+			}); */
 
 			/* $(".searchBtn").on("click", function(){
 				var shDate = $("#shDate option:selected").val()
@@ -269,8 +278,19 @@
 				$("#cgDeleteBtn").data("cg-seq", chkSeq);
 			});
 			
+			goForm = function(keyValue) {
+		    	/* if(keyValue != 0) seq.val(btoa(keyValue)); */
+		    	seq.val(keyValue);
+				form.attr("action", "codeGroupForm").submit();
+			}
+			
+			goList = function(thisPage) {
+				$("input:hidden[name=thisPage]").val(thisPage);
+				form.submit();
+			}
+			
 			$(".createBtn").on("click", function(){
-				location.href = 'codeGroupForm';
+				goForm(0);
 			});
 			
 			$(".resetBtn").on("click", function(){

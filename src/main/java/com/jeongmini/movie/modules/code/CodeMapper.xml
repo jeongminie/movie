@@ -19,7 +19,7 @@
 			<when test="shOption == 3">AND ccNameEng LIKE CONCAT('%',#{shValue},'%')</when>
 		</choose>
 		<choose>
-				<when test="shDate == 1">AND date(a.createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			<when test="shDate == 1">AND date(a.createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
 			<when test="shDate == 2">AND date(a.updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
 		</choose>
 	</sql>

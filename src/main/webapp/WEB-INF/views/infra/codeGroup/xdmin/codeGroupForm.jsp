@@ -124,15 +124,15 @@
 					<div class="d-flex justify-content-between" style="padding-bottom: 10px;">
 						<button type="button" class="btn prevBtn">이전</button>
 						<c:choose>
-							<c:when test="${not empty item.cgSeq }">
+							<c:when test="${not empty item.seq }">
 								<div class="d-flex">
 									<button type="button" class="btn ueleteBtn" id="uelete">X</button>
 									<button type="button" class="btn deleteBtn" id="delete">삭제</button>
-									<button type="submit" class="btn updateBtn">수정</button>
+									<button type="submit" class="btn saveBtn">수정</button>
 								</div>
 							</c:when>
 							<c:otherwise>
-								<button type="button" class="btn createBtn" id="createBtn">등록</button>
+								<button type="button" class="btn saveBtn">등록</button>
 							</c:otherwise>
 						</c:choose>
 						<!-- <button type="submit" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
@@ -176,10 +176,10 @@
 			var formVo = $("form[name=formVo]");
 			
 			/* var submitType = $("button[type=submit]").val(); //0수정 1등록 */
-			var seq = $("input:hidden[name=seq]").val();
+			var seq = $("input:hidden[name=seq]");
 			console.log(seq)
 			
-			$("#createBtn").on("click", function(){
+			$(".saveBtn").on("click", function(){
 				
 				var cgSeq = $("#cgSeq").val();
 				var cgName = $("#cgName").val();
@@ -208,7 +208,7 @@
 					return false;
 				}
 				
-				if(seq == 0 || seq == "") { //insert
+				if(seq.val() == 0 || seq.val() == "") { //insert
 					form.attr("action", "/codeGroup/codeGroupInst").submit();
 					alert("저장완료");
 				} else { //update
@@ -235,7 +235,7 @@
 					$.ajax({
 						type:"post"
 						, url:ueleteurl
-						, data:{"seq":seq}
+						, data:{"seq":seq.val()}
 						, success:function(data){
 							if(data.result) {
 								alert("삭제 완료");
@@ -247,7 +247,7 @@
 					$.ajax({
 						type:"post"
 						, url:deleteurl
-						, data:{"seq":seq}
+						, data:{"seq":seq.val()}
 						, success:function(data){
 							if(data.result) {
 								alert("삭제 완료");
@@ -268,7 +268,7 @@
 			});
 			
 			
-			$(".modal .createBtn").on("click",function(){
+			$(".modal .saveBtn").on("click",function(){
 				location.href="memberList.html"
 			});
 			

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<input type="hidden" name="nowPage" value="<c:out value="${vo.nowPage}" default="1"/>">
-<input type="hidden" name="perPageNum" value="<c:out value="${vo.perPageNum}"/>">
+<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
+<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow}"/>">
 
 <input type="hidden" name="shDelNy" value="<c:out value="${vo.shDelNy}"/>"/>
 <input type="hidden" name="shDate" value="<c:out value="${vo.shDate}"/>"/>

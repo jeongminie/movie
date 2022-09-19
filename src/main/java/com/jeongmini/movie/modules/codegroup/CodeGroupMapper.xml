@@ -22,7 +22,6 @@
  				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
 				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
 			</choose>
-		ORDER BY seq DESC
 	</sql>
 	
 	<select id="selectList" resultMap="resultMapObj">
@@ -32,12 +31,13 @@
 		FROM 
 			codeGroup a
 		<include refid="where"></include>
-		<if test="pageStart != null and !pageStart.equals('')">LIMIT #{pageStart}, #{shPageNum}</if>
+		ORDER BY seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
 	<select id="selectBoardCount" resultType="Integer">
 		SELECT
-			count(*) as shTotal
+			count(*)
 		FROM 
 			codeGroup a
 		<include refid="where"></include>
@@ -103,6 +103,7 @@
 			codeGroup a
 		SET
 			a.delNy = 1
+			, updatedAt = now()
 		WHERE
 			a.seq = #{seq}
 	</update>

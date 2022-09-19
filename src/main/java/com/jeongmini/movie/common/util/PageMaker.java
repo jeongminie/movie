@@ -27,34 +27,34 @@ public class PageMaker {
 	//총 개시글 수
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		calc();
+//		calc();
 	}
 	
 	public void setShPageNum(int shPageNum) {
-		codeGroupVo.setPerPageNum(shPageNum);
+		codeGroupVo.setRowNumToShow(shPageNum);
 		
 		System.out.println("pageMaker : " + shPageNum);
 	}
 	
 	//페이징의 버튼들을 생성하는 계산식. 끝 페이지 번호, 시작 페이지 번호, 이전, 다음 버튼들을 구한다.
-	public void calc() {
-		endPage = (int) (Math.ceil(codeGroupVo.getNowPage() / (double) displayPageNum) * displayPageNum);
-		
-		startPage = (endPage - displayPageNum) +1;
-		if(startPage <= 0 ) startPage = 1;
-		
-		int tempEndPage = (int) (Math.ceil(totalCount / (double) codeGroupVo.getPerPageNum()));
-		System.out.println("----------------" + tempEndPage + "---------------");
-		if(endPage > tempEndPage) endPage = tempEndPage;
-		
-		prev = startPage == 1 ? false : true;
-		next = endPage * codeGroupVo.getPerPageNum() < totalCount ? true : false;
-	}
+//	public void calc() {
+//		endPage = (int) (Math.ceil(codeGroupVo.getNowPage() / (double) displayPageNum) * displayPageNum);
+//		
+//		startPage = (endPage - displayPageNum) +1;
+//		if(startPage <= 0 ) startPage = 1;
+//		
+//		int tempEndPage = (int) (Math.ceil(totalCount / (double) codeGroupVo.getRowNumToShow()));
+//		System.out.println("----------------" + tempEndPage + "---------------");
+//		if(endPage > tempEndPage) endPage = tempEndPage;
+//		
+//		prev = startPage == 1 ? false : true;
+//		next = endPage * codeGroupVo.getRowNumToShow() < totalCount ? true : false;
+//	}
 	
 	public int getStartPage() {
 		return startPage;
 	}
-	public void setStartPage(int startPage) {
+	public void setStartPage(Integer startPage) {
 		this.startPage = startPage;
 	}
 	public int getEndPage() {

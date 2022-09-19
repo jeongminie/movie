@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jeongmini.movie.common.util.PageMaker;
 import com.jeongmini.movie.modules.codegroup.CodeGroup;
 import com.jeongmini.movie.modules.codegroup.CodeGroupServiceImpl;
 import com.jeongmini.movie.modules.codegroup.CodeGroupVo;
@@ -42,6 +43,7 @@ public class CodeController {
 	
 	@RequestMapping(value="codeForm")
 	public String codeGroupRegView(Model model, @ModelAttribute("vo") CodeVo vo, CodeGroupVo cgVo) throws Exception {
+		cgVo.setRowNumToShow(9999);
 		
 		List<CodeGroup> list = codeGroupServiceImpl.selectList(cgVo);
 		model.addAttribute("list", list);
@@ -49,8 +51,8 @@ public class CodeController {
 		Code code = service.selectOne(vo);
 		model.addAttribute("item", code);
 		
-		System.out.println("pageStart : " + cgVo.getPageStart());
-		System.out.println("perPageNum : " + cgVo.getPerPageNum());
+		System.out.println("vo.getStartRnumForMysql() : " + cgVo.getStartRnumForMysql());
+		System.out.println("vo.getRowNumToShow() : " + cgVo.getRowNumToShow());
 		System.out.println("vo.getShValue() : " + vo.getShValue());
 		
 		return "infra/code/xdmin/codeForm";

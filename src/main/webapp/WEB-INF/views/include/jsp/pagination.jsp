@@ -6,7 +6,7 @@
 	<ul class="pagination">
 		<c:if test="${vo.startPage gt vo.pageNumToShow}">
 			<li class="page-item">
-				<a class="page-link" href="<c:url value='codeList?thisPage=${vo.startPage-1 }' />">이전</a>
+				<a class="page-link" href="<c:url value="javascript:goList(${vo.startPage - 1})" />">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${vo.startPage }" end="${vo.endPage }" varStatus="i">
@@ -16,7 +16,7 @@
 		</c:forEach>
 		<c:if test="${vo.endPage ne vo.totalPages}">  
 			<li class="page-item">
-				<a class="page-link" href="<c:url value='codeList?thisPage=${vo.endPage+1 }' />">다음</a>
+				<a class="page-link" href="<c:url value="javascript:goList(${vo.endPage + 1})" />">다음</a>
 			</li>
 		</c:if>
 	</ul>

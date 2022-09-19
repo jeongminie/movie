@@ -113,7 +113,7 @@ tbody > tr:hover {
 	box-shadow: 1px 1px 20px #ddd;
 }
 
-.cancelBtn, .deleteBtn, .excelBtn, .createBtn, .updateBtn, .ueleteBtn, .prevBtn {
+.cancelBtn, .deleteBtn, .excelBtn, .saveBtn, .ueleteBtn, .prevBtn {
 	/* padding-top : 1px; */
 	font-size: 15px;
 }
@@ -122,7 +122,7 @@ tbody > tr:hover {
 	background-color: #FF7070 !important;
 }
 
-.excelBtn:hover, .createBtn:hover, .updateBtn:hover {
+.excelBtn:hover, .saveBtn:hover {
 	background-color: #93ECAF !important;
 }
 
