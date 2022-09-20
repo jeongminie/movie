@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
+<jsp:useBean id="CodeServiceImpl" class="com.jeongmini.movie.modules.code.CodeServiceImpl"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,6 +122,7 @@
 							
 						</tr>
 						<tr>
+							<c:set var="listCodeEmail" value="${CodeServiceImpl.selectListCachedCode('1001')}"/>
 							<th>이메일 주소</th>
 							<td>
 								<div class="d-flex">
@@ -128,8 +130,8 @@
 									<span style="margin : 0 4px 0 4px;">@</span>
 										<select class="text-input col-5" name="domain" id="domain">
 											<option value="0">선택</option>
-											<c:forEach items="${code }" var="code" varStatus="status">
-												<option value="${code.seq }">${code.ccNameEng }</option>
+											<c:forEach items="${listCodeEmail}" var="listEmail" varStatus="statusEmail">
+												<option value="${listEmail.seq }"><c:out value="${listEmail.ccNameEng }"></c:out></option>
 											</c:forEach>
 										</select>
 								</div>

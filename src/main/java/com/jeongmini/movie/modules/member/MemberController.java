@@ -42,8 +42,8 @@ public class MemberController {
 	@RequestMapping(value="signup")
 	public String signupView(Model model) throws Exception {
 		
-		List<Code> codeList = codeServiceImpl.emailSelectList();
-		model.addAttribute("code", codeList);
+//		List<Code> codeList = codeServiceImpl.emailSelectList();
+//		model.addAttribute("code", codeList);
 		
 		return "infra/member/user/signupForm";
 	}

@@ -130,7 +130,18 @@
 					</div>
 					<div class="d-flex justify-content-between">
 						<button type="button" id="prevBtn" class="btn prevBtn">이전</button>
-						<button type="button" id="createBtn" class="btn createBtn">등록하기</button>
+						<c:choose>
+							<c:when test="${not empty item.seq }">
+								<div class="d-flex">
+									<button type="button" class="btn ueleteBtn" id="uelete">X</button>
+									<button type="button" class="btn deleteBtn" id="delete">삭제</button>
+									<button type="submit" class="btn saveBtn">수정</button>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn saveBtn">등록</button>
+							</c:otherwise>
+						</c:choose>
 						<!-- <button type="button" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
 					</div>
 				</form>
@@ -208,19 +219,21 @@
 		}
 		
 		$(document).ready(function(){
-			
+			var action;
+			var deleteurl = "codeDelete";
+			var ueleteurl = "codeUelete";
 			var form = $("form[name=form]");
 			var formVo = $("form[name=formVo]");
 			
 			var seq = $("input:hidden[name=seq]").val();
 			console.log(seq)
 			
-			$("#createBtn").on("click", function(){
+			$(".saveBtn").on("click", function(){
 				if(seq == 0 || seq == "") { //insert
 					form.attr("action", "/code/codeInst").submit();
 					alert("저장완료");
 				} else { //update
-					form.attr("action", "/codeGroup/codeGroupUpdate").submit();
+					form.attr("action", "/code/codeUpdate").submit();
 					alert("수정완료");
 				}
 			});
@@ -246,6 +259,46 @@
 					$(".passwordError").removeClass("d-none");
 				} else {
 					$(".passwordError").addClass("d-none");
+				}
+			});
+			
+			/* uelete 버튼 */
+			$("#uelete").on("click", function(){
+				action = "uelete";
+				modal.modal('show');
+			});
+			
+			/* delete 버튼 */
+			$("#delete").on("click", function(){
+				action = "delete"
+				modal.modal('show');
+			});
+			
+			$("#cgDeleteBtn").on("click", function(e){
+				if(action == "uelete") {
+					$.ajax({
+						type:"post"
+						, url:ueleteurl
+						, data:{"seq":seq}
+						, success:function(data){
+							if(data.result) {
+								alert("삭제 완료");
+								location.href="codeList";
+							}
+						}
+					});
+				} else if(action == "delete") {
+					$.ajax({
+						type:"post"
+						, url:deleteurl
+						, data:{"seq":seq}
+						, success:function(data){
+							if(data.result) {
+								alert("삭제 완료");
+								location.href="codeList";
+							}
+						}
+					});
 				}
 			});
 			

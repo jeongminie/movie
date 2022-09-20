@@ -1,6 +1,8 @@
 package com.jeongmini.movie.modules.code;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Code {
 	//DTO
@@ -16,7 +18,8 @@ public class Code {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	
+//	for cache
+	public static List<Code> cachedCodeArrayList = new ArrayList<Code>();
 
 	public Integer getSeq() {
 		return seq;
@@ -77,6 +80,12 @@ public class Code {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public static List<Code> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+	public static void setCachedCodeArrayList(List<Code> cachedCodeArrayList) {
+		Code.cachedCodeArrayList = cachedCodeArrayList;
 	}
 	
 	

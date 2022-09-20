@@ -62,7 +62,7 @@
 		<include refid="where" />
 	</select>
 	
-	<select id="emailSelectList" resultMap="resultMapObj">
+<!-- 	<select id="emailSelectList" resultMap="resultMapObj">
 		SELECT
 			seq
 			, ccNameEng
@@ -70,7 +70,7 @@
 			commonCode
 		WHERE 
 			cgSeq = 14;
-	</select>
+	</select> -->
 	
 	<insert id="insert">
 		INSERT INTO commonCode (
@@ -97,8 +97,8 @@
 		UPDATE 
 			commonCode a
 		SET 
-			a.cgName = #{cgName}
-			, a.cgNameEng = #{cgNameEng}
+			a.ccName = #{ccName}
+			, a.ccNameEng = #{ccNameEng}
 			, a.useNy = #{useNy}
 			, a.delNy = #{delNy}
 			, a.updatedAt = now() 
@@ -118,5 +118,18 @@
 		WHERE
 			a.seq = #{seq}
 	</update>
+	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			seq
+			, ccName
+			, ccNameEng
+			, cgSeq
+		FROM
+			commonCode
+		WHERE 1=1
+			AND delNy = 0
+		    AND useNy = 1
+    </select>
 
 </mapper>	

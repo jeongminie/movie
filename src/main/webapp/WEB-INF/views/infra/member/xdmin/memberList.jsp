@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
+<jsp:useBean id="CodeServiceImpl" class="com.jeongmini.movie.modules.code.CodeServiceImpl"/>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -146,11 +147,17 @@
 										<th scope="col"><input type="checkbox" class="chk"></th>
 										<th scope="row">${status.count }</th>
 										<td>${list.name }</td>
-										<td>
+										<%-- <td>
 											<c:choose>
 												<c:when test="${list.gender eq 0}">남</c:when>
 												<c:otherwise>여</c:otherwise>
 											</c:choose>
+										</td> --%>
+										<c:set var="listCodeGender" value="${CodeServiceImpl.selectListCachedCode('1000')}"/>
+										<td>
+											<c:forEach items="${listCodeGender}" var="listGender" varStatus="statusGender">
+												<c:if test="${list.gender eq listGender.seq}"><c:out value="${listGender.ccName }"/></c:if>
+											</c:forEach>
 										</td>
 										<td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td>
 										<td>${list.emailFull }</td>

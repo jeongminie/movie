@@ -99,5 +99,4 @@ public class Member {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-	
 }
