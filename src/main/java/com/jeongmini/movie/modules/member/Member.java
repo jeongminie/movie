@@ -20,6 +20,9 @@ public class Member {
 	private Date updatedAt;
 	private String email;
 	private String domain;
+	private Integer postcode;
+	private String address;
+	private String detailAddress;
 	
 	public Integer getSeq() {
 		return seq;
@@ -99,4 +102,23 @@ public class Member {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
+	public Integer getPostcode() {
+		return postcode;
+	}
+	public void setPostcode(Integer postcode) {
+		this.postcode = postcode;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	
 }

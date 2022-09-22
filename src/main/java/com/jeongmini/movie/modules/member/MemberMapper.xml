@@ -21,6 +21,8 @@
 		    , name
 		    , birth
 		    , emailFull
+		    , postcode
+		    , address
 		    , marketingAgree
 		) VALUES (
 		    #{loginId}
@@ -29,6 +31,8 @@
 		    , #{name}
 		    , #{birth}
 		    , CONCAT(#{email},'@',(SELECT cc.ccNameEng FROM commonCode cc WHERE cc.seq = #{domain}))
+			, #{postcode}
+			, CONCAT(#{address},' ',#{detailAddress})
 		    , #{marketingAgree}
 		)
 		<selectKey resultType="int" keyProperty="seq" order="AFTER">

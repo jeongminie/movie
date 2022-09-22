@@ -29,12 +29,6 @@
 	<title>회원관리</title>
 	
 	<style>
-		.text-input {
-			width : 250px;
-			margin-right: 10px;
-			margin-top: 10px;
-		}
-		
 		#ui-datepicker-div {
 			width : 250px;
 		}
@@ -52,43 +46,7 @@
 <body>
 	<div id="wrap">
 		<div>
-			<header class="d-flex">
-				<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
-				<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
-					<ul class="nav">
-					    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-					    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-					    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
-					</ul>                        
-				</nav>
-			</header>
-			<section class="d-flex">
-				<aside class="col-2">
-					<nav class="main-nav">
-						<ul class="nav flex-column">
-							<li class="nav-item"><a href="#" class="nav-link">코드그룹관리</a></li>				
-							<li class="nav-item"><a href="#" class="nav-link">코드관리</a></li>
-							<li class="nav-item"><a href="memberList.html" class="nav-link">회원관리</a></li>
-						</ul>
-					</nav>
-				</aside>
-				<section class="col-10">
-<!-- 				
-					<div class="noticeSection d-flex justify-content-around">
-						<div class="box">
-							<span>공지사항</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-						<div class="box">
-							<span>1:1문의</span>
-						</div>
-					</div>
- -->				
+			<%@include file="../../../include/jsp/menu.jsp" %>
  					<span class="m-4"><b>회원관리</b></span>
 					<div id="searchSection">
 						<div class="d-flex">
@@ -124,7 +82,7 @@
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="memberRegForm.html" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
+								<a href="memberForm" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
 							</div>
 						</div>
 						<table class="table text-center memberTable">

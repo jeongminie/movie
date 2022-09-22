@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.jeongmini.movie.modules.movie.MovieMapper">
+	<resultMap id="resultMapObj" type="com.jeongmini.movie.modules.movie.Movie"></resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT 
+			mi.*
+		FROM 
+			movieInfo2022 mi
+		JOIN 
+			runningCurrent rc 
+		ON 
+			mi.movieCode = rc.movieCode ;
+	</select>
+	
+	
+</mapper>

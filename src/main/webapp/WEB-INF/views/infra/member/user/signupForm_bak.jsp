@@ -71,6 +71,11 @@
   			background-color : #BEB4AF;
   			border : 0px;
   		}
+  		
+  		#detailAddress {
+  			padding: 0px;
+  		}
+	  			
 	</style>
 </head>
 <body>
@@ -142,18 +147,13 @@
 							<th>주소</th>
 							<td id="addressWrap">
 								<div class="d-flex">
-									<input type="text" class="text-input mb-2 mr-2" name="postcode" id="postcode" placeholder="우편번호">
+									<input type="text" class="text-input mb-2 mr-2" name="postcode" id="postcode" placeholder="우편번호" onclick="execDaumPostcode()">
 									<button type="button" id="reset" class="btn btn-sm"><i class="fa-solid fa-trash"></i></button>
 								</div>
 								<input type="text" class="text-input mb-2" name="address" id="address" placeholder="주소">
-								<div class="d-flex mb-2">
+								<div class="d-flex">
 									<input type="text" class="text-input col-7 mr-2" name="detailAddress" id="detailAddress" placeholder="상세주소">
 									<input type="text" class="text-input col-5" name="extraAddress" id="extraAddress" placeholder="참고항목">
-								</div>
-								<div class="d-flex">
-									<input type="text" class="text-input col-6 mr-2" name="x" id="x">
-									<input type="text" class="text-input col-6" name="y" id="y">
-									<!-- <div id="map" style="width:200px;height:200px;"></div> -->
 								</div>
 							</td>
 						</tr>
@@ -164,7 +164,6 @@
 								<label>비동의<input type="radio" class="ml-1" name="marketingAgree" value="0"></label>
 							</td>
 						</tr>
-						
 					</table>
 				</section>
 				<section class="d-flex justify-content-center">
@@ -178,72 +177,66 @@
 	<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 	</div>
-		
-	<!-- 카카오 지도 api -->
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services"></script>
+	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	<script>
-		function execDaumPostcode() {
+	    function execDaumPostcode() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {
-	            	var addr = ''; // 주소 변수
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
 	                var extraAddr = ''; // 참고항목 변수
-
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 	                    addr = data.roadAddress;
 	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
 	                    addr = data.jibunAddress;
 	                }
 	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
 	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
 	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
 	                        extraAddr += data.bname;
 	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
 	                    if(data.buildingName !== '' && data.apartment === 'Y'){
 	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
 	                    if(extraAddr !== ''){
 	                        extraAddr = ' (' + extraAddr + ')';
 	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
 	                    document.getElementById("extraAddress").value = extraAddr;
 	                
 	                } else {
 	                    document.getElementById("sample6_extraAddress").value = '';
 	                }
 	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
 	                document.getElementById('postcode').value = data.zonecode;
 	                document.getElementById("address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
 	                document.getElementById("detailAddress").focus();
-	                
-	                geocoder.addressSearch(addr, callback);
 	            }
 	        }).open();
 	    }
-		
-		var geocoder = new kakao.maps.services.Geocoder();
-		
-		var callback = function(result, status) {
-	        if (status === kakao.maps.services.Status.OK) {
-	            console.log(result);
-	            document.getElementById('x').value = result[0].x;
-	           	document.getElementById('y').value = result[0].y;
-	            
-	        }
-	    };
-	
-		 $(document).ready(function(){
-			$("#postcode").on("click", function(){
-				execDaumPostcode();
-			})
-			
+	    
+	    $(document).ready(function(){
 	    	$("#reset").on("click", function(){
 	    		var input = $("#addressWrap").find('input[type=text]')
 			    input.val('');
 	    	})
 	    })
 	</script>
-
+	
 	
 	<script>
 		$(document).ready(function(){
