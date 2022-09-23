@@ -79,7 +79,7 @@
 	<script>
 		$(document).ready(function(){
 			$(".home-btn").on("click", function(){
-				location.href="../main2.jsp"
+				location.href= "/"
 			});
 		});
 	</script>

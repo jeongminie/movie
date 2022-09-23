@@ -69,8 +69,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="login")
-	public String login(Member dto, Model model, HttpServletRequest request) throws Exception {
+	public String login(Member dto, MemberVo vo, Model model, HttpServletRequest request) throws Exception {
 		Member member = service.login(dto);
+		
+		String url = request.getHeader("referer");
+		System.out.println(url);
 		
 		if(member != null) {
 			logger.info("로그인성공 login ID : " + member.getLoginId() + " user name : " + member.getName());
@@ -83,7 +86,7 @@ public class MemberController {
 			logger.info("로그인 실패 ");
 		}
 		
-		return "redirect:/";
+		return "redirect:"+url;
 	}
 	
 	@RequestMapping(value="idCheck")

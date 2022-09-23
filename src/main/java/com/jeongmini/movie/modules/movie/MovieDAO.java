@@ -16,9 +16,24 @@ public class MovieDAO {
 	
 	private static String namespace = "com.jeongmini.movie.modules.movie.MovieMapper";
 	
-	public List<Movie> selectList() {
-		List<Movie> list = sqlSession.selectList(namespace + ".selectList", "");
+	public List<Movie> selectRunning() {
+		List<Movie> list = sqlSession.selectList(namespace + ".selectRunning", "");
 		return list;
+	}
+	
+	public Movie selectMovie(MovieVO vo) {
+		Movie movie = sqlSession.selectOne(namespace + ".selectMovie", vo);
+		return movie;
+	}
+	
+	public List<Movie> selectBoxofficeAPI() {
+		List<Movie> list = sqlSession.selectList(namespace + ".selectBoxofficeAPI", "");
+		return list;
+	}
+	
+	public int boxofficeUpdate(Movie dto) {
+		int result = sqlSession.insert(namespace + ".boxofficeUpdate", dto);
+		return result;
 	}
 
 }

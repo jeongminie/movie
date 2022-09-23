@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>    
 <!DOCTYPE html>
 <header>
 	<div class="front-area">
@@ -7,22 +11,30 @@
 			<!-- <a href="#"><img src="/resources/static/image/logo_black.png" class="logo"></a> -->
 		</div>
 		<div class="right-link d-flex justify-content-end">
-			<a href="#" class="mr-3 login" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</a>
-			<a href="#" class="signup">회원가입</a>
+			<c:choose>
+				<c:when test="${not empty loginId}" >
+					<a href="#" class="mr-3 userName">${name } 님</a>
+					<a href="member/logout" class="logout">로그아웃</a>
+				</c:when>
+				<c:otherwise>
+					<a href="#" class="mr-3 login" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</a>
+					<a href="../member/signup" class="signup">회원가입</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<nav class="menu mt-3">
 			<ul class="nav nav-pills nav-fill">
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>예매</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="#">오픈 알림 신청</a></li>
+						<li><a class="nav-link" href="openAlarm">오픈 알림 신청</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>영화</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="#">박스오피스</a></li>
-						<li><a class="nav-link" href="#">상영예정작</a></li>
+						<li><a class="nav-link" href="boxoffice">박스오피스</a></li>
+						<li><a class="nav-link" href="current">현재 상영작</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title dropdown">

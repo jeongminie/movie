@@ -6,7 +6,7 @@
 <mapper namespace="com.jeongmini.movie.modules.movie.MovieMapper">
 	<resultMap id="resultMapObj" type="com.jeongmini.movie.modules.movie.Movie"></resultMap>
 	
-	<select id="selectList" resultMap="resultMapObj">
+	<select id="selectRunning" resultMap="resultMapObj">
 		SELECT 
 			mi.*
 		FROM 
@@ -16,6 +16,61 @@
 		ON 
 			mi.movieCode = rc.movieCode ;
 	</select>
+	
+	<select id="selectMovie" resultMap="resultMapObj">
+		SELECT 
+			mi.*
+		FROM 
+			movieInfo2022 mi
+		WHERE
+			mi.movieCode = #{movieCode} ;
+	</select>
+	
+	<select id="selectBoxofficeAPI" resultMap="resultMapObj">
+		SELECT 
+			mi.*
+			, boa.ranking
+		FROM 
+			movieInfo2022 mi 
+		JOIN boxOfficeAPI boa 
+		ON mi.title LIKE boa.movieNm
+		ORDER BY boa.ranking
+		LIMIT 4
+	</select>
+	
+<!-- 	<insert id="boxofficeInst">
+		INSERT INTO boxOfficeAPI (
+			ranking
+			, movieNm
+			, openDt
+			, audiCnt
+			, audiAcc
+		) VALUES (
+			#{ranking}
+			, #{movieNm}
+			, #{openDt}
+			, #{audiCnt}
+			, #{audiAcc}
+		)
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert> -->
+	
+	<update id="boxofficeUpdate">
+		UPDATE 
+			boxOfficeAPI
+		SET
+			ranking = #{ranking}
+			, movieNm = #{movieNm}
+			, openDt = #{openDt}
+			, audiCnt = #{audiCnt}
+			, audiAcc = #{audiAcc}
+			, updatedAt = now()
+		WHERE
+			ranking = #{ranking}
+	</update>
+
 	
 	
 </mapper>

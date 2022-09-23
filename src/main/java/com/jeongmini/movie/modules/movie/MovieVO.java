@@ -1,6 +1,6 @@
 package com.jeongmini.movie.modules.movie;
 
-public class Movie {
+public class MovieVO {
 	
 	private Integer seq;
 	private Integer openYear;
@@ -87,7 +87,7 @@ public class Movie {
 	public void setStory(String story) {
 		this.story = story;
 	}
-	
+
 	//박스오피스
 	private Integer ranking;
 	private String movieNm;

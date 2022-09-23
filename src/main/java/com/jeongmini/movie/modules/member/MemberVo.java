@@ -20,6 +20,7 @@ public class MemberVo {
 	private Date updatedAt;
 	private String email;
 	private String domain;
+	private String redirectUrl;
 	
 	public Integer getSeq() {
 		return seq;
@@ -99,7 +100,12 @@ public class MemberVo {
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-
+	public String getRedirectUrl() {
+		return redirectUrl;
+	}
+	public void setRedirectUrl(String redirectUrl) {
+		this.redirectUrl = redirectUrl;
+	}
 	
 
 }

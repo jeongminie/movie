@@ -212,11 +212,11 @@ ul {
 .col-5 {
 	padding: 0px;	
 }
-
+/* 
 .form-control {
 	width : 350px;
 	
-}
+} */
 
 .home-btn {
 	border : 1px solid #DADADA;
@@ -232,65 +232,20 @@ ul {
 	border : 0px;
 }
 
-
-
-/* modal */
-.modal {
-	border : 0px;
-	
-}
-
-.modal-content {
-	border : 0px;
-	border-radius: 0px;
-	width : 80%
-}
-
-.modal-header {
-	height : 25px;
-	background-color: #BEB4AF;
-	border-radius: 0px;
-	color : white;
-	align-items : center;
-	margin-bottom: 10px;
-}
-
-.login-btn {
-	border : 1px solid #DADADA;
-	width : 200px;
-	color : white;
-	background-color : #BEB4AF;
-	border : 0px;
-}
-  		
-.login-btn:hover {
-	color : white;
-	background-color : #BEB4AF;
-	border : 0px;
-}
-
 .alarmBtn {
-	margin-top : 10px;
-	height: 30px;
 	width : 250px;
-	background-color : #037b94;
-	border-radius : 5px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.alarmBtn:hover {
-	background-color: #037b94;
-	border : 0px;
+	background-color: #0188A5;
+	border-radius: 5px;
+	border: 0px;
+	margin-top: 10px;
 }
 
 .fa-bell {
 	color : white;
 }
-		
 
 /* modal */
+
 
 .login, .signup {
 	font-size: 13px;

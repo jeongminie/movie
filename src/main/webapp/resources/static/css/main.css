@@ -262,7 +262,7 @@ ul {
 	display : none;
 	width: 100%;
 	height: 100%;
-	opacity: 0.5;
+	opacity: 0.9;
 	background-color : black;
 	border-radius : 5px;
 	position :absolute;
@@ -270,9 +270,13 @@ ul {
 }
 
 .summary {
-	display: flex;
-	margin: 15px;
-	border-bottom: 1px solid #EBEBEB;
+	display:block; 
+	padding : 15px;
+	width : 100%;
+	height : 300px !important;
+	overflow : hidden;
+	text-overflow:ellipsis;
+	/* border-bottom: 1px solid #EBEBEB; */
 }
 
 .booking-btn {
@@ -296,9 +300,6 @@ ul {
     height: auto;
     margin: 0 auto;
     padding: 0 0 50px 0;
-	
-	
-	
 }
 		
 .search-link {
@@ -390,38 +391,15 @@ ul {
 	
 }
 
-/* modal */
-.modal {
-	border : 0px;
+.alarmBtn {
+	width : 250px;
+	background-color: #0188A5;
+	border-radius: 5px;
+	border: 0px;
+	margin-top: 10px;
 }
 
-.modal-content {
-	border : 0px;
-	border-radius: 0px;
-	width : 80%
-}
-
-.modal-header {
-	height : 25px;
-	background-color: #BEB4AF;
-	border-radius: 0px;
+.fa-bell {
 	color : white;
-	align-items : center;
-	margin-bottom: 10px;
 }
 
-.login-btn {
-	border : 1px solid #DADADA;
-	width : 200px;
-	color : white;
-	background-color : #BEB4AF;
-	border : 0px;
-}
-  		
-.login-btn:hover {
-	color : white;
-	background-color : #BEB4AF;
-	border : 0px;
-}
-
-/* modal */

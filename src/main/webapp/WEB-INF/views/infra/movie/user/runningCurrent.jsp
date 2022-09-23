@@ -263,6 +263,8 @@
 		</div>
 	</div>
 	
+	<jsp:include page="../../../include/jsp/loginModal.jsp" />
+	
 	<script>
 		$(document).ready(function(){
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
@@ -271,6 +273,8 @@
 			$('button[data-bs-toggle="tab"]').on("shown.bs.tab", function(){
 				location.href="boxoffice"
 			});
+			
+			
 		});
 	</script>
 	
