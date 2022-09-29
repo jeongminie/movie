@@ -34,7 +34,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 	
-	<title>현재 상영영화</title>
+	<title>상영예정작</title>
 	
 	<style>
 		.tap-menu {
@@ -216,8 +216,8 @@
 		<div class="tap-menu">
 			<nav>
 				<div class="nav nav-tabs" id="nav-tab" role="tablist">
-					<button class="nav-link" id="nav-rank-tab" data-bs-toggle="tab" data-bs-target="#nav-rank" type="button" role="tab" aria-controls="nav-home" aria-selected="true">박스오피스</button>
-					<button class="nav-link active" id="nav-comingsoon-tab" data-bs-toggle="tab" data-bs-target="#nav-comingsoon" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">현재 상영영화</button>
+					<button class="nav-link active" id="nav-rank-tab" data-bs-toggle="tab" data-bs-target="#nav-rank" type="button" role="tab" aria-controls="nav-home" aria-selected="true">현재 상영작</button>
+					<button class="nav-link" id="nav-comingsoon-tab" data-bs-toggle="tab" data-bs-target="#nav-comingsoon" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">상영 예정작</button>
 				</div>
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
@@ -245,13 +245,13 @@
 								    </div>
 								    <div class="btn-util">    
 								        <button type="button" class="btn btn-like" data-no="22048000">
-								            <i class="fa-regular fa-heart"></i> <span>72</span>
+								            <i class="fa-regular fa-heart"></i> <span></span>
 								        </button>    
 								        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
 								        <p class="txt movieStat5" style="display: none">개봉예정</p>    
 								        <p class="txt movieStat6" style="display: none">상영종료</p>    
 								        <div class="case movieStat4" style="">        
-								            <a href="#" class="btn bokdBtn" data-no="22048000" title="영화 예매하기">예매</a>    
+								            <a href="#" class="btn bokdBtn" data-no="22048000" title="영화 예매하기">알림신청</a>    
 								        </div>
 								    </div>
 								</li>
@@ -271,7 +271,7 @@
 			});
 			
 			$('button[data-bs-toggle="tab"]').on("shown.bs.tab", function(){
-				location.href="boxoffice"
+				location.href="premovie"
 			});
 			
 			

@@ -4,6 +4,12 @@
 		font-family: 'Noto Sans KR', sans-serif;
 }
 
+a {
+	text-decoration-line: none;
+	 color: black;
+	
+}
+
 .text-input {
 	width : 250px;
 	margin-right: 10px;

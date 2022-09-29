@@ -23,6 +23,7 @@ public class Member {
 	private Integer postcode;
 	private String address;
 	private String detailAddress;
+	private Integer adminNy; 
 	
 	public Integer getSeq() {
 		return seq;
@@ -119,6 +120,12 @@ public class Member {
 	}
 	public void setDetailAddress(String detailAddress) {
 		this.detailAddress = detailAddress;
+	}
+	public Integer getAdminNy() {
+		return adminNy;
+	}
+	public void setAdminNy(Integer adminNy) {
+		this.adminNy = adminNy;
 	}
 	
 }

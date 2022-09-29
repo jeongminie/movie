@@ -47,34 +47,7 @@
 		</div>
 	</div>
 
-	<!-- modal -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<span class="modal-title">로그인</span>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex justify-content-center">
-					<div>
-						<input type="text" class="form-control mb-2" placeholder="아이디">
-						<input type="password" class="form-control mb-3" placeholder="비밀번호">
-						<button type="button" class="btn login-btn w-100 mb-3">로그인</button>
-						<p class="d-flex justify-content-center">
-							<a href="#" class="text-dark">ID/PW 찾기</a>
-							<span class="mr-3 ml-3">|</span>
-							<a href="#" class="text-dark">회원가입</a>
-						</p>
-					</div>
-					
-				</div>
-				<div class="modal-footer">
-					<!-- <button type="button" class="btn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn deleteBtn">삭제하기</button> -->
-				</div>
-			</div>
-		</div>
-	</div>
+	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
 	<script>
 		$(document).ready(function(){

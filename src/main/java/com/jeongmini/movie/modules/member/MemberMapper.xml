@@ -48,6 +48,7 @@
 			,a.name
 			,a.birth
 			,a.emailFull
+			,a.adminNy
 		FROM
 			user a
 		WHERE 1=1

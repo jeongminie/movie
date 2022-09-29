@@ -5,7 +5,6 @@ body {
 header {
 	width: 100%;
 	padding-top: 10px;
-	border-bottom: 1px solid #BEB4AF;
 	background-color: white;
 }
 
@@ -234,6 +233,7 @@ ul {
 
 .alarmBtn {
 	width : 250px;
+	height : 30px;
 	background-color: #0188A5;
 	border-radius: 5px;
 	border: 0px;
@@ -243,6 +243,462 @@ ul {
 .fa-bell {
 	color : white;
 }
+
+.age-image {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -10px;
+}
+
+/* 영화탭 */
+.tap-menu {
+	width : 60%;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.nav-tabs .nav-link {
+	width : 50%
+}
+
+.nav-tabs .nav-link.active {
+	border-color: #503396 #503396 #fff;
+}
+
+.nav-tabs .nav-link {
+	border: 1px solid #EBEBEB;
+	border-radius: 0px;
+}
+
+.tab-content {
+	margin-top: 50px;
+}
+
+.movie-list {
+    letter-spacing: 0;
+}
+
+.movie-list ul {
+    margin-left: -40px;
+}	
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.movie-list ul li {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    width: 230px;
+    height: 450px;
+    margin: 0 0 0 60px;
+    padding: 0;
+    background-color: #fff;
+}
+
+.movie-list ul li .movie-list-info {
+    overflow: hidden;
+    display: block;
+    position: relative;
+    height: 331px;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+.movie-list ul li.no-img .movie-list-info .rank {
+    background-image: none;
+}
+
+.movie-list ul li .movie-list-info img.poster {
+    width: 230px;
+    height: 331px;
+}
+
+.movie-list ul li .movie-list-info .movie-score {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 230px;
+    height: 331px;
+    color: #fff;
+    opacity: 0;
+}
+
+.movie-list ul li .movie-list-info .movie-score .wrap {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    color: #fff;
+    background-color: rgba(0,0,0,.8);
+}
+
+.movie-list ul li .tit-area {
+    position: relative;
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 0 0 0 30px;
+    line-height: 25px;
+}
+
+.movie-list ul li .tit-area .movie-grade {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -10px;
+}
+
+.movie-list ul li .tit-area .tit {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 2px 0 0 1px;
+    font-size: 1.3333em;
+    font-weight: 400;
+    margin: 0px;
+}
+
+.movie-list ul li .rate-date {
+    overflow: hidden;
+    padding: 0px 0 0 0;
+}
+
+.movie-list ul li .rate-date .date {
+    display: flex;
+    justify-content: center;
+}
+
+.movie-list ul li .rate-date span.rate {
+    margin: 0 7px 0 0;
+    padding: 0 8px 0 0;
+}
+
+.movie-list ul li .rate-date span {
+    display: block;
+    position: relative;
+   /*  float: left; */
+}
+
+.movie-list ul li .btn-util {
+    overflow: hidden;
+    /* position: absolute; */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 36px;
+    margin-top: 5px;
+}
+
+.movie-list ul li .btn-util .btn-like {
+    float: left;
+    width: 72px;
+    height : 30px;
+    margin: 0;
+    padding-top: 3px;
+    font-size: .8667em;
+    border-color: #ebebeb;
+}
+
+.movie-list ul li .btn-util .case {
+    float: left;
+    width: 153px;
+    margin-left: 5px;
+}
+
+
+.movie-list ul li .btn-util .case .btn {
+    display: block;
+    float: left;
+    width: 100%;
+    height : 30px;
+    margin: 0;
+    padding-top: 3px;
+    color : white !important;
+    background-color: #503396;
+    border : 0px;
+}
+
+/* 극장탭 */
+  	.theater-detail-page {
+	position: relative;
+	z-index: 1;
+	height: 190px;
+	margin: 0;
+	color: #ccc;
+	background-color: #111;
+}
+
+.theater-detail-page .bg-img {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	z-index: 1;
+	width: 1100px;
+	margin: 0 0 0 -550px;
+	height: 100%;
+	background-position: center 0;
+	background-repeat: no-repeat;
+}
+
+.theater-detail-page .bg-mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	background: url(https://img.megabox.co.kr/static/pc/images/movie/bg-movie-detail-mask.png) no-repeat center 0;
+}
+
+.theater-detail-page .theater-all {
+	position: relative;
+	z-index: 4;
+	width: 1100px;
+	height: 100%;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.theater-detail-page .theater-all .theater-area-list {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth1 {
+  		border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth1>li {
+    float: left;
+    margin-left: 72px;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth1>li>.depth1 {
+    position: relative;
+    display: block;
+    color: #fff !important;
+    line-height: 60px;
+    padding: 0 5px;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth1:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth2 {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    padding: 25px 30px;
+    background-color: #fff ;
+    border-radius: 8px;
+    z-index: 10;
+    box-shadow: 10px 10px 10px rgb(0 0 0 / 20%);
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth2 ul li {
+    float: left;
+    margin: 5px 0;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth2 ul li a {
+    position: relative;
+    display: block;
+    vertical-align: middle;
+    color: #444;
+    padding: 0 11px;
+}
+
+.theater-detail-page .theater-all .theater-area-list .area-depth2 ul li a:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1px;
+    height: 12px;
+    margin-top: -6px;
+    background-color: #d8d9db;
+}
+
+.theater-detail-page .theater-all .name {
+    overflow: hidden;
+    padding: 20px 0 0 0;
+    text-align: center;
+    color: #fff;
+    font-size: 3.0666em;
+    font-weight: 400;
+    line-height: 1.1;
+    text-shadow: 2px 2px 10px rgb(0 0 0 / 70%);
+}
+
+.calendarTable{
+	margin : auto;
+	width : 1200px;
+	margin-top: 20px;
+}
+
+	.calendarTable tr td {
+	 text-align: center;
+}
+
+.theater-list-box {
+    margin: auto;
+ 			width: 1200px;
+    border-top: 0;
+}
+
+.theater-list-box .theater-list {
+    margin-top: 30px;
+}
+
+.theater-list-box .theater-tit {
+    width: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    display: block;
+    padding: 10px 20px;
+    background-color: #f7f8f9;
+    border-top: 1px solid #eaeaea!important;
+    border-bottom: 1px solid #eaeaea;
+    margin-top: -1px!important;
+    margin-bottom: 20px;
+} 
+
+.theater-list-box .theater-tit p {
+    float: left;
+    padding: 0;
+    margin: 0 5px 0 0;
+    font-weight: 400;
+}
+
+.theater-list-box .theater-list .theater-type-box {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-type {
+    text-align: left;
+    width: 170px;
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    padding: 0!important;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time {
+    width: 100%;
+    margin-left: 190px;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-type p.theater-name {
+    font-size: 1.2em;
+    color: #444;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1em;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-type p.chair {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1em;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-type-area {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100px;
+    background-color: #f2f4f5;
+    text-align: center;
+    color: #444;
+    font-weight: 700;
+    border-bottom: 0;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time-box {
+    display: table-cell;
+    width: 800px;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table {
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    width: 800px;
+    margin-left: 9px;
+    width: auto;
+    table-layout: auto;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table colgroup {
+    display: none;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td {
+    width: 99px;
+    border-right: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    text-align: center;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab {
+    width: 100%;
+    height: 69px;
+    display: table;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab .txt-center {
+    display: table-cell;
+    vertical-align: middle;
+    position: relative;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab .txt-center a {
+    display: inline-block;
+    width: 100%;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab .ico-box {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab p.time {
+    font-size: 1.2em;
+    color: #444;
+    font-weight: 400;
+    line-height: 1em;
+    font-family: Roboto;
+    margin: 0px;
+}
+
+.reserve.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td .td-ab p.chair {
+    color: #01738b;
+    margin: 0px;
+}
+
+.theater-list-box .theater-list .theater-type-box .theater-time .time-list-table tbody tr td {
+    text-align: center;
+}
+
+		
 
 /* modal */
 

@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="d-flex">
 	<a href="#" class="display-4 text-dark col-1" id="logo">Title</a>
 	<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
 		<ul class="nav">
-		    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-		    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-		    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
+			<c:choose>
+				<c:when test="${not empty loginId}" >
+					<a href="#" class="userName" style="margin-right: 10px">${name } 님</a>
+					<a href="../member/logout" class="logout">로그아웃</a>
+				</c:when>
+				<c:otherwise>
+					<a href="../admin/login" class="mr-3 login">로그인</a>
+				</c:otherwise>
+			</c:choose>
 		</ul>                        
 	</nav>
 </header>

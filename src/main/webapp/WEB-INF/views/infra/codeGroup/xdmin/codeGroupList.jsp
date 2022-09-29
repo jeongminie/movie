@@ -186,23 +186,23 @@
 	</div>
 	
 	<!-- modal -->
-		<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content" role="document">
-					<div class="modal-header">
-						<h5 class="modal-title">코드그룹 삭제</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body d-flex align-items-center">
-						<p></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-						<button type="button" class="btn deleteBtn modalDeleteBtn" id="cgDeleteBtn">삭제</button>
-					</div>
+	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" role="document">
+				<div class="modal-header">
+					<h5 class="modal-title">코드그룹 삭제</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body d-flex align-items-center">
+					<p></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
+					<button type="button" class="btn deleteBtn modalDeleteBtn" id="cgDeleteBtn">삭제</button>
 				</div>
 			</div>
 		</div>
+	</div>
 	
 	<script>
 		$("#startDate").datepicker({

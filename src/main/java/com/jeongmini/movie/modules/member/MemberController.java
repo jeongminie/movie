@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.python.core.exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import com.jeongmini.movie.modules.code.Code;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
 
 @Controller
-@RequestMapping(value="/member/")
+@RequestMapping(value= "/member/")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
@@ -80,13 +81,22 @@ public class MemberController {
 			
 			HttpSession session = request.getSession();
 			
+			session.setAttribute("sessSeq", member.getSeq());
 			session.setAttribute("loginId", member.getLoginId());
 			session.setAttribute("name", member.getName());
+			session.setAttribute("adminNy", member.getAdminNy());
+			
+			System.out.println(member.getAdminNy());
 		} else {
 			logger.info("로그인 실패 ");
 		}
 		
-		return "redirect:"+url;
+		if(member.getAdminNy() == 1) {
+			return "redirect:../code/codeList";
+		} else {
+			return "redirect:"+url;
+		}
+		
 	}
 	
 	@RequestMapping(value="idCheck")
@@ -108,12 +118,17 @@ public class MemberController {
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		session.removeAttribute("loginId");
-		session.removeAttribute("name");
+//		session.removeAttribute("loginId");
+//		session.removeAttribute("name");
+		session.invalidate();
+		
+		String url = request.getHeader("referer");
+		
 		
 		logger.info("로그아웃 완료");
 		
-		return "redirect:/";
+		return "redirect:"+url;
 	}
+	
 
 }

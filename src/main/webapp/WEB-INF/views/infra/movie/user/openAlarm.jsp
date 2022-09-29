@@ -138,6 +138,15 @@
 <body>
 	<div id="wrap">
 		<jsp:include page="../../../include/jsp/header_white.jsp" />
+		<div class="page-util">
+			<div class="inner-wrap">
+				<div class="location">
+					<i class="fa-solid fa-house" onclick='location.href="/"' style="cursor:pointer"></i>
+					<a href="running">예매</a>
+					<a href="premovie">오픈 알림 신청</a>
+				</div>
+			</div>
+		</div>
 		<div id="bg">
 			<div class="bg-pattern"></div>
 			<img height="885px" src="/resources/static/2022/<c:out value='${item.movieCode }'/>.png" onerror="noImg(this, 'main');">

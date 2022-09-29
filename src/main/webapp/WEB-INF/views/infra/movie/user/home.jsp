@@ -64,7 +64,7 @@
 								</div>
 								<form method="post" id="form" name="form">
 									<div class="alarm">
-										<button type="button" class="alarmBtn" data-movie-code="${list.movieCode }"><i class="fa-regular fa-bell"></i></button>
+										<button type="button" class="alarmBtn" data-no="${list.movieCode }"><i class="fa-regular fa-bell"></i></button>
 									</div>
 								</form>
 							</li>
@@ -106,9 +106,9 @@
 			});
 			
 			$(".alarmBtn").on("click", function(){
-				var movieCode = $(this).data("movie-code");
+				var movieCode = $(this).data("no");
 				
-				$("#form").submit();
+				/* $("#form").submit(); */
 
 				location.href="movie/openAlarm?movieCode="+movieCode;
 			});

@@ -21,6 +21,11 @@ public class MovieDAO {
 		return list;
 	}
 	
+	public List<Movie> selectPremovie() {
+		List<Movie> list = sqlSession.selectList(namespace + ".selectPremovie", "");
+		return list;
+	}
+	
 	public Movie selectMovie(MovieVO vo) {
 		Movie movie = sqlSession.selectOne(namespace + ".selectMovie", vo);
 		return movie;

@@ -9,12 +9,30 @@
 	<select id="selectRunning" resultMap="resultMapObj">
 		SELECT 
 			mi.*
+			, boa.ranking
 		FROM 
-			movieInfo2022 mi
+			movieInfo2022 mi 
+		LEFT JOIN 
+			boxOfficeAPI boa 
+		ON 
+			mi.title LIKE boa.movieNm
 		JOIN 
 			runningCurrent rc 
 		ON 
-			mi.movieCode = rc.movieCode ;
+			mi.movieCode = rc.movieCode 
+		ORDER BY ISNULL(boa.ranking), boa.ranking ASC
+	</select>
+	
+	<select id="selectPremovie" resultMap="resultMapObj">
+		<![CDATA[
+		SELECT 
+			mi.* 
+		FROM 
+			movieInfo2022 mi 
+		WHERE 
+			DATE_FORMAT(now(), '%Y.%m.%d') <= STR_TO_DATE(mi.openDate , '%Y.%m.%d') 
+		ORDER BY mi.openDate ASC
+		]]>
 	</select>
 	
 	<select id="selectMovie" resultMap="resultMapObj">

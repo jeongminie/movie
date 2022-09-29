@@ -3,11 +3,6 @@ $(document).ready(function(){
 		location.href="member/signup";
 	});
 	
-	$(".nav-txt-community").on("click", function(){
-		location.href="/community";
-		
-	});
-	
 	$(".nav-sub").hide();
 	
 	$(".nav-title-item, .nav-sub").on("mouseover", function(){

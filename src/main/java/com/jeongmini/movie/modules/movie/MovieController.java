@@ -1,5 +1,10 @@
 package com.jeongmini.movie.modules.movie;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,19 +23,22 @@ public class MovieController {
 	@Autowired
 	MovieServiceImpl service;
 	
-	@RequestMapping(value="current")
+	@RequestMapping(value="running")
 	public String runningCurrentView(Model model) throws Exception {
 		List<Movie> list = service.selectRunning();
 		
 		model.addAttribute("list", list);
 		
-		return "infra/movie/user/runningCurrent";
+		return "infra/movie/user/running";
 	}
 	
-	@RequestMapping(value="boxoffice")
-	public String boxofficeView() throws Exception {
+	@RequestMapping(value="premovie")
+	public String boxofficeView(Model model) throws Exception {
+List<Movie> list = service.selectPremovie();
 		
-		return "infra/movie/user/boxoffice";
+		model.addAttribute("list", list);
+		
+		return "infra/movie/user/premovie";
 	}
 	
 	@RequestMapping(value="openAlarm")
@@ -43,6 +51,7 @@ public class MovieController {
 		
 		return "infra/movie/user/openAlarm";
 	}
+	
 	
 	@RequestMapping(value="boxofficeApi")
 	public String boxOfficeXdminView(Model model) throws Exception {

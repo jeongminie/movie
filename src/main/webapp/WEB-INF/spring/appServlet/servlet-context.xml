@@ -23,4 +23,15 @@
 	
 	<context:component-scan base-package="com.jeongmini.movie." />
 	
+ 	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/resources/**" />
+			<exclude-mapping path="/" />
+			<exclude-mapping path="/member/login" />
+			<exclude-mapping path="/member/signup" />
+			<beans:bean id="CheckLoginSessionInterception" class="com.jeongmini.movie.common.interceptor.CheckLoginSessionInterception"/>
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>

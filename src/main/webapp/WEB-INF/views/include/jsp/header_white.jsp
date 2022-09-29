@@ -14,7 +14,7 @@
 			<c:choose>
 				<c:when test="${not empty loginId}" >
 					<a href="#" class="mr-3 userName">${name } 님</a>
-					<a href="member/logout" class="logout">로그아웃</a>
+					<a href="../member/logout" class="logout">로그아웃</a>
 				</c:when>
 				<c:otherwise>
 					<a href="#" class="mr-3 login" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</a>
@@ -27,21 +27,21 @@
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>예매</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="openAlarm">오픈 알림 신청</a></li>
+						<li><a class="nav-link" href="../movie/running">오픈 알림 신청</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>영화</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="boxoffice">박스오피스</a></li>
-						<li><a class="nav-link" href="current">현재 상영작</a></li>
+						<li><a class="nav-link" href="running">현재 상영작</a></li>
+						<li><a class="nav-link" href="premovie">상영 예정작</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>극장</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="#">위치</a></li>
-						<li><a class="nav-link" href="#">상영시간표</a></li>
+						<li><a class="nav-link" href="theater">위치</a></li>
+						<li><a class="nav-link" href="time">상영시간표</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title">
@@ -52,15 +52,5 @@
 		<div class="user">
 			<a href="#"><i class="fa-solid fa-user"></i></a>
 		</div>	
-	</div>
-	<div class="page-util">
-		<div class="inner-wrap">
-			<div class="location">
-				<i class="fa-solid fa-house"></i>
-				<a href="#" title="예매 페이지로 이동">극장</a>
-				<a href="#" title="예매 페이지로 이동">상영시간표</a>
-			</div>
-			
-		</div>
 	</div>
 </header>

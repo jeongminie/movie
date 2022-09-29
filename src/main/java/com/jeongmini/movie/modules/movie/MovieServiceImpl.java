@@ -18,6 +18,13 @@ public class MovieServiceImpl implements MovieService {
 	}
 	
 	@Override
+	public List<Movie> selectPremovie() throws Exception {
+		List<Movie> list = dao.selectPremovie();
+
+		return list;
+	}
+	
+	@Override
 	public Movie selectMovie(MovieVO vo) throws Exception {
 		Movie movie = dao.selectMovie(vo);
 		
