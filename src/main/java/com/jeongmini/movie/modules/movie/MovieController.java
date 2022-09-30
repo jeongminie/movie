@@ -1,10 +1,5 @@
 package com.jeongmini.movie.modules.movie;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -75,6 +69,14 @@ List<Movie> list = service.selectPremovie();
 		}
 		
 		return result;
+	}
+	
+	@RequestMapping(value="test.do")
+	@ResponseBody
+	public String test(MovieVO vo) throws Exception {
+		System.out.println("넘어옸나");
+		
+		return "infra/movie/user/time"; 
 	}
 	
 

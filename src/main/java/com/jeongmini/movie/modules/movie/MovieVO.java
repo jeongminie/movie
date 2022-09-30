@@ -126,5 +126,7 @@ public class MovieVO {
 		this.audiAcc = audiAcc;
 	}
 	
+	
+	
 
 }

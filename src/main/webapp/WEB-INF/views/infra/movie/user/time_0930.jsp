@@ -200,86 +200,80 @@
 			});
 			
 			$.ajax({
-				type : 'get',
-				url : 'http://127.0.0.1:5000/tospring',
-				data : {},
-				dataType : 'json',
-				success : function(data) {
-					console.log(data)
+				  type : 'get',
+				  url : 'http://127.0.0.1:5000/tospring',
+				  data : {},
+				  dataType : 'json',
+				  success : function(response) {
+					var dic = response
+					console.log(dic)
 					
-					for (var key in data) {
-						
-						
-						
-						var theaterTit = '<div class="theater-list"><div class="theater-tit">'+key+'</div>'
-						console.log(theaterTit)
-						$(".theater-list-box").append(theaterTit);
-						
-						var key2 = Object.keys(data[key])
-						
+					var key = Object.keys(dic)
+
+					for (var key in dic) {
+						console.log("key : " + key + " key2 : " + Object.keys(dic[key])  +", value : " + Object.values(dic[key]));
+						var key2 = Object.keys(dic[key]) //dic2의 키
+						console.log(key2)
 						for(var i = 0; i < key2.length; i++) {
+							console.log(Object.values(dic[key][key2[i]])) //정직한후보 n관의 시간
+							console.log()
+							for(var j = 0; j < dic[key][key2[i]].length; j++) {
+								console.log(Object.values(dic[key][key2[i]][j]))								
+							}
 							
-							var theaterType = '<div class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2[i] +'관</p></div></div></div>'
-							console.log(theaterType)
-							
-							
-							var key2 = Object.keys(data[key]) //dic2의 키
-							console.log(key2)
-							
-							console.log(data[key][key2[i]]) //n관 배열
-							//console.log(data[key][key2[i]].length)
-							
-							
-								//console.log(data[key][key2[i]][j])
-							
-							var theaterTime = 
-								'<div class="theater-time">'
-									+'<div class="theater-time-box">'
-										+'<table class="time-list-table">'
-											+'<tbody>'
-												+'<tr>'
-												
-												+'</tr>'
-											+'</tbody>'
-										+'</table>'
-									+'</div>'
-								+'</div>'
-								
-								for(var j = 0; j < data[key][key2[i]].length; j++) {
-									var td = 
-										'<td>'
-											+'<div class="td-ab">'
-												+'<div class="txt-center">'
-													+'<p class="time">'+ data[key][key2[i]][j][0] +'</p>'
-													+'<p class="chair">'+ data[key][key2[i]][j][1] +'</p>'
-												+'</div>'
-											+'</div>'
-										+'</td>'
-									
-									console.log(td)
-								}
-								
-						
 						}
-						
-						/* $(".theater-list-box").append(
+						/* console.log(Object.values(dic[key][key2[0]][0]))
+						console.log(Object.values(dic[key][key2[1]])) */
+					}
+					
+					for (var key in dic) {
+						var key2 = Object.keys(dic[key]) //dic2의 키
+
+						$(".theater-list-box").append(
 							'<div class="theater-list">'
 								+'<div class="theater-tit">'+key+'</div>'
-							+'</div>'
-						) */
+						)
+
+						for(var i = 0; i < key2.length; i++) {
+							for(var j = 0; j < dic[key][key2[i]].length; j++) {
+								$(".theater-tit").after(
+										'<div class="theater-type-box">'
+											+'<div class="theater-type">'
+												+'<p class="theater-name">'+ key2[i] +'관</p>'
+											+'</div>'
+											+'<div class="theater-time">'
+												+'<div class="theater-time-box">'
+												+'</div>'
+											+'</div>'
+								)
+							}
+							$(".theater-type").html("")
+						}
+					} //for
+					
+					
+					
+ 					$(".theater-type-box").after(
+								'</div>' //theater-type-box
+							+'</div>' //list		
+					)
+					
 						
-						
-						/* $(".theater-tit").after(
-							'<div class="theater-type-box">'	
-								+'<div class="theater-type">'
-									+'<p class="theater-name">'+ key2[i] +'관</p>'
-								+'</div>'
-							+'</div>'
-						) */
-						
-						console.log("---------------------")
-						
-					}
++'<table class="time-list-table">'
+	+'<tbody>'
+		+'<tr>'
+			+'<td>'
+				+'<div class="td-ab">'
+					+'<div class="txt-center">'
+						+'<p class="time">'+ val[i] +'</p>'
+						+'<p class="chair">'+ val[i] +'</p>'
+					+'</div>'
+				+'</div>'
+			+'</td>'
+		+'</tr>'
+	+'</tbody>'
++'</table>'
+							
 					
 				  },
 				  error : function() {

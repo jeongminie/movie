@@ -326,7 +326,7 @@
 					return false;
 				}
 				
-				if(postcode == null || postcode == "") {
+				/* if(postcode == null || postcode == "") {
 					alert("우편번호를 입력하세요");
 					$("#postcode").focus();
 					
@@ -338,7 +338,7 @@
 					$("#detailAddress").focus();
 					
 					return false;
-				}
+				} */
 				
 				$("#signupForm").submit();
 				

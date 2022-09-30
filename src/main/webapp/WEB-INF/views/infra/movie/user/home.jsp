@@ -53,14 +53,11 @@
 						<c:forEach items="${list }" var="list" varStatus="status">
 							<li class="rank-item">
 								<p class="rank">${list.ranking }<span class="ir">위</span></p>
-								<img class="poster" src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png">				
+								<img class="poster" src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" />				
 								<div class="fade-wrap">
 									<div class="summary h-75">
-										${list.story }
+										<span>${list.story }</span>
 									</div>
-									<!-- <div class="score">
-										<p>관람평</p>
-									</div> -->
 								</div>
 								<form method="post" id="form" name="form">
 									<div class="alarm">
