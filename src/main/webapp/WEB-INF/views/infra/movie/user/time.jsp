@@ -179,6 +179,7 @@
 						</table>	
 					</div>
 					<div class="reserve theater-list-box">
+					<div class="theater-type-box"></div>
 					</div>
 				</div>
 			</div>
@@ -221,7 +222,7 @@
 							
 							var theaterType = '<div class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2[i] +'관</p></div></div></div>'
 							console.log(theaterType)
-							
+							$(".theater-type-box").html(theaterType);
 							
 							var key2 = Object.keys(data[key]) //dic2의 키
 							console.log(key2)
