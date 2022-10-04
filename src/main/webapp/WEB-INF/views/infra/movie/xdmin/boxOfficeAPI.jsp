@@ -126,6 +126,7 @@
 							success:function(data){
 								if(data.result == "success") {
 									console.log(movieNm)
+									
 								} else {
 									alert("DB INSERT 실패");
 								}

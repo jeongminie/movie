@@ -179,7 +179,6 @@
 						</table>	
 					</div>
 					<div class="reserve theater-list-box">
-					<div class="theater-type-box"></div>
 					</div>
 				</div>
 			</div>
@@ -208,23 +207,32 @@
 				success : function(data) {
 					console.log(data)
 					
+					
+					
 					for (var key in data) {
-						
-						
-						
+						 
 						var theaterTit = '<div class="theater-list"><div class="theater-tit">'+key+'</div>'
 						console.log(theaterTit)
+						
 						$(".theater-list-box").append(theaterTit);
 						
 						var key2 = Object.keys(data[key])
+
+						for(var key2 in data[key]) {
 						
-						for(var i = 0; i < key2.length; i++) {
+							var div = '<div class="theater-type-box"></div>'
 							
-							var theaterType = '<div class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2[i] +'관</p></div></div></div>'
+							var theaterType = '<div class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
 							console.log(theaterType)
-							$(".theater-type-box").html(theaterType);
 							
-							var key2 = Object.keys(data[key]) //dic2의 키
+							$(".theater-list").append(theaterType);
+							
+							
+						}
+						
+						console.log("---------------------")
+						
+/* 							var key2 = Object.keys(data[key]) //dic2의 키
 							console.log(key2)
 							
 							console.log(data[key][key2[i]]) //n관 배열
@@ -261,7 +269,8 @@
 								}
 								
 						
-						}
+						 */
+						
 						
 						/* $(".theater-list-box").append(
 							'<div class="theater-list">'
@@ -278,10 +287,7 @@
 							+'</div>'
 						) */
 						
-						console.log("---------------------")
-						
 					}
-					
 				  },
 				  error : function() {
 				  	alert('요청 실패쓰');

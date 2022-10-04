@@ -36,8 +36,11 @@ public class AdminController {
 			
 			HttpSession session = request.getSession();
 			
+			session.setAttribute("sessSeq", member.getSeq());
 			session.setAttribute("loginId", member.getLoginId());
 			session.setAttribute("name", member.getName());
+			session.setAttribute("adminNy", member.getAdminNy());
+			
 		} else {
 			logger.info("로그인 실패 ");
 		}

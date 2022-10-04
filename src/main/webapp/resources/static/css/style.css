@@ -595,7 +595,7 @@ ul {
     width: 170px;
     display: table-cell;
     vertical-align: middle;
-    position: absolute;
+    /* position: absolute; */
     top: 20px;
     left: 0;
     padding: 0!important;
