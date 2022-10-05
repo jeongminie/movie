@@ -62,7 +62,7 @@
 							<c:forEach items="${list }" var="list" varStatus="status">
 								<li tabindex="0" class="no-img">
 								    <div class="movie-list-info">    
-								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="noImg(this)" />    
+								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="this.src='/resources/static/image/noImg.png';" />    
 								        <%-- <div class="movie-score" style="opacity: 0;">        
 								            <a href="#" class="wrap movieBtn" data-no="" title="">            
 								                <div class="summary">

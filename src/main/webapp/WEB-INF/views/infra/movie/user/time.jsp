@@ -7,6 +7,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.time.*" %>
+<%@ page import="java.time.format.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +43,6 @@
 </head>
 <body>
 	<div id="wrap">
-	${data}
 		<jsp:include page="../../../include/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
@@ -161,7 +163,8 @@
 						<table class="table calendarTable">
 							<tr>
 								<c:forEach items="${dateList }" var="dateList" varStatus="status">
-									<td>
+									<td class="dateBtn" style="cursor:pointer;">
+									<input type="hidden" value="${year}${month}${dateList}" class="date" >
 										<c:choose>
 											<c:when test="${dayOfWeek[status.index] eq '토'}">
 												<span style="color: blue">${dateList }<br>${dayOfWeek[status.index]}</span> 
@@ -185,117 +188,92 @@
 		</div>
 	</div> 
 	<script>
-		$(document).ready(function(){
-			
-			$("#time").datepicker({
-				dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
-			});
-			
-			$(".depth1, .area-depth2").on("mouseover", function(){
-				$(".theater-detail-page .theater-all .theater-area-list .area-depth2").css("display", "block");
-			});
-			
-			$(".depth1, .area-depth2").on("mouseleave", function(){
-				$(".theater-detail-page .theater-all .theater-area-list .area-depth2").css("display", "none");
-			});
-			
-			$.ajax({
-				type : 'get',
-				url : 'http://127.0.0.1:5000/tospring',
-				data : {},
-				dataType : 'json',
-				success : function(data) {
-					console.log(data)
+	function ajax(date) {
+		$.ajax ({
+			type : 'post',
+			url : 'http://127.0.0.1:5000/tospring',
+			data : {"date":date},
+			dataType : 'json',
+			success : function(data) {
+				var count = 1 
+				
+				for (var key in data) {
 					
+					var theaterTit = '<div id="title'+count+'" class="theater-list"><div class="theater-tit">'+key+'</div>'
+					console.log(theaterTit)
 					
+					$(".theater-list-box").append(theaterTit);
 					
-					for (var key in data) {
-						 
-						var theaterTit = '<div class="theater-list"><div class="theater-tit">'+key+'</div>'
-						console.log(theaterTit)
+					var key2 = Object.keys(data[key])
+					
+					for(var key2 in data[key]) {
 						
-						$(".theater-list-box").append(theaterTit);
+						var theaterType = '<div id="t'+count+'-'+'theater'+key2+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
+						console.log(theaterType)
 						
-						var key2 = Object.keys(data[key])
-
-						for(var key2 in data[key]) {
+						$('#title'+ count).append(theaterType);
 						
-							var div = '<div class="theater-type-box"></div>'
-							
-							var theaterType = '<div class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
-							console.log(theaterType)
-							
-							$(".theater-list").append(theaterType);
-							
-							
-						}
+						var theaterTime = 
+						'<div class="theater-time">'
+							+'<div class="theater-time-box">'
+								+'<table class="time-list-table">'
+									+'<tbody>'
+										+'<tr id="table'+key2+'">'+'</tr>'
+									+'</tbody>'
+								+'</table>'
+							+'</div>'
+						+'</div>'
 						
-						console.log("---------------------")
+						$('#t'+ count + '-' + 'theater'+ key2).append(theaterTime);
 						
-/* 							var key2 = Object.keys(data[key]) //dic2의 키
-							console.log(key2)
-							
-							console.log(data[key][key2[i]]) //n관 배열
-							//console.log(data[key][key2[i]].length)
-							
-							
-								//console.log(data[key][key2[i]][j])
-							
-							var theaterTime = 
-								'<div class="theater-time">'
-									+'<div class="theater-time-box">'
-										+'<table class="time-list-table">'
-											+'<tbody>'
-												+'<tr>'
-												
-												+'</tr>'
-											+'</tbody>'
-										+'</table>'
-									+'</div>'
-								+'</div>'
-								
-								for(var j = 0; j < data[key][key2[i]].length; j++) {
-									var td = 
-										'<td>'
-											+'<div class="td-ab">'
-												+'<div class="txt-center">'
-													+'<p class="time">'+ data[key][key2[i]][j][0] +'</p>'
-													+'<p class="chair">'+ data[key][key2[i]][j][1] +'</p>'
-												+'</div>'
+						for(var i = 0; i < data[key][key2].length; i++) {
+							var td = '<td>'
+										+'<div class="td-ab">'
+											+'<div class="txt-center">'
+												+'<p class="time">'+ data[key][key2][i][0] +'</p>'
+												+'<p class="chair">'+ data[key][key2][i][1] +'</p>'
 											+'</div>'
-										+'</td>'
+										+'</div>'
+									 +'</td>'
 									
-									console.log(td)
-								}
-								
-						
-						 */
-						
-						
-						/* $(".theater-list-box").append(
-							'<div class="theater-list">'
-								+'<div class="theater-tit">'+key+'</div>'
-							+'</div>'
-						) */
-						
-						
-						/* $(".theater-tit").after(
-							'<div class="theater-type-box">'	
-								+'<div class="theater-type">'
-									+'<p class="theater-name">'+ key2[i] +'관</p>'
-								+'</div>'
-							+'</div>'
-						) */
-						
+							$('#t'+ count + '-' + 'theater'+ key2 + ' table tr').append(td)
+						}
 					}
-				  },
-				  error : function() {
-				  	alert('요청 실패쓰');
-				  }
-				})
-			
+					count++
+				}
+			},
+			error : function() {
+				alert('요청 실패쓰');
+			}
+		})
+	
+	}
+		
+	$(document).ready(function(){
+		var date = $(".date").val();
+		ajax(date)
+		
+		$("#time").datepicker({
+			dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
 		});
-	</script>
+		
+		$(".depth1, .area-depth2").on("mouseover", function(){
+			$(".theater-detail-page .theater-all .theater-area-list .area-depth2").css("display", "block");
+		});
+		
+		$(".depth1, .area-depth2").on("mouseleave", function(){
+			$(".theater-detail-page .theater-all .theater-area-list .area-depth2").css("display", "none");
+		});
+		
+		$(".dateBtn").on("click", function(){
+			date =  $(this).children(".date").val();
+			
+			$(".theater-list-box").empty();
+			ajax(date)
+		})
+		
+	});
+</script>
 	
 	
 </body>

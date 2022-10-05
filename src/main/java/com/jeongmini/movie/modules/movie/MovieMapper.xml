@@ -20,7 +20,7 @@
 			runningCurrent rc 
 		ON 
 			mi.movieCode = rc.movieCode 
-		ORDER BY ISNULL(boa.ranking), boa.ranking ASC
+		ORDER BY ISNULL(boa.ranking), boa.ranking ASC, mi.openDate DESC
 	</select>
 	
 	<select id="selectPremovie" resultMap="resultMapObj">
@@ -30,7 +30,7 @@
 		FROM 
 			movieInfo2022 mi 
 		WHERE 
-			DATE_FORMAT(now(), '%Y.%m.%d') <= STR_TO_DATE(mi.openDate , '%Y.%m.%d') 
+			DATE_FORMAT(now(), '%Y.%m.%d') < STR_TO_DATE(mi.openDate , '%Y.%m.%d') 
 		ORDER BY mi.openDate ASC
 		]]>
 	</select>

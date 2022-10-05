@@ -556,7 +556,7 @@ ul {
 
 .theater-list-box {
     margin: auto;
- 			width: 1200px;
+	width: 100%;
     border-top: 0;
 }
 
@@ -588,6 +588,13 @@ ul {
     overflow: hidden;
     width: 100%;
     position: relative;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.theater-list-box .theater-list .theater-type-box .theater-time {
+    float: left;
+    width: 81%;
+    margin: 20px 0;
 }
 
 .reserve.theater-list-box .theater-list .theater-type-box .theater-type {
@@ -595,7 +602,7 @@ ul {
     width: 170px;
     display: table-cell;
     vertical-align: middle;
-    /* position: absolute; */
+    position: absolute;
     top: 20px;
     left: 0;
     padding: 0!important;
