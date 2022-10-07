@@ -33,15 +33,15 @@
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>영화</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="running">현재 상영작</a></li>
-						<li><a class="nav-link" href="premovie">상영 예정작</a></li>
+						<li><a class="nav-link" href="../movie/running">현재 상영작</a></li>
+						<li><a class="nav-link" href="../movie/premovie">상영 예정작</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title dropdown">
 					<a class="nav-link nav-title-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>극장</a>
 					<ul class="nav-sub dropdown-menu">
-						<li><a class="nav-link" href="theater">위치</a></li>
-						<li><a class="nav-link" href="time">상영시간표</a></li>
+						<li><a class="nav-link" href="../theater/list">위치</a></li>
+						<li><a class="nav-link" href="../theater/time?brchNo=1372">상영시간표</a></li>
 					</ul>
 				</li>
 				<li class="nav-item nav-title">

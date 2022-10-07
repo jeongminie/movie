@@ -79,5 +79,4 @@ List<Movie> list = service.selectPremovie();
 		return "infra/movie/user/time"; 
 	}
 	
-
 }

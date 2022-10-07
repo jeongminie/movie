@@ -24,6 +24,10 @@ public class MemberDAO {
 		return sqlSession.insert(namespace + ".insert", dto);
 	}
 	
+	public int profileUploaded(Member dto) {
+		return sqlSession.insert(namespace + ".profileUploaded", dto);
+	}
+	
 	public Member selectOne(Member dto) {
 		return sqlSession.selectOne(namespace + ".login", dto); 
 	}

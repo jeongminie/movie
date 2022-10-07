@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.python.core.exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeongmini.movie.modules.code.Code;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
 
 @Controller
@@ -129,6 +127,26 @@ public class MemberController {
 		
 		return "redirect:"+url;
 	}
+	
+	@RequestMapping(value="mypage")
+	public String mypageView() {
+		
+		return "infra/member/user/mypage";
+	}
+	
+	@RequestMapping(value="profileUploaded")
+	public String profileInst(Member dto) throws Exception {
+		int result = service.profileUploaded(dto);
+		
+		if(result == 0) {
+			System.out.println("업로드 실패 : " + result);
+		} else {
+			System.out.println("업로드 성공 : " + result);
+		}
+		
+		return "redirect:/member/mypage"; 
+	}
+	
 	
 
 }

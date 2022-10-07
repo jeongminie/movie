@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jeongmini.movie.common.util.EncryptUtils;
+import com.jeongmini.movie.common.util.UtilUpload;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -33,6 +35,30 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return dao.insert(dto);
+	}
+	
+	@Override
+	public int profileUploaded(Member dto) throws Exception {
+		
+		int j = 0;
+		
+    	for(MultipartFile multipartFile : dto.getFileInput() ) {
+    		
+    		if(!multipartFile.isEmpty()) {
+
+    			String pathModule = this.getClass().getSimpleName().toString().toLowerCase().replace("serviceimpl", "");
+	    		UtilUpload.upload(multipartFile, pathModule, dto);
+	    		
+	    		dto.setTableName("memberUploaded");
+	    		dto.setSort(j + 1);
+
+				dao.profileUploaded(dto);
+				j++;
+    		}
+    	}
+    	
+    	return 1;
+		
 	}
 	
 	@Override

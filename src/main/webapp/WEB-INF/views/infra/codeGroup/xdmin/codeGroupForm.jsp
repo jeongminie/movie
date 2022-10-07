@@ -15,6 +15,11 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
+	<!-- js -->
+	<script type="text/javascript" src="/resources/static/js/xdmin/commonXdmin.js"></script>
+	<!-- <script type="text/javascript" src="/resources/static/js/xdmin/constantsXdmin.js"></script> -->
+	<script type="text/javascript" src="/resources/static/js/common/common.js"></script>
+	
 	<!-- fontawesome -->
 	<script src="https://kit.fontawesome.com/9a0994e5cb.js" crossorigin="anonymous"></script>
 	
@@ -103,6 +108,12 @@
 							<div>예비3 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
 							<div>예비1 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 							<div>예비3 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
+							<div>이미지첨부 
+								<input type="file" id="fileInput" class="col-10 mb-2 d-none" multiple="multiple" onChange="upload('fileInput', 0, 1, 0, 0);">
+								<i id="imageUploadBtn" class="fa-regular fa-image" style="position: relative; top: 90px; left: 115px; cursor:pointer;"></i>
+								<div style="width: 420px; height: 150px; background-color: #ECECF1;"></div>
+							</div>
+							
 						</div>
 						<div class="codeInfo col-6">
 							<div>코드그룹 코드 (Another)<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
@@ -167,6 +178,36 @@
 		
 	<script>
 		$(document).ready(function(){
+			
+			//최대첨부파일수, 허용확장자, 각허용가능사이즈, 토탈허용사이즈
+			upload = function(objName, allowedMaxTotalFileNumber, allowedExtdiv, allowedEachFileSize, allowedTotalFileSize) {
+			
+				var totalFileSize = 0;
+				var obj = $("#" + objName +"")[0].files;
+				var fileCount = obj.length;
+				
+				allowedMaxTotalFileNumber = allowedMaxTotalFileNumber == 0 ? MAX_TOTAL_FILE_NUMBER : allowedMaxTotalFileNumber;
+				allowedEachFileSize = allowedEachFileSize == 0 ? MAX_EACH_FILE_SIZE : allowedEachFileSize;
+				allowedTotalFileSize = allowedTotalFileSize == 0 ? MAX_TOTAL_FILE_SIZE : allowedTotalFileSize;
+				
+				//최대 첨부 파일수 확인
+				if(checkUploadedTotalFileNumber(obj, allowedMaxTotalFileNumber, fileCount) == false) { return false; }
+
+				//확장자, 개별 파일 사이즈 확인
+				for (var i = 0 ; i < fileCount ; i++) {
+					if(checkUploadedExt($("#" + objName +"")[0].files[i].name, allowedExtdiv) == false) { return false; }
+					if(checkUploadedEachFileSize($("#" + objName +"")[0].files[i], allowedEachFileSize) == false) { return false; }
+					totalFileSize += $("#" + objName +"")[0].files[i].size;
+				}
+				
+				if(checkUploadedTotalFileSize(totalFileSize, allowedTotalFileSize) == false) { return false; }
+			}
+			
+			
+			$("#imageUploadBtn").on("click", function(){
+				$("#fileInput").click();
+			});
+			
 			var action;
 			var modal = $("#codeGroupDeleteModal");
 			var deleteurl = "codeGroupDelete";
@@ -179,9 +220,9 @@
 			var seq = $("input:hidden[name=seq]");
 			console.log(seq)
 			
-			$(".saveBtn").on("click", function(){
+ 			$(".saveBtn").on("click", function(){
 				
-				var cgSeq = $("#cgSeq").val();
+				/* var cgSeq = $("#cgSeq").val();
 				var cgName = $("#cgName").val();
 				var cgNameEng = $("#cgNameEng").val();
 				var useNy = $("#useNy").val();
@@ -214,7 +255,7 @@
 				} else { //update
 					form.attr("action", "/codeGroup/codeGroupUpdate").submit();
 					alert("수정완료");
-				}
+				} */
 				
 			});
 			

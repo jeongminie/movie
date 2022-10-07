@@ -1,0 +1,38 @@
+document.write('<script type="text/javascript" src="/resources/static/js/xdmin/constantsXdmin.js"></script>')
+
+checkUploadedTotalFileNumber = function(obj, allowedMaxTotalFileNumber, fileCount) {
+	if(allowedMaxTotalFileNumber < fileCount){
+		alert("전체 파일 갯수는 "+ allowedMaxTotalFileNumber +"개 까지 허용됩니다.");
+//		$("#file"+seq).val("");
+//		obj.val("");
+		return false;
+	}
+}
+
+checkUploadedExt = function(objName, div) {
+	var ext = objName.split('.').pop().toLowerCase();
+	var extArray = eval("extArray" + div);
+	
+	if(extArray.indexOf(ext) == -1) {
+		alert("허용된 확장자가 아닙니다.");
+//		$("#file"+seq).val("");
+
+		return false;
+	}
+}
+
+checkUploadedEachFileSize = function(obj, allowedEachFileSize) {
+	if(obj.size > allowedEachFileSize){
+		alert("각 첨부 파일 사이즈는 "+kbToMb(allowedEachFileSize)+"MB 이내로 등록 가능합니다.");
+		// $("#file"+seq).val("");
+		return false;
+	}
+}
+
+checkUploadedTotalFileSize = function(totalSize, allowedTotalFileSize) {
+	if(totalSize > allowedTotalFileSize){
+		alert("전체 용량은 "+kbToMb(allowedTotalFileSize)+"M를 넘을 수 없습니다.");
+		$("#file"+seq).val("");
+		return false;
+	}
+}

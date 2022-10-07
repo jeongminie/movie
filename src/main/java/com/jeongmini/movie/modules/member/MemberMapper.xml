@@ -65,5 +65,23 @@
 			loginId = #{loginId}
 	</select>
 	
+	<insert id="profileUploaded">
+		INSERT INTO ${tableName} (
+			path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+		) values (
+			#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+		)
+	</insert>
+	
 
 </mapper>	

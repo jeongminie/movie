@@ -17,6 +17,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -48,8 +49,8 @@
 			<div class="inner-wrap">
 				<div class="location">
 					<i class="fa-solid fa-house" onclick='location.href="/"' style="cursor:pointer"></i>
-					<a href="theater">극장</a>
-					<a href="premovie">위치</a>
+					<a href="#">극장</a>
+					<a href="time?brchNo=1372">상영시간표</a>
 				</div>
 			</div>
 		</div>
@@ -63,82 +64,25 @@
 							<a href="" class="depth1" title="서울 선택">서울</a>
 							<div class="area-depth2">
 								<ul>
-									<li class="on">
-										<a href="/theater?brchNo=1372" title="강남 상세보기">강남
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=0023" title="강남대로(씨티) 상세보기">강남대로(씨티)
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1341" title="강동 상세보기">강동
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1431" title="군자 상세보기">군자
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1003" title="동대문 상세보기">동대문
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1572" title="마곡 상세보기">마곡
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1581" title="목동 상세보기">목동
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1311" title="상봉 상세보기">상봉
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1211" title="상암월드컵경기장 상세보기">상암월드컵경기장
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1331" title="성수 상세보기">성수
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1371" title="센트럴 상세보기">센트럴
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1381" title="송파파크하비오 상세보기">송파파크하비오
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1202" title="신촌 상세보기">신촌
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1561" title="이수 상세보기">이수
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1321" title="창동 상세보기">창동
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1351" title="코엑스 상세보기">코엑스
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1212" title="홍대 상세보기">홍대
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1571" title="화곡 상세보기">화곡
-										</a>
-									</li>
-									<li>
-										<a href="/theater?brchNo=1562" title="ARTNINE 상세보기">ARTNINE
-										</a>
-									</li>
+									<li class="theater"><a href="#" title="강남 상세보기" data-id="1372">강남</a></li>
+									<li class="theater"><a href="#" title="강남대로(씨티) 상세보기" data-id="0023">강남대로(씨티)</a></li>
+									<li class="theater"><a href="#" title="강동 상세보기" data-id="1341">강동</a></li>
+									<li class="theater"><a href="#" class="theater" title="군자 상세보기" data-id="1431">군자</a></li>
+									<li class="theater"><a href="#" class="theater" title="동대문 상세보기" data-id="1003">동대문</a></li>
+									<li class="theater"><a href="#" class="theater" title="마곡 상세보기" data-id="1572">마곡</a></li>
+									<li class="theater"><a href="#" class="theater" title="목동 상세보기" data-id="1581">목동</a></li>
+									<li class="theater"><a href="#" class="theater" title="상봉 상세보기" data-id="1311">상봉</a></li>
+									<li class="theater"><a href="#" class="theater" title="상암월드컵경기장 상세보기" data-id="1211">상암월드컵경기장</a></li>
+									<li class="theater"><a href="#" class="theater" title="성수 상세보기" data-id="1331">성수</a></li>
+									<li class="theater"><a href="#" class="theater" title="센트럴 상세보기" data-id="1371">센트럴</a></li>
+									<li class="theater"><a href="#" class="theater" title="송파파크하비오 상세보기" data-id="1381">송파파크하비오</a></li>
+									<li class="theater"><a href="#" class="theater" title="신촌 상세보기" data-id="1202">신촌</a></li>
+									<li class="theater"><a href="#" class="theater" title="이수 상세보기" data-id="1561">이수</a></li>
+									<li class="theater"><a href="#" class="theater" title="창동 상세보기" data-id="1321">창동</a></li>
+									<li class="theater"><a href="#" class="theater" title="코엑스 상세보기" data-id="1351">코엑스</a></li>
+									<li class="theater"><a href="#" class="theater" title="홍대 상세보기" data-id="1212">홍대</a></li>
+									<li class="theater"><a href="#" class="theater" title="화곡 상세보기" data-id="1571">화곡</a></li>
+									<li class="theater"><a href="#" class="theater" title="ARTNINE 상세보기" data-id="1562">ARTNINE</a></li>
 								</ul>
 							</div>
 						</li>
@@ -146,7 +90,7 @@
 						</li>
 					</ul>
 				</div>
-				<p class="name">강남</p>
+				<p class="name" id="theaterNm">강남</p>
 			</div>
 		</div>
 		<div class="tap-menu">
@@ -189,10 +133,21 @@
 	</div> 
 	<script>
 	function ajax(date) {
+		var query = window.location.search;
+		var param = new URLSearchParams(query);
+		var brchNo = param.get('brchNo');
+		
+		var theaterNm = $('[data-id="'+brchNo+'"]').text();
+		
+		$("#theaterNm").html(theaterNm);
+		
+		console.log(theaterNm)
+		console.log(brchNo);
+		
 		$.ajax ({
 			type : 'post',
 			url : 'http://127.0.0.1:5000/tospring',
-			data : {"date":date},
+			data : {"date":date, "brchNo":brchNo},
 			dataType : 'json',
 			success : function(data) {
 				var count = 1 
@@ -248,9 +203,26 @@
 		})
 	
 	}
+	
+	function getParameter(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 		
 	$(document).ready(function(){
+		$(".theater-list-box").empty();
+		
+		$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
+		});
+		
+		$('button[data-bs-toggle="tab"]').on("shown.bs.tab", function(){
+			location.href="list"
+		});
+		
 		var date = $(".date").val();
+
 		ajax(date)
 		
 		$("#time").datepicker({
@@ -271,6 +243,17 @@
 			$(".theater-list-box").empty();
 			ajax(date)
 		})
+		
+		$(".theater").on("click", function(){
+			date = $(".date").val();
+			var brchNo = $(this).children("a").data("id");
+			
+			location.href="/theater/time?brchNo="+brchNo
+			
+			$(".theater-list-box").empty();
+			ajax(date);
+		})
+		
 		
 	});
 </script>

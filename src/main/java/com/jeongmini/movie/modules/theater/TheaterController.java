@@ -3,16 +3,17 @@ package com.jeongmini.movie.modules.theater;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RequestMapping(value="movie")
+@RequestMapping(value="/theater/")
 @Controller
 public class TheaterController {
 	/*
@@ -74,6 +75,9 @@ public class TheaterController {
 	 * 
 	 * return mav; }
 	 */
+	
+	@Autowired
+	TheaterServiceImpl service;
 	
 	@RequestMapping(value="time")
 	public String theatherView(Model model) throws Exception {
@@ -152,5 +156,20 @@ public class TheaterController {
 		
 		return "infra/movie/user/time";
 	}
+	
+	@RequestMapping(value="list")
+	public String theaterView(Model model) throws Exception {
+
+		return "infra/movie/user/theater"; 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="data")
+	public List<Theater> theaterData() throws Exception {
+		
+		return service.selectTheaterList(); 
+	}
+	
+
 
 }

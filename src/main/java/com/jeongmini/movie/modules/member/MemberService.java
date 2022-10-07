@@ -8,6 +8,8 @@ public interface MemberService {
 	
 	public int insert(Member dto) throws Exception;
 	
+	public int profileUploaded(Member dto) throws Exception;
+	
 	public Member login(Member dto) throws Exception;
 	
 	public boolean idCheck(MemberVo vo) throws Exception;
