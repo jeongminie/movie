@@ -27,7 +27,7 @@ public class MemberDAO {
 	public int profileUploaded(Member dto) {
 		return sqlSession.insert(namespace + ".profileUploaded", dto);
 	}
-	
+
 	public Member selectOne(Member dto) {
 		return sqlSession.selectOne(namespace + ".login", dto); 
 	}

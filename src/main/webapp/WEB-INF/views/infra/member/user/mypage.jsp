@@ -49,14 +49,25 @@
 		background-repeat: no-repeat;
 		overflow:hidden;
 		border-radius: 50%;
+		position: relative;
 	}
 	
-	#image_section {
-		width:100px;
-		height:100px;
-		
+	#imageSection {
+		position: absolute; top:0; left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
-		
+	
+	.profileWrap {
+		width: 500px;
+		height: 500px;
+		margin: auto;
+	}	
+	
+	#preview,#saveBtn {
+		margin: auto;
+	}
 	</style>	
 		
 </head>
@@ -71,31 +82,31 @@
 				</div>
 			</div>
 		</div>
-		<form method="post" id="profileUploaded" action="profileUploaded" enctype="multipart/form-data">
-			<div class="d-flex justify-content-center mt-2">
-				<input type="file" id="fileInput" name="fileInput" class="col-10 mb-2 d-none" accept="image/*">
+<!-- 		<form method="post" id="profileUploaded" action="profileUploaded" enctype="multipart/form-data"> -->
+			<input type="file" id="fileInput" name="fileInput" class="col-10 mb-2 d-none" accept="image/*">
+			<div id="preview" class="profile-img border" style="cursor:pointer;">
+			   <img id="imageSection" src="#" class="w-100 d-none"/>
 			</div>
-			<div class="d-flex justify-content-center">
-				<div id="preview" class="profile-img border" style="cursor:pointer;">
-				   <img id="image_section" src="#" class="d-none w-100"/>
-				</div>
-				<button type="button" id="saveBtn">저장</button>
-			</div>
-		</form>
-
-		
+			<button type="button" id="saveBtn" class="btn saveBtn d-flex justfy-content-center">저장</button>
+		<!-- </form> -->
 	</div> 
 	
 	<script>
 		function readURL(input) {
-			if (input.files && input.files[0]) {
+			var file = input.files[0];
+			console.log(file)
+			
+			if(file.type.startsWith("image")) {
 				var reader = new FileReader();
-				
+				console.log($("#fileInput")[0].files[0])
+
 				reader.onload = function (e) {
-					$("#image_section").attr("src", e.target.result); 
-					$("#image_section").removeClass("d-none")
+					$("#imageSection").attr("src", e.target.result); 
+					$("#imageSection").removeClass("d-none")
 				}
 				reader.readAsDataURL(input.files[0]);
+			} else {
+				alert("이미지 파일만 가능합니다.")
 			}
 		}
 		
@@ -104,7 +115,6 @@
 			$("#fileInput").change(function(e){
 				$("#image_section").removeClass("d-none");
 				readURL(this);
-				
 			});
 				
 			$("#preview").on("click", function(){
@@ -112,7 +122,28 @@
 			});
 			
 			$("#saveBtn").on("click", function(){
-				$("#profileUploaded").submit();
+				var formData = new FormData();
+				formData.append("fileInput", $("#fileInput")[0].files);
+				
+				$.ajax({
+					enctype:"mutipart/form-data",
+					type:"POST",
+					url:"/member/profileUploaded",
+					processData: false,
+					contentType: false,
+					data: formData,
+					dataType : 'json',
+					success:function(data){
+						if(data.result == "success") {
+							alert("등록되었습니다");
+						} else {
+							alert("실패");
+						}
+					},
+					error:function(e){
+						alert("에러");
+					}
+				});
 			})
 			
 		})

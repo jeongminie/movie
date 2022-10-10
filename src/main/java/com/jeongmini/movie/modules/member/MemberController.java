@@ -135,16 +135,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="profileUploaded")
-	public String profileInst(Member dto) throws Exception {
-		int result = service.profileUploaded(dto);
+	@ResponseBody
+	public Map<String, Object> profileInst(Member dto) throws Exception {
+		System.out.println(dto.getFileInput());
 		
-		if(result == 0) {
-			System.out.println("업로드 실패 : " + result);
+		Map<String, Object> result = new HashMap<>();
+		
+		if(service.profileUploaded(dto) == 1) {
+			result.put("result", "success");
 		} else {
-			System.out.println("업로드 성공 : " + result);
+			result.put("result", "fail");
 		}
+		System.out.println(result);
 		
-		return "redirect:/member/mypage"; 
+		return result;
 	}
 	
 	

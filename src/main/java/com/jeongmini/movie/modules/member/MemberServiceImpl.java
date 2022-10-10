@@ -38,30 +38,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int profileUploaded(Member dto) throws Exception {
-		
-		int j = 0;
-		
-    	for(MultipartFile multipartFile : dto.getFileInput() ) {
-    		
-    		if(!multipartFile.isEmpty()) {
-
-    			String pathModule = this.getClass().getSimpleName().toString().toLowerCase().replace("serviceimpl", "");
-	    		UtilUpload.upload(multipartFile, pathModule, dto);
-	    		
-	    		dto.setTableName("memberUploaded");
-	    		dto.setSort(j + 1);
-
-				dao.profileUploaded(dto);
-				j++;
-    		}
-    	}
-    	
-    	return 1;
-		
-	}
-	
-	@Override
 	public Member login(Member dto) throws Exception {
 		String encryptPassword = EncryptUtils.md5(dto.getPassword());
 		dto.setPassword(encryptPassword);
@@ -76,6 +52,32 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return true;
 		}
+	}
+	
+	@Override
+	public int profileUploaded(Member dto) throws Exception{
+		
+		int j = 0;
+		
+    	for(MultipartFile multipartFile : dto.getFileInput()) {
+    		
+    		if(!multipartFile.isEmpty()) {
+
+    			String pathModule = this.getClass().getSimpleName().toString().toLowerCase().replace("serviceimpl", "");
+    			System.out.println("pathModule : " + pathModule);
+	    		UtilUpload.upload(multipartFile, pathModule, dto);
+	    		
+	    		dto.setTableName("memberUploaded");
+	    		dto.setType(1);
+	    		dto.setDefaultNy(j == 0 ? 1 : 0);
+	    		dto.setSort(j + 1);
+
+				dao.profileUploaded(dto);
+				j++;
+    		}
+    	}
+    	
+    	return 1;
 	}
 
 }

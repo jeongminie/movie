@@ -90,7 +90,7 @@
 					<span>STEP2.등록완료</span>
 					<h4 class="mt-4">코드그룹 정보를 입력해주세요</h4>
 				</div>
-				<form method="post" name="form" id="form">
+				<form method="post" name="form" id="form" autocomplete="off" enctype="multipart/form-data">
 					<input type="hidden" name="seq" value="${vo.seq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
@@ -185,6 +185,7 @@
 				var totalFileSize = 0;
 				var obj = $("#" + objName +"")[0].files;
 				var fileCount = obj.length;
+				console.log(obj)
 				
 				allowedMaxTotalFileNumber = allowedMaxTotalFileNumber == 0 ? MAX_TOTAL_FILE_NUMBER : allowedMaxTotalFileNumber;
 				allowedEachFileSize = allowedEachFileSize == 0 ? MAX_EACH_FILE_SIZE : allowedEachFileSize;

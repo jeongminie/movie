@@ -107,5 +107,6 @@
 		WHERE
 			a.seq = #{seq}
 	</update>
-
+	
+	
 </mapper>	
