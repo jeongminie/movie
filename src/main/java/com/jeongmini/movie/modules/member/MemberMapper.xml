@@ -73,6 +73,7 @@
 			,ext
 			,size
 			,delNy
+			,pseq
 		) values (
 			#{path}
 			,#{originalName}
@@ -80,6 +81,7 @@
 			,#{ext}
 			,#{size}
 			,0
+			,#{pseq}
 		)
 	</insert>
 	

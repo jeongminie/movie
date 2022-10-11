@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
@@ -75,7 +76,7 @@ public class MemberController {
 		System.out.println(url);
 		
 		if(member != null) {
-			logger.info("로그인성공 login ID : " + member.getLoginId() + " user name : " + member.getName());
+			logger.info("로그인성공 login ID : " + member.getLoginId() + " user name : " + member.getName() + " user name : " + member.getSeq());
 			
 			HttpSession session = request.getSession();
 			
@@ -135,20 +136,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="profileUploaded")
-	@ResponseBody
-	public Map<String, Object> profileInst(Member dto) throws Exception {
-		System.out.println(dto.getFileInput());
-		
-		Map<String, Object> result = new HashMap<>();
+	public String profileInst(Member dto, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		dto.setPseq((Integer)session.getAttribute("sessSeq"));
 		
 		if(service.profileUploaded(dto) == 1) {
-			result.put("result", "success");
+			logger.info("image 성공");
 		} else {
-			result.put("result", "fail");
+			logger.info("image 실패");
 		}
-		System.out.println(result);
 		
-		return result;
+		return "redirect:mypage";
+		
 	}
 	
 	

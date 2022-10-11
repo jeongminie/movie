@@ -1,9 +1,3 @@
-<!-- jsoup -->
-<%@page import="org.jsoup.nodes.Element"%>
-<%@page import="org.jsoup.select.Elements"%>
-<%@page import="org.jsoup.Jsoup"%>
-<%@page import="java.io.IOException"%>
-<%@ page import="org.jsoup.nodes.Document"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -82,13 +76,13 @@
 				</div>
 			</div>
 		</div>
-<!-- 		<form method="post" id="profileUploaded" action="profileUploaded" enctype="multipart/form-data"> -->
-			<input type="file" id="fileInput" name="fileInput" class="col-10 mb-2 d-none" accept="image/*">
+ 		<form method="post" id="form" action="profileUploaded" enctype="multipart/form-data">
+			<input type="file" id="profileUploaded" name="profileUploaded" class="col-10 mb-2 d-none" accept="image/*">
 			<div id="preview" class="profile-img border" style="cursor:pointer;">
 			   <img id="imageSection" src="#" class="w-100 d-none"/>
 			</div>
 			<button type="button" id="saveBtn" class="btn saveBtn d-flex justfy-content-center">저장</button>
-		<!-- </form> -->
+		</form>
 	</div> 
 	
 	<script>
@@ -98,7 +92,7 @@
 			
 			if(file.type.startsWith("image")) {
 				var reader = new FileReader();
-				console.log($("#fileInput")[0].files[0])
+				console.log($("#profileUploaded")[0].files[0])
 
 				reader.onload = function (e) {
 					$("#imageSection").attr("src", e.target.result); 
@@ -112,17 +106,21 @@
 		
 		$(document).ready(function(){
 				 
-			$("#fileInput").change(function(e){
-				$("#image_section").removeClass("d-none");
+			$("#profileUploaded").change(function(e){
+				$("#imageSection").removeClass("d-none");
 				readURL(this);
 			});
 				
 			$("#preview").on("click", function(){
-				$("#fileInput").click();
+				$("#profileUploaded").click();
 			});
 			
-			$("#saveBtn").on("click", function(){
-				var formData = new FormData();
+			$("#saveBtn").on("click", function(e){
+				console.log($("#profileUploaded")[0].files[0])
+			
+				$("#form").submit();
+				
+/* 				var formData = new FormData();
 				formData.append("fileInput", $("#fileInput")[0].files);
 				
 				$.ajax({
@@ -143,7 +141,7 @@
 					error:function(e){
 						alert("에러");
 					}
-				});
+				}); */
 			})
 			
 		})

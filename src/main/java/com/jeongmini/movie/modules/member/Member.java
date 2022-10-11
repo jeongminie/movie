@@ -18,9 +18,9 @@ public class Member {
 	private String ext;
 	private long size;
 	private Integer delNy;
-	private String pseq;
+	private Integer pseq;
 	
-	private MultipartFile[] fileInput;
+	private MultipartFile[] profileUploaded;
 	
 	private Integer seq;
 	private String loginId;
@@ -203,18 +203,18 @@ public class Member {
 	public void setDelNy(Integer delNy) {
 		this.delNy = delNy;
 	}
-	public String getPseq() {
+	public Integer getPseq() {
 		return pseq;
 	}
-	public void setPseq(String pseq) {
+	public void setPseq(Integer pseq) {
 		this.pseq = pseq;
 	}
-	public MultipartFile[] getFileInput() {
-		return fileInput;
+	public MultipartFile[] getProfileUploaded() {
+		return profileUploaded;
 	}
-	public void setFileInput(MultipartFile[] fileInput) {
-		this.fileInput = fileInput;
+	public void setProfileUploaded(MultipartFile[] profileUploaded) {
+		this.profileUploaded = profileUploaded;
 	}
-	
+
 	
 }

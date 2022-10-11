@@ -18,6 +18,8 @@ public class TheaterDAO {
 	
 	private static String namespace = "com.jeongmini.movie.modules.theater.TheaterMapper";
 	
-	public List<Theater> selectTheaterList(){ return sqlSession.selectList(namespace + ".selectTheaterList", ""); }
+	public List<Theater> selectTheaterList(TheaterVO vo){ return sqlSession.selectList(namespace + ".selectTheaterList", vo); }
+	
+	public List<Theater> selectTheaterCity(){ return sqlSession.selectList(namespace + ".selectTheaterCity", ""); }
 
 }

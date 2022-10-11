@@ -12,8 +12,13 @@ public class TheaterServiceImpl implements TheaterService {
 	TheaterDAO dao;
 	
 	@Override
-	public List<Theater> selectTheaterList() throws Exception {
-		return dao.selectTheaterList();
+	public List<Theater> selectTheaterList(TheaterVO vo) throws Exception {
+		return dao.selectTheaterList(vo);
+	}
+	
+	@Override
+	public List<Theater> selectTheaterCity() throws Exception {
+		return dao.selectTheaterCity();
 	}
 
 }

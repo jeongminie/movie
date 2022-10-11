@@ -6,6 +6,7 @@ public class Theater {
 	private String theaterNm;
 	private String address ;
 	private String callNumber;
+	private String brchNo;
 	
 	public Integer getSeq() {
 		return seq;
@@ -37,6 +38,13 @@ public class Theater {
 	public void setCallNumber(String callNumber) {
 		this.callNumber = callNumber;
 	}
+	public String getBrchNo() {
+		return brchNo;
+	}
+	public void setBrchNo(String brchNo) {
+		this.brchNo = brchNo;
+	}
 
+	
 	
 }

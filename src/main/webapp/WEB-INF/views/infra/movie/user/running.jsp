@@ -34,6 +34,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 	
 	<title>현재 상영작</title>
+	
 </head>
 <body>
 	<div id="wrap">
@@ -56,6 +57,21 @@
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-rank" role="tabpanel" aria-labelledby="nav-rank-tab" tabindex="0">
+					<div class="movie-list-util mt40">
+						<div class="topSort" style="display: block;">
+						    <div class="movie-sorting sortTab">
+						        <span><button type="button" class="btn on" sort-type="rfilmDe">개봉일순</button></span>
+						        <span><button type="button" class="btn" sort-type="title">가나다순</button></span>
+						    </div>
+						</div>
+						<!-- 검색결과 없을 때 -->
+						<p class="no-result-count"><strong id="totCnt">1</strong>개의 영화가 검색되었습니다.</p>
+						<!--// 검색결과 없을 때 -->
+						<div class="movie-search">
+						    <input type="text" title="영화명을 입력하세요" id="ibxMovieNmSearch" name="ibxMovieNmSearch" placeholder="영화명 검색" class="input-text">
+						    <button type="button" class="btn-search-input" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
 					<div class="movie-list">
 						<ul class="list" id="movieList">
 							<c:forEach items="${list }" var="list" varStatus="status">

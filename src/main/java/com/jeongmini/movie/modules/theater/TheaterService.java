@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface TheaterService {
 	
-	public List<Theater> selectTheaterList() throws Exception;
+	public List<Theater> selectTheaterList(TheaterVO vo) throws Exception;
+	
+	public List<Theater> selectTheaterCity() throws Exception;
 
 }

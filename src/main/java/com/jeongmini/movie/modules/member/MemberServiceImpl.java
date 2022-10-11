@@ -2,6 +2,8 @@ package com.jeongmini.movie.modules.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +58,11 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int profileUploaded(Member dto) throws Exception{
+		System.out.println(dto.getProfileUploaded());
 		
 		int j = 0;
 		
-    	for(MultipartFile multipartFile : dto.getFileInput()) {
-    		
+    	for(MultipartFile multipartFile : dto.getProfileUploaded()) {
     		if(!multipartFile.isEmpty()) {
 
     			String pathModule = this.getClass().getSimpleName().toString().toLowerCase().replace("serviceimpl", "");

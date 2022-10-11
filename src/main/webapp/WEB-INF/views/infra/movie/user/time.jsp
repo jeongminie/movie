@@ -1,12 +1,7 @@
-<!-- jsoup -->
-<%@page import="org.jsoup.nodes.Element"%>
-<%@page import="org.jsoup.select.Elements"%>
-<%@page import="org.jsoup.Jsoup"%>
-<%@page import="java.io.IOException"%>
-<%@ page import="org.jsoup.nodes.Document"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
 <%@ page import="java.time.format.*" %>
@@ -60,33 +55,54 @@
 			<div class="theater-all">
 				<div class="theater-area-list">
 					<ul class="area-depth1">
-						<li class="on">
-							<a href="" class="depth1" title="서울 선택">서울</a>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="서울 선택">서울</a>
 							<div class="area-depth2">
-								<ul>
-									<li class="theater"><a href="#" title="강남 상세보기" data-id="1372">강남</a></li>
-									<li class="theater"><a href="#" title="강남대로(씨티) 상세보기" data-id="0023">강남대로(씨티)</a></li>
-									<li class="theater"><a href="#" title="강동 상세보기" data-id="1341">강동</a></li>
-									<li class="theater"><a href="#" class="theater" title="군자 상세보기" data-id="1431">군자</a></li>
-									<li class="theater"><a href="#" class="theater" title="동대문 상세보기" data-id="1003">동대문</a></li>
-									<li class="theater"><a href="#" class="theater" title="마곡 상세보기" data-id="1572">마곡</a></li>
-									<li class="theater"><a href="#" class="theater" title="목동 상세보기" data-id="1581">목동</a></li>
-									<li class="theater"><a href="#" class="theater" title="상봉 상세보기" data-id="1311">상봉</a></li>
-									<li class="theater"><a href="#" class="theater" title="상암월드컵경기장 상세보기" data-id="1211">상암월드컵경기장</a></li>
-									<li class="theater"><a href="#" class="theater" title="성수 상세보기" data-id="1331">성수</a></li>
-									<li class="theater"><a href="#" class="theater" title="센트럴 상세보기" data-id="1371">센트럴</a></li>
-									<li class="theater"><a href="#" class="theater" title="송파파크하비오 상세보기" data-id="1381">송파파크하비오</a></li>
-									<li class="theater"><a href="#" class="theater" title="신촌 상세보기" data-id="1202">신촌</a></li>
-									<li class="theater"><a href="#" class="theater" title="이수 상세보기" data-id="1561">이수</a></li>
-									<li class="theater"><a href="#" class="theater" title="창동 상세보기" data-id="1321">창동</a></li>
-									<li class="theater"><a href="#" class="theater" title="코엑스 상세보기" data-id="1351">코엑스</a></li>
-									<li class="theater"><a href="#" class="theater" title="홍대 상세보기" data-id="1212">홍대</a></li>
-									<li class="theater"><a href="#" class="theater" title="화곡 상세보기" data-id="1571">화곡</a></li>
-									<li class="theater"><a href="#" class="theater" title="ARTNINE 상세보기" data-id="1562">ARTNINE</a></li>
+								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="">
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">경기</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
+						</li>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">인천</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
+						</li>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">대전/충청/세종</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
+						</li>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">부산/대구/경상</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
+						</li>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">광주/전라</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
+						</li>
+						<li class="on area-li">
+							<a href="" class="depth1 area" title="경기 선택">강원</a>
+							<div class="area-depth2">
+								<ul class="area-ul">
+								</ul>
+							</div>
 						</li>
 					</ul>
 				</div>
@@ -136,13 +152,6 @@
 		var query = window.location.search;
 		var param = new URLSearchParams(query);
 		var brchNo = param.get('brchNo');
-		
-		var theaterNm = $('[data-id="'+brchNo+'"]').text();
-		
-		$("#theaterNm").html(theaterNm);
-		
-		console.log(theaterNm)
-		console.log(brchNo);
 		
 		$.ajax ({
 			type : 'post',
@@ -243,14 +252,50 @@
 			$(".theater-list-box").empty();
 			ajax(date)
 		})
+
 		
-		$(".theater").on("click", function(){
+		$(".area").on("mouseover", function(e){
+			var path = $(".area-li").children(".area-depth2").children(".area-ul");
+			path.empty();
+			
+			var city = $(this).text();
+ 			var cityArr = city.split('/')
+
+			city = cityArr[0]
+ 			var city2 = cityArr[1]
+ 			var city3 = cityArr[2]
+			
+			$.ajax({
+				type:"POST"
+				, url:"selectTheater"
+				, data:{"city":city, "city2":city2, "city3":city3}
+				, success:function(data) {
+					
+					for(var i = 0; i < data.length; i++) {
+						var title = data[i].theaterNm.replace("메가박스 ","")
+						path.append('<li class="theater"><a href="#" title="강남 상세보기" data-id="'+data[i].brchNo+'" value="'+title+'">'+title+'</a></li>');
+					}
+				}
+				, error:function(e){
+					alert("에러")
+				}
+			})
+		});
+		
+		
+		$(".area-ul").on("click",'.theater', function(){
 			date = $(".date").val();
 			var brchNo = $(this).children("a").data("id");
+			
+			var theaterNm = $('[data-id="'+brchNo+'"]').val();
+			alert(theaterNm)
+			
+			$("#theaterNm").html(theaterNm)
 			
 			location.href="/theater/time?brchNo="+brchNo
 			
 			$(".theater-list-box").empty();
+			
 			ajax(date);
 		})
 		

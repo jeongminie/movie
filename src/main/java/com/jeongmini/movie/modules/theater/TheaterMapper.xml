@@ -9,10 +9,23 @@
     
     <select id="selectTheaterList" resultMap="resultMapObj">
 		SELECT 
-			* 
+			t.city,
+			t.brchNo,
+			t.theaterNm,
+			t.address,
+			t.callNumber
 		FROM 
-			theater t 
+			theater t
+		WHERE
+			t.city IN (#{city}, #{city2}, #{city3})
+		ORDER BY t.theaterNm
 	</select>
-    
-    
+	
+	<select id="selectTheaterCity" resultMap="resultMapObj">
+		SELECT 
+			*
+		FROM 
+			theater t
+		GROUP BY t.city 
+	</select>
 </mapper>
