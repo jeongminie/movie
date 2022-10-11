@@ -16,9 +16,13 @@
 			t.callNumber
 		FROM 
 			theater t
-		WHERE
-			t.city IN (#{city}, #{city2}, #{city3})
-		ORDER BY t.theaterNm
+		<choose>	
+			<when test="city != null or city2 != null or city3 != null">
+				WHERE
+					t.city IN (#{city}, #{city2}, #{city3})
+				ORDER BY t.theaterNm
+			</when>
+		</choose>
 	</select>
 	
 	<select id="selectTheaterCity" resultMap="resultMapObj">
