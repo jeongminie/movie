@@ -153,6 +153,13 @@
 		var param = new URLSearchParams(query);
 		var brchNo = param.get('brchNo');
 		
+		var theaterNm = $('#'+brchNo).data("id");
+		
+		/* $("#theaterNm").html(theaterNm) */
+		
+		console.log(theaterNm)
+		console.log(date)
+		
 		$.ajax ({
 			type : 'post',
 			url : 'http://127.0.0.1:5000/tospring',
@@ -258,10 +265,10 @@
 			var path = $(".area-li").children(".area-depth2").children(".area-ul");
 			path.empty();
 			
-			var city = $(this).text();
- 			var cityArr = city.split('/')
-
-			city = cityArr[0]
+			var ul = $(this).text();
+ 			var cityArr = ul.split('/')
+			
+ 			var city = cityArr[0]
  			var city2 = cityArr[1]
  			var city3 = cityArr[2]
 			
@@ -270,10 +277,9 @@
 				, url:"selectTheater"
 				, data:{"city":city, "city2":city2, "city3":city3}
 				, success:function(data) {
-					
 					for(var i = 0; i < data.length; i++) {
 						var title = data[i].theaterNm.replace("메가박스 ","")
-						path.append('<li class="theater"><a href="#" title="강남 상세보기" data-id="'+data[i].brchNo+'" value="'+title+'">'+title+'</a></li>');
+						path.append('<li class="theater"><a href="#" title="강남 상세보기" data-id="'+data[i].brchNo+'" id="'+data[i].brchNo+'">'+title+'</a></li>');
 					}
 				}
 				, error:function(e){
@@ -283,20 +289,13 @@
 		});
 		
 		
-		$(".area-ul").on("click",'.theater', function(){
+		$(document).on("click",'.theater', function(){
 			date = $(".date").val();
 			var brchNo = $(this).children("a").data("id");
-			
-			var theaterNm = $('[data-id="'+brchNo+'"]').val();
-			alert(theaterNm)
-			
-			$("#theaterNm").html(theaterNm)
-			
+					
 			location.href="/theater/time?brchNo="+brchNo
-			
+
 			$(".theater-list-box").empty();
-			
-			ajax(date);
 		})
 		
 		

@@ -51,7 +51,7 @@
 		FROM 
 			movieInfo2022 mi 
 		JOIN boxOfficeAPI boa 
-		ON mi.title LIKE boa.movieNm
+		ON REPLACE(mi.title," ","") LIKE REPLACE(boa.movieNm," ","")
 		ORDER BY boa.ranking
 		LIMIT 4
 	</select>

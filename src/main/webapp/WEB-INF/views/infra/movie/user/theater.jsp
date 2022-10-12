@@ -77,6 +77,7 @@
 		#pagination {margin:10px auto;text-align: center;}
 		#pagination a {display:inline-block;margin-right:10px;}
 		#pagination .on {font-weight: bold; cursor: default;color:#777;}
+		
 	</style>	
 		
 </head>
@@ -170,16 +171,24 @@
 					geocoder.addressSearch(el[0].addr, function(result, status) {
 					    // 정상적으로 검색이 완료됐으면 
 					     if (status === kakao.maps.services.Status.OK) {
-					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					    	 var imageSrc = 'https://img.icons8.com/fluency-systems-filled/48/7950F2/marker-m.png', // 마커이미지의 주소입니다    
+					    	    imageSize = new kakao.maps.Size(35, 35) // 마커이미지의 크기입니다
+					    	      
+					    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+					    	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+					    	    markerPosition = new kakao.maps.LatLng(result[0].y, result[0].x); // 마커가 표시될 위치입니다
+					    	    
+					        /* var coords = new kakao.maps.LatLng(result[0].y, result[0].x); */
 							
 					        // 결과값으로 받은 위치를 마커로 표시합니다
 					        var marker = new kakao.maps.Marker({
 					            map: map,
-					            position: coords,
+					            position: markerPosition, 
+					            image: markerImage
 					        });
 							
 				        	var infowindow = new kakao.maps.InfoWindow({
-				        		content: '<div style="width:150px;text-align:center;padding:6px 0;">' + el[0].title + '</div>',
+				        		content: '<div class="infowindow" style="width:150px;text-align:center;padding:6px;">' + el[0].title + '</div>'
 					        });
 				        	
 				        	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));

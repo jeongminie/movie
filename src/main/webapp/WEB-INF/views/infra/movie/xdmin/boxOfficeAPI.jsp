@@ -86,6 +86,7 @@
                         openDt = rows[i]['openDt']; 
                         audiCnt = rows[i]['audiCnt']; 
                         audiAcc = rows[i]['audiAcc']; 
+                        console.log(movieNm)
                     	
                         $("tbody").append(
                     		"<tr>"+
@@ -94,7 +95,7 @@
                     			"<td>"+openDt+"</td>"+
                     			"<td>"+audiCnt+"</td>"+
                     			"<td>"+audiAcc+"</td>"+
-                    			"<input type='hidden' name='boxoffice' value='"+rank+"^"+movieNm+"^"+openDt+"^"+audiCnt+"^"+audiAcc+"'^"+
+                    			'<input type="hidden" name="boxoffice" value="'+rank+'^'+movieNm+'^'+openDt+'^'+audiCnt+'^'+audiAcc+'"^'+
                     		"</tr>"
                     	)
                     }
@@ -107,6 +108,7 @@
 				tableRowCount = tableRow.length -1;
 				
 				var boxoffice = $("input:hidden[name=boxoffice]");
+				console.log(boxoffice)
 					
 				for(let i = 0; i < tableRowCount; i++) {
 					value = boxoffice[i].value.split("^");
@@ -126,6 +128,7 @@
 							success:function(data){
 								if(data.result == "success") {
 									console.log(movieNm)
+									console.log(openDt)
 									
 								} else {
 									alert("DB INSERT 실패");
