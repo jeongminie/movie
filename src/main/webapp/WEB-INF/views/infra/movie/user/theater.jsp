@@ -77,7 +77,7 @@
 		#pagination {margin:10px auto;text-align: center;}
 		#pagination a {display:inline-block;margin-right:10px;}
 		#pagination .on {font-weight: bold; cursor: default;color:#777;}
-		
+		.theaterInfo{height: 200px;margin-left: 70px; margin-top: 10px;}
 	</style>	
 		
 </head>
@@ -105,25 +105,18 @@
 					<div>
 						<span class="d-flex justify-content-center mt-5"></span>
 					</div>
+				    <div class="movie-list-util mt40" style="margin:0px 80px 10px 0px;">
+						<div class="movie-search">
+						    <input type="text" id="thNmSearch" name="thNmSearch" placeholder="지점 검색" class="input-text">
+						    <button type="button" class="btn-search-input" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</div>
+					</div>
 					<div class="map_wrap">
 					    <div id="map" style="width:1000px;height:500px;position:relative;overflow:hidden;margin: auto;"></div>
-					
-					    <div id="menu_wrap" class="bg_white" style="left:80px">
-					        <div class="option">
-					            <div>
-					                <form onsubmit="searchPlaces(); return false;">
-					                    키워드 : <input type="text" value="영화관을 입력하세요" id="keyword" size="15"> 
-					                    <button type="submit">검색하기</button> 
-					                </form>
-					            </div>
-					        </div>
-					        <hr>
-					        <ul id="placesList"></ul>
-					        <div id="pagination"></div>
-					    </div>
 					</div>
-					<c:forEach items="${list }" var="list" varStatus="status">
-					</c:forEach>
+					<div class="theaterInfo">
+					
+					</div>
 				</div>
 			</div>
 		</div>
@@ -132,20 +125,13 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services,clusterer,drawing"></script>
 	
 	<script>
-	$(document).ready(function(){
-		
-		$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
-		});
-		
-		$('button[data-bs-toggle="tab"]').on("shown.bs.tab", function(){
-			location.href="time?brchNo=1372"
-		});
-		
+	function ajax(keyword) {
 		$.ajax({
 			type : 'post',
 			url : '/theater/data',
 			data : {},
 			dataType : 'json',
+			async:false,
 			success : function(data) {
 				
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -160,13 +146,38 @@
 				// 주소-좌표 변환 객체를 생성합니다
 				var geocoder = new kakao.maps.services.Geocoder();
 				
+				// 장소 검색 객체를 생성합니다
+				var ps = new kakao.maps.services.Places(); 
+
+				// 키워드로 장소를 검색합니다
+				ps.keywordSearch(keyword, placesSearchCB); 
+
+				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+				function placesSearchCB (data, status, pagination) {
+				    if (status === kakao.maps.services.Status.OK) {
+						console.log(data)
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+				        // LatLngBounds 객체에 좌표를 추가합니다
+				        var bounds = new kakao.maps.LatLngBounds();
+
+				        for (var i=0; i<data.length; i++) {
+				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+				        }       
+
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				        map.setBounds(bounds);
+				    } 
+				}
+				
 				var list = new Array();
 				
 				for(var i = 0; i < data.length; i++) {
-					list[i] = [{addr:data[i].address, title:data[i].theaterNm}]
+					list[i] = [{id:data[i].brchNo, addr:data[i].address, title:data[i].theaterNm, callNumber:data[i].callNumber}]
 				}
 				
 				list.forEach(function(el, index) {
+					console.log(el)
+					
 					// 주소로 좌표를 검색합니다
 					geocoder.addressSearch(el[0].addr, function(result, status) {
 					    // 정상적으로 검색이 완료됐으면 
@@ -186,6 +197,12 @@
 					            position: markerPosition, 
 					            image: markerImage
 					        });
+					        
+					        marker.id= el[0].id;
+					        
+					        kakao.maps.event.addListener(marker, 'click', function() {
+					            $(".theaterInfo").html('<p class="display-6">'+el[0].title+'</p><span style="color: #01738b!important;">도로명주소 : </span>'+el[0].addr+'<br><span style="color: #01738b!important;">전화번호 : </span>'+el[0].callNumber)
+					      });
 							
 				        	var infowindow = new kakao.maps.InfoWindow({
 				        		content: '<div class="infowindow" style="width:150px;text-align:center;padding:6px;">' + el[0].title + '</div>'
@@ -193,7 +210,7 @@
 				        	
 				        	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 				            kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-
+				            
 							// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 							function makeOverListener(map, marker, infowindow) {
 							    return function() {
@@ -212,6 +229,29 @@
 				});
 			} //success
 		});
+		
+	}
+	
+	$(document).ready(function(){
+		ajax()
+		
+		$("#btnSearch").on("click", function(){
+			var keyword = $("#thNmSearch").val();
+			ajax(keyword)
+		})
+		
+		$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
+		});
+		
+		$('button[data-bs-toggle="tab"]').on("shown.bs.tab", function(){
+			location.href="time?brchNo=1372"
+		});
+		
+		/* $(document).on("click",'marker', function(){
+			alert("d")
+		}) */
+		
+
 	});
 
 	</script>

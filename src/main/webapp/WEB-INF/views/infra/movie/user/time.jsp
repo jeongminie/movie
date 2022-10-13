@@ -106,7 +106,7 @@
 						</li>
 					</ul>
 				</div>
-				<p class="name" id="theaterNm">강남</p>
+				<p class="name" id="theaterNm"></p>
 			</div>
 		</div>
 		<div class="tap-menu">
@@ -148,16 +148,13 @@
 		</div>
 	</div> 
 	<script>
-	function ajax(date) {
+	function ajax(date, theaterNm) {
 		var query = window.location.search;
 		var param = new URLSearchParams(query);
 		var brchNo = param.get('brchNo');
 		
-		var theaterNm = $('#'+brchNo).data("id");
-		
 		/* $("#theaterNm").html(theaterNm) */
 		
-		console.log(theaterNm)
 		console.log(date)
 		
 		$.ajax ({
@@ -228,8 +225,6 @@
 	}
 		
 	$(document).ready(function(){
-		$(".theater-list-box").empty();
-		
 		$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 		});
 		
@@ -237,8 +232,10 @@
 			location.href="list"
 		});
 		
+		$(".theater-list-box").empty();
+		
 		var date = $(".date").val();
-
+		
 		ajax(date)
 		
 		$("#time").datepicker({
@@ -294,6 +291,10 @@
 			var brchNo = $(this).children("a").data("id");
 					
 			location.href="/theater/time?brchNo="+brchNo
+			var theaterNm = $('#'+brchNo).text();
+			alert(theaterNm)
+			
+			$("#theaterNm").innerHTML(theaterNm)
 
 			$(".theater-list-box").empty();
 		})
