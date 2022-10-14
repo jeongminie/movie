@@ -199,6 +199,11 @@ ul {
 	color: #BEB4AF
 }
 
+.dateBtn.on {
+	background-color: #f7f8f9 !important;
+    border-bottom: 3px solid #503396 !important;
+}
+
 .input-box {
 	font-size: 15px;
 }

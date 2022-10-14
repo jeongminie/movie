@@ -35,6 +35,29 @@
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 	
 	<title>상영시간표</title>
+	
+	<style>
+	.table td {
+		padding: 0px;
+	}
+	
+	.table>:not(caption)>*>* {
+		padding: 0px;
+	}
+	
+	.dateBtn {
+		padding: 0px;
+	}
+	
+	.calendarTable .dateBtn {
+	    width: 70px;
+	    height: 72px;
+	    border: 0;
+	    background-color: transparent;
+	    border-bottom: 3px solid transparent;
+	    font-weight: 400;
+	}
+	</style>
 		
 </head>
 <body>
@@ -123,19 +146,21 @@
 						<table class="table calendarTable">
 							<tr>
 								<c:forEach items="${dateList }" var="dateList" varStatus="status">
-									<td class="dateBtn" style="cursor:pointer;">
-									<input type="hidden" value="${year}${month}${dateList}" class="date" >
+									<td>
+									<input type="hidden" value="${year}${month}${dateList}" class="date">
+									<button type="button" class="dateBtn" data-date="${year}${month}${dateList}">
 										<c:choose>
 											<c:when test="${dayOfWeek[status.index] eq '토'}">
-												<span style="color: blue">${dateList }<br>${dayOfWeek[status.index]}</span> 
+												<span class="date" style="color: blue">${dateList }<br>${dayOfWeek[status.index]}</span> 
 											</c:when>
 											<c:when test="${dayOfWeek[status.index] eq '일'}">
-												<span style="color: red">${dateList }<br>${dayOfWeek[status.index]}</span> 
+												<span class="date" style="color: red">${dateList }<br>${dayOfWeek[status.index]}</span> 
 											</c:when>
 											<c:otherwise>
-												${dateList }<br>${dayOfWeek[status.index]}
+												<span class="date">${dateList }<br>${dayOfWeek[status.index]}</span>
 											</c:otherwise>
 										</c:choose>
+									</button>
 									</td>
 								</c:forEach>
 							</tr>
@@ -153,10 +178,6 @@
 		var param = new URLSearchParams(query);
 		var brchNo = param.get('brchNo');
 		
-		/* $("#theaterNm").html(theaterNm) */
-		
-		console.log(date)
-		
 		$.ajax ({
 			type : 'post',
 			url : 'http://127.0.0.1:5000/tospring',
@@ -168,7 +189,6 @@
 				for (var key in data) {
 					
 					var theaterTit = '<div id="title'+count+'" class="theater-list"><div class="theater-tit">'+key+'</div>'
-					console.log(theaterTit)
 					
 					$(".theater-list-box").append(theaterTit);
 					
@@ -177,7 +197,6 @@
 					for(var key2 in data[key]) {
 						
 						var theaterType = '<div id="t'+count+'-'+'theater'+key2+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
-						console.log(theaterType)
 						
 						$('#title'+ count).append(theaterType);
 						
@@ -216,14 +235,7 @@
 		})
 	
 	}
-	
-	function getParameter(name) {
-		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		results = regex.exec(location.search);
-		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	}
-		
+
 	$(document).ready(function(){
 		$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 		});
@@ -235,8 +247,29 @@
 		$(".theater-list-box").empty();
 		
 		var date = $(".date").val();
+		dataDate = $('[data-date='+date+']');
+		$(dataDate).addClass("on");
 		
-		ajax(date)
+		var query = window.location.search;
+		var param = new URLSearchParams(query);
+		var brchNo = param.get('brchNo')
+		
+		$.ajax({
+			type : 'post',
+			url : 'selectTheater',
+			data : {},
+			dataType : 'json',
+			success : function(data) {
+				for(var i = 0; i < data.length; i++) {
+					if(data[i].brchNo == brchNo) {
+						thNm = data[i].theaterNm.replace("메가박스 ","");
+						$("#theaterNm").html(thNm) 
+					}
+				}
+			}
+		});
+		
+		ajax(date);
 		
 		$("#time").datepicker({
 			dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
@@ -251,12 +284,11 @@
 		});
 		
 		$(".dateBtn").on("click", function(){
-			date =  $(this).children(".date").val();
+			date =  $(this).data("date");
 			
 			$(".theater-list-box").empty();
 			ajax(date)
-		})
-
+		});
 		
 		$(".area").on("mouseover", function(e){
 			var path = $(".area-li").children(".area-depth2").children(".area-ul");
@@ -285,20 +317,24 @@
 			})
 		});
 		
-		
 		$(document).on("click",'.theater', function(){
 			date = $(".date").val();
 			var brchNo = $(this).children("a").data("id");
 					
 			location.href="/theater/time?brchNo="+brchNo
-			var theaterNm = $('#'+brchNo).text();
-			alert(theaterNm)
-			
-			$("#theaterNm").innerHTML(theaterNm)
 
 			$(".theater-list-box").empty();
 		})
 		
+		$(".dateBtn").on("click", function(){
+			
+			if ($(this).hasClass("on")) {
+		        $(".on").removeClass('on')
+		     } else {
+		        $(".on").removeClass('on')
+		        $(this).addClass('on')
+		     }
+		})
 		
 	});
 </script>

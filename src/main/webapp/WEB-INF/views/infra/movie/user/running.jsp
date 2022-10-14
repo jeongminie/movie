@@ -35,6 +35,13 @@
 	
 	<title>현재 상영작</title>
 	
+	<style>
+		.noImg {
+			background-color : #F2F2F2;
+		    object-fit : none;
+		}
+	</style>
+	
 </head>
 <body>
 	<div id="wrap">
@@ -77,7 +84,7 @@
 							<c:forEach items="${list }" var="list" varStatus="status">
 								<li tabindex="0" class="no-img">
 								    <div class="movie-list-info">    
-								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="this.src='/resources/static/image/noImg.png';" />    
+								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)" />    
 								        <%-- <div class="movie-score" style="opacity: 0;">        
 								            <a href="#" class="wrap movieBtn" data-no="" title="">            
 								                <div class="summary">
@@ -129,6 +136,11 @@
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
 	<script>
+		function setEmptyImage(img) {
+			img.src='/resources/static/image/noImg.png';
+			$(img).addClass('noImg');
+		}
+	
 		$(document).ready(function(){
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});

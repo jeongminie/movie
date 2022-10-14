@@ -166,13 +166,6 @@ public class TheaterController {
 		return "infra/movie/user/theater"; 
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="data")
-	public List<Theater> theaterData(TheaterVO vo) throws Exception {
-		
-		return service.selectTheaterList(vo); 
-	}
-	
 	@RequestMapping(value="selectTheater")
 	@ResponseBody
 	public List<Theater> selectTheater(Model model, TheaterVO vo) throws Exception {

@@ -128,7 +128,7 @@
 	function ajax(keyword) {
 		$.ajax({
 			type : 'post',
-			url : '/theater/data',
+			url : '/theater/selectTheater',
 			data : {},
 			dataType : 'json',
 			async:false,
