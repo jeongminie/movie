@@ -48,5 +48,34 @@ public class MovieServiceImpl implements MovieService {
 			return true;
 		}
 	}
-
+	
+	@Override
+	public boolean existLike(MovieVO vo) {
+		int count = dao.selectCountLike(vo);
+		System.out.println(count);
+		
+		if(count >= 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean movieLike(MovieVO vo) throws Exception {
+		if(this.existLike(vo)) {
+			dao.movieLikeDel(vo);	
+			return false;
+		} else {
+			dao.movieLikeInst(vo);
+			return true;
+		}
+	}
+	
+	@Override
+	public int totalCountLike(MovieVO vo) throws Exception {
+		
+		return dao.selectTotalCountLike(vo);
+	}
+	
 }

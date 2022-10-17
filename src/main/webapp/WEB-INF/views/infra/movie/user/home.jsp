@@ -59,11 +59,9 @@
 										<span>${list.story }</span>
 									</div>
 								</div>
-								<form method="post" id="form" name="form">
-									<div class="alarm">
-										<button type="button" class="alarmBtn" data-no="${list.movieCode }"><i class="fa-regular fa-bell"></i></button>
-									</div>
-								</form>
+								<div class="alarm">
+									<button type="button" class="alarmBtn" data-no="${list.movieCode }"><i class="fa-regular fa-bell"></i></button>
+								</div>
 							</li>
 						</c:forEach>
 					</ul>

@@ -195,6 +195,7 @@
 					var key2 = Object.keys(data[key])
 					
 					for(var key2 in data[key]) {
+						console.log(data[key][key2][0][2])
 						
 						var theaterType = '<div id="t'+count+'-'+'theater'+key2+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
 						
@@ -202,6 +203,7 @@
 						
 						var theaterTime = 
 						'<div class="theater-time">'
+							+'<div class="theater-type-area">'+data[key][key2][0][2]+'</div>'
 							+'<div class="theater-time-box">'
 								+'<table class="time-list-table">'
 									+'<tbody>'
@@ -214,15 +216,16 @@
 						$('#t'+ count + '-' + 'theater'+ key2).append(theaterTime);
 						
 						for(var i = 0; i < data[key][key2].length; i++) {
+							
 							var td = '<td>'
 										+'<div class="td-ab">'
 											+'<div class="txt-center">'
 												+'<p class="time">'+ data[key][key2][i][0] +'</p>'
-												+'<p class="chair">'+ data[key][key2][i][1] +'</p>'
+												+'<p class="chair">'+ data[key][key2][i][1] +'석</p>'
 											+'</div>'
 										+'</div>'
 									 +'</td>'
-									
+							
 							$('#t'+ count + '-' + 'theater'+ key2 + ' table tr').append(td)
 						}
 					}

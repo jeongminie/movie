@@ -89,9 +89,8 @@
 		.movie-poster{
 			display : flex;
 			justify-content : center;
-			width: 250px;
-		    height: 400px;
-		    margin : auto;
+			width: 100%;
+		    height: 100%;
 		    object-fit: cover;
 		    border-radius: 5px;
 		}
@@ -133,6 +132,37 @@
 		.fa-calendar {
 			top : 5px;
 		}
+		
+		.movie-info {
+			width: 250px;
+		    height: 400px;
+		    margin : auto;
+		}
+		
+ 		.fade-wrap {
+			display : none;
+			width: 250px;
+			height: 400px;
+			opacity: 0.9;
+			background-color : black;
+			border-radius : 5px;
+			position :absolute;
+			top : 0%;
+		}
+		
+		.summary {
+			display:block; 
+			padding : 15px;
+			width : 100%;
+			height : 300px !important;
+			overflow : hidden;
+			text-overflow:ellipsis;
+			/* border-bottom: 1px solid #EBEBEB; */
+		}
+		
+		.summary span {
+			color : white;
+		}
 	</style>
 </head>
 <body>
@@ -152,7 +182,14 @@
 			<img height="885px" src="/resources/static/2022/<c:out value='${item.movieCode }'/>.png" onerror="noImg(this, 'main');">
 		</div>
 		<div class="alarm-box">
-			<img src="/resources/static/2022/<c:out value='${item.movieCode }'/>.png" class="movie-poster">
+			<div class="movie-info">
+				<img src="/resources/static/2022/<c:out value='${item.movieCode }'/>.png" class="movie-poster">
+				<div class="fade-wrap">
+					<div class="summary h-75">
+						<span>${item.story }</span>
+					</div>
+				</div>
+			</div>
 			<div class="movie-tit">
 				<span>${item.title }</span>
 			</div>
@@ -197,6 +234,16 @@
 	
 	<script>
 		$(document).ready(function(){
+			$(".movie-info").on("mouseover", function(e){
+				if ($(e.target).is('.movie-poster')) {
+					$(".fade-wrap").fadeIn();
+			    }
+				
+			}); 
+			
+			$(".movie-info").on("mouseleave", function(){
+				$(".fade-wrap").fadeOut();
+			});
 			
 			$("#startDate").datepicker({
 	               showButtonPanel: true, 

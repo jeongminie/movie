@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +31,7 @@ public class MovieController {
 	
 	@RequestMapping(value="premovie")
 	public String boxofficeView(Model model) throws Exception {
-List<Movie> list = service.selectPremovie();
+		List<Movie> list = service.selectPremovie();
 		
 		model.addAttribute("list", list);
 		
@@ -71,12 +74,20 @@ List<Movie> list = service.selectPremovie();
 		return result;
 	}
 	
-	@RequestMapping(value="test.do")
+	@RequestMapping(value="likeProc")
 	@ResponseBody
-	public String test(MovieVO vo) throws Exception {
-		System.out.println("넘어옸나");
+	public Map<String, Object> likeProc(MovieVO vo, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		int userSeq = (Integer)session.getAttribute("sessSeq");
+		vo.setUserSeq(userSeq);
 		
-		return "infra/movie/user/time"; 
+		Map<String, Object> result = new HashMap<>();
+		
+		boolean like = service.movieLike(vo);
+		result.put("like", like);
+		
+		return result;
+		
 	}
 	
 }

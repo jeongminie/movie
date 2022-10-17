@@ -40,5 +40,25 @@ public class MovieDAO {
 		int result = sqlSession.insert(namespace + ".boxofficeUpdate", dto);
 		return result;
 	}
+	
+	public int selectCountLike(MovieVO vo) {
+		int result = sqlSession.selectOne(namespace + ".selectCountLike", vo);
+		return result;
+	}
+	
+	public int movieLikeInst(MovieVO vo) {
+		int result = sqlSession.insert(namespace + ".movieLikeInst", vo);
+		return result;
+	}
+	
+	public int movieLikeDel(MovieVO vo) {
+		int result = sqlSession.update(namespace + ".movieLikeDel", vo);
+		return result;
+	}
+	
+	public int selectTotalCountLike(MovieVO vo) {
+		return sqlSession.selectOne(namespace + ".selectTotalCountLike", vo);
+	}
+	
 
 }

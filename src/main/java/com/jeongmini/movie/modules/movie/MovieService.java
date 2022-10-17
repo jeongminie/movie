@@ -13,4 +13,12 @@ public interface MovieService {
 	public List<Movie> selectBoxofficeAPI() throws Exception;
 	
 	public boolean boxofficeUpdate(Movie dto) throws Exception;
+	
+	public boolean existLike(MovieVO vo) throws Exception;
+	
+	public boolean movieLike(MovieVO vo) throws Exception;
+	
+	public int totalCountLike(MovieVO vo) throws Exception;
+	
+	
 }

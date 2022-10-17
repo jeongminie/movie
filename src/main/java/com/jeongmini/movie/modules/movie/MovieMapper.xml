@@ -89,6 +89,41 @@
 			ranking = #{ranking}
 	</update>
 
+	<select id="selectCountLike" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			movieLike
+		WHERE 1=1
+			AND userSeq = #{userSeq}
+			AND movieCode = #{movieCode}
+			AND delNy = 0 
+	</select>
 	
+	<insert id="movieLikeInst">
+		INSERT INTO movieLike (
+			movieCode
+			, userSeq
+			, delNy
+		) VALUES (
+			#{movieCode}
+			, #{userSeq}
+			, 0
+		)
+	</insert>
+	
+	<update id="movieLikeDel">
+		UPDATE movieLike SET delNy = 1
+	</update>
+	
+	<select id="selectTotalCountLike" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			movieLike
+		WHERE 1=1
+			AND movieCode = #{movieCode}
+			AND delNy = 0 
+	</select>
 	
 </mapper>

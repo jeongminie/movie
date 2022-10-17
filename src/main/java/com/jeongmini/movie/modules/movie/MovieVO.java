@@ -2,6 +2,8 @@ package com.jeongmini.movie.modules.movie;
 
 public class MovieVO {
 	
+	private Integer userSeq;
+	
 	private Integer seq;
 	private Integer openYear;
 	private Integer movieCode;
@@ -86,6 +88,20 @@ public class MovieVO {
 	}
 	public void setStory(String story) {
 		this.story = story;
+	}
+	public Integer getUserSeq() {
+		return userSeq;
+	}
+	public void setUserSeq(Integer userSeq) {
+		this.userSeq = userSeq;
+	}
+	
+	private Integer totalCountLike;
+	public Integer getTotalCountLike() {
+		return totalCountLike;
+	}
+	public void setTotalCountLike(Integer totalCountLike) {
+		this.totalCountLike = totalCountLike;
 	}
 
 	//박스오피스

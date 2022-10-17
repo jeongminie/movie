@@ -62,7 +62,7 @@
 							<c:forEach items="${list }" var="list" varStatus="status">
 								<li tabindex="0" class="no-img">
 								    <div class="movie-list-info">    
-								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="noImg(this)" />    
+								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)"/>    
 								        <%-- <div class="movie-score" style="opacity: 0;">        
 								            <a href="#" class="wrap movieBtn" data-no="" title="">            
 								                <div class="summary">
@@ -106,6 +106,9 @@
 							</c:forEach>
 						</ul>
 					</div>
+					<div class="btn-more v1" id="addMovieDiv" style="">
+						<button type="button" class="btn" id="btnAddMovie">더보기</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -114,6 +117,11 @@
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
 	<script>
+		function setEmptyImage(img) {
+			img.src='/resources/static/image/noImg.png';
+			$(img).addClass('noImg');
+		}
+		
 		$(document).ready(function(){
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});
@@ -128,6 +136,16 @@
 				/* $("#form").submit(); */
 
 				location.href="../movie/openAlarm?movieCode="+movieCode;
+			});
+			
+			$(".movie-list ul li").slice(0, 20).show(); // 초기갯수
+		   
+			$("#btnAddMovie").on("click", function(){
+				$(".movie-list ul li:hidden").slice(0, 20).show();	
+				
+				if($(".movie-list ul li:hidden").length == 0){ 
+					$("#btnAddMovie").css("display", "none");
+				}
 			});
 			
 		});

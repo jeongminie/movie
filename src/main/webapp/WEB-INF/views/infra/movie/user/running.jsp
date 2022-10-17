@@ -36,10 +36,8 @@
 	<title>현재 상영작</title>
 	
 	<style>
-		.noImg {
-			background-color : #F2F2F2;
-		    object-fit : none;
-		}
+		
+
 	</style>
 	
 </head>
@@ -84,7 +82,7 @@
 							<c:forEach items="${list }" var="list" varStatus="status">
 								<li tabindex="0" class="no-img">
 								    <div class="movie-list-info">    
-								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)" />    
+								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)"/>    
 								        <%-- <div class="movie-score" style="opacity: 0;">        
 								            <a href="#" class="wrap movieBtn" data-no="" title="">            
 								                <div class="summary">
@@ -115,8 +113,8 @@
 								        <span class="date">개봉일 ${list.openDate }</span>
 								    </div>
 								    <div class="btn-util">    
-								        <button type="button" class="btn btn-like" data-no="22048000">
-								            <i class="fa-regular fa-heart"></i> <span></span>
+								        <button type="button" class="btn btn-like" data-no="${list.movieCode }">
+								            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span>${totalCount }</span>
 								        </button>    
 								        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
 								        <p class="txt movieStat5" style="display: none">개봉예정</p>    
@@ -128,6 +126,9 @@
 							</c:forEach>
 						</ul>
 					</div>
+					<div class="btn-more v1" id="addMovieDiv" style="">
+						<button type="button" class="btn" id="btnAddMovie">더보기</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -136,12 +137,35 @@
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
 	<script>
+		function processLike(movieCode) {
+			$.ajax({
+				type:"post",
+				url:"/movie/likeProc",
+				data:{"movieCode":movieCode},
+				success:function(data) {
+					console.log(data)
+					if(data.like){
+						$("#heartIcon-" + movieNo).removeClass("fa-regular");
+						$("#heartIcon-" + movieNo).addClass("fa-solid");
+						
+					} else {
+						$("#heartIcon-" + movieNo).removeClass("fa-solid");
+						$("#heartIcon-" + movieNo).addClass("fa-regular");
+					}
+				}
+			});
+			
+		}
+	
 		function setEmptyImage(img) {
 			img.src='/resources/static/image/noImg.png';
 			$(img).addClass('noImg');
 		}
 	
 		$(document).ready(function(){
+			var movieCode = $(this).data("no");
+			
+			
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});
 			
@@ -157,8 +181,24 @@
 				location.href="../movie/openAlarm?movieCode="+movieCode;
 			});
 			
+			$(".movie-list ul li").slice(0, 20).show(); // 초기갯수
 			
+			$("#btnAddMovie").on("click", function(){
+				$(".movie-list ul li:hidden").slice(0, 20).show();		
+				
+				if($(".movie-list ul li:hidden").length == 0){ 
+					$("#btnAddMovie").css("display", "none");
+				}
+			});
+			
+			$(".btn-like").on("click", function(){
+				var movieCode = $(this).data("no");
+				
+				processLike(movieCode)
+			})
 		});
+		
+		
 	</script>
 	
 </body>

@@ -4,7 +4,7 @@ public class Movie {
 	
 	private Integer seq;
 	private Integer openYear;
-	private Integer movieCode;
+	private int movieCode;
 	private String title;
 	private String genre;
 	private String nation;
@@ -14,6 +14,8 @@ public class Movie {
 	private String directors;
 	private String actors;
 	private String story;
+	
+	private Integer totalCountLike;
 	
 	public Integer getSeq() {
 		return seq;
@@ -27,10 +29,10 @@ public class Movie {
 	public void setOpenYear(Integer openYear) {
 		this.openYear = openYear;
 	}
-	public Integer getMovieCode() {
+	public int getMovieCode() {
 		return movieCode;
 	}
-	public void setMovieCode(Integer movieCode) {
+	public void setMovieCode(int movieCode) {
 		this.movieCode = movieCode;
 	}
 	public String getTitle() {
@@ -87,7 +89,14 @@ public class Movie {
 	public void setStory(String story) {
 		this.story = story;
 	}
-	
+	public Integer getTotalCountLike() {
+		return totalCountLike;
+	}
+	public void setTotalCountLike(Integer totalCountLike) {
+		this.totalCountLike = totalCountLike;
+	}
+
+
 	//박스오피스
 	private Integer ranking;
 	private String movieNm;

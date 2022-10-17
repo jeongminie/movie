@@ -797,6 +797,32 @@ ul {
     right: 1px;
     top: 1px;
 }
+
+.btn-more.v1 .btn {
+    border: 1px solid #eaeaea;
+}
+
+.btn-more .btn {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    border: 0;
+    border-bottom: 1px solid #eaeaea;
+    background-color: transparent;
+    color: #666;
+}
+
+		
+.movie-list ul li {
+	display: none;
+}
+
+.noImg {
+	background-color : #F2F2F2;
+    object-fit : none;
+}
 	
 .fa-magnifying-glass {
 	margin-top: 8px;
