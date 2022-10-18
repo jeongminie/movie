@@ -1,5 +1,6 @@
 package com.jeongmini.movie.modules.movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,15 @@ public class MovieServiceImpl implements MovieService {
 	@Autowired
 	MovieDAO dao;
 	
+	@Autowired
+	MovieServiceImpl service;
+	
 	@Override
-	public List<Movie> selectRunning() throws Exception {
-		List<Movie> list = dao.selectRunning();
-
+	public List<Movie> selectRunning(MovieVO vo) throws Exception {
+		List<Movie> list = dao.selectRunning(vo);
+		
+		System.out.println();
+ 
 		return list;
 	}
 	

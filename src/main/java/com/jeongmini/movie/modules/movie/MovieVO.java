@@ -1,8 +1,11 @@
 package com.jeongmini.movie.modules.movie;
 
+import java.util.List;
+
 public class MovieVO {
 	
 	private Integer userSeq;
+	private Integer totalCountLike;
 	
 	private Integer seq;
 	private Integer openYear;
@@ -95,8 +98,6 @@ public class MovieVO {
 	public void setUserSeq(Integer userSeq) {
 		this.userSeq = userSeq;
 	}
-	
-	private Integer totalCountLike;
 	public Integer getTotalCountLike() {
 		return totalCountLike;
 	}
@@ -142,7 +143,4 @@ public class MovieVO {
 		this.audiAcc = audiAcc;
 	}
 	
-	
-	
-
 }

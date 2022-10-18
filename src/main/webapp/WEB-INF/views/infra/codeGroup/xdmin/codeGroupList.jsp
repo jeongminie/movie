@@ -135,7 +135,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="codeGroupView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
+											<tr class="codeGroupView">
 												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>

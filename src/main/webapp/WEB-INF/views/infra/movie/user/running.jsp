@@ -112,10 +112,17 @@
 								    <div class="rate-date">    
 								        <span class="date">개봉일 ${list.openDate }</span>
 								    </div>
-								    <div class="btn-util">    
+								    <div class="btn-util" id="btn-util-${list.movieCode }">   
 								        <button type="button" class="btn btn-like" data-no="${list.movieCode }">
-								            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span>${totalCount }</span>
-								        </button>    
+										    <c:choose> 
+										        <c:when test="${list.existLike eq 0 || empty list.existLike}">
+										            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+										        </c:when>
+										        <c:otherwise>
+										        	<i class="fa-solid fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+										        </c:otherwise>
+										    </c:choose>
+								        </button> 
 								        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
 								        <p class="txt movieStat5" style="display: none">개봉예정</p>    
 								        <div class="case movieStat4" style="">        
@@ -144,14 +151,21 @@
 				data:{"movieCode":movieCode},
 				success:function(data) {
 					console.log(data)
+					var likeCount = $("#likeCount-" + movieCode).text();
+					
 					if(data.like){
-						$("#heartIcon-" + movieNo).removeClass("fa-regular");
-						$("#heartIcon-" + movieNo).addClass("fa-solid");
+						$("#heartIcon-" + movieCode).removeClass("fa-regular");
+						$("#heartIcon-" + movieCode).addClass("fa-solid");
+						
+						$("#likeCount-" + movieCode).html((likeCount+1).replace(/(^0+)/, ""))
 						
 					} else {
-						$("#heartIcon-" + movieNo).removeClass("fa-solid");
-						$("#heartIcon-" + movieNo).addClass("fa-regular");
+						$("#heartIcon-" + movieCode).removeClass("fa-solid");
+						$("#heartIcon-" + movieCode).addClass("fa-regular");
+						
+						$("#likeCount-" + movieCode).html(likeCount-1)
 					}
+					
 				}
 			});
 			
@@ -164,7 +178,12 @@
 	
 		$(document).ready(function(){
 			var movieCode = $(this).data("no");
+			var form = $("form[name=form]");
 			
+			goForm = function(movieCode) {
+		    	movieCode.val(movieCode);
+				form.attr("action", "likeProc").submit();
+			}
 			
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});
@@ -195,6 +214,7 @@
 				var movieCode = $(this).data("no");
 				
 				processLike(movieCode)
+				
 			})
 		});
 		

@@ -21,9 +21,14 @@ public class MovieController {
 	MovieServiceImpl service;
 	
 	@RequestMapping(value="running")
-	public String runningCurrentView(Model model) throws Exception {
-		List<Movie> list = service.selectRunning();
+	public String runningCurrentView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
 		
+		if((Integer)session.getAttribute("sessSeq") != null) {
+			vo.setUserSeq((Integer)session.getAttribute("sessSeq"));
+		}
+		
+		List<Movie> list = service.selectRunning(vo);
 		model.addAttribute("list", list);
 		
 		return "infra/movie/user/running";
@@ -84,7 +89,9 @@ public class MovieController {
 		Map<String, Object> result = new HashMap<>();
 		
 		boolean like = service.movieLike(vo);
+		boolean existLike = service.existLike(vo);
 		result.put("like", like);
+		result.put("existLike", existLike);
 		
 		return result;
 		

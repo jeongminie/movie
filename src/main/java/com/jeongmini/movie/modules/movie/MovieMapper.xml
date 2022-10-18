@@ -10,6 +10,12 @@
 		SELECT 
 			mi.*
 			, boa.ranking
+			, (SELECT COUNT(*) FROM movieLike ml WHERE mi.movieCode = ml.movieCode AND ml.delNy = 0) AS totalCountLike
+			<choose>
+				<when test="userSeq != null and !userSeq.equals('')">
+					,(SELECT COUNT(*) FROM movieLike ml WHERE ml.userSeq = #{userSeq} and mi.movieCode = ml.movieCode AND ml.delNy = 0) AS existLike
+				</when>
+			</choose>
 		FROM 
 			movieInfo2022 mi 
 		LEFT JOIN 

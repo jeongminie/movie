@@ -16,6 +16,7 @@ public class Movie {
 	private String story;
 	
 	private Integer totalCountLike;
+	private Integer existLike;
 	
 	public Integer getSeq() {
 		return seq;
@@ -94,6 +95,14 @@ public class Movie {
 	}
 	public void setTotalCountLike(Integer totalCountLike) {
 		this.totalCountLike = totalCountLike;
+	}
+	
+
+	public Integer getExistLike() {
+		return existLike;
+	}
+	public void setExistLike(Integer existLike) {
+		this.existLike = existLike;
 	}
 
 
