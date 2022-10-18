@@ -22,6 +22,8 @@ public class MovieController {
 	
 	@RequestMapping(value="running")
 	public String runningCurrentView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
+		System.out.println(vo.getShMovieNm());
+		
 		HttpSession session = request.getSession();
 		
 		if((Integer)session.getAttribute("sessSeq") != null) {
@@ -35,9 +37,14 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value="premovie")
-	public String boxofficeView(Model model) throws Exception {
-		List<Movie> list = service.selectPremovie();
+	public String boxofficeView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
 		
+		if((Integer)session.getAttribute("sessSeq") != null) {
+			vo.setUserSeq((Integer)session.getAttribute("sessSeq"));
+		}
+		
+		List<Movie> list = service.selectPremovie(vo);
 		model.addAttribute("list", list);
 		
 		return "infra/movie/user/premovie";

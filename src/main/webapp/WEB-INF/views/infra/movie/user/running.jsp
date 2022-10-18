@@ -73,8 +73,10 @@
 						<p class="no-result-count"><strong id="totCnt">1</strong>개의 영화가 검색되었습니다.</p>
 						<!--// 검색결과 없을 때 -->
 						<div class="movie-search">
-						    <input type="text" title="영화명을 입력하세요" id="ibxMovieNmSearch" name="ibxMovieNmSearch" placeholder="영화명 검색" class="input-text">
-						    <button type="button" class="btn-search-input" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+						<form id="form" name="form" method="post" action="running">
+						    <input type="text" title="영화명을 입력하세요" id="shMovieNm" name="shMovieNm" placeholder="영화명 검색" class="input-text">
+						    <button type="submit" class="btn-search-input" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</form>
 						</div>
 					</div>
 					<div class="movie-list">
@@ -143,34 +145,9 @@
 	
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
-	<script>
-		function processLike(movieCode) {
-			$.ajax({
-				type:"post",
-				url:"/movie/likeProc",
-				data:{"movieCode":movieCode},
-				success:function(data) {
-					console.log(data)
-					var likeCount = $("#likeCount-" + movieCode).text();
-					
-					if(data.like){
-						$("#heartIcon-" + movieCode).removeClass("fa-regular");
-						$("#heartIcon-" + movieCode).addClass("fa-solid");
-						
-						$("#likeCount-" + movieCode).html((likeCount+1).replace(/(^0+)/, ""))
-						
-					} else {
-						$("#heartIcon-" + movieCode).removeClass("fa-solid");
-						$("#heartIcon-" + movieCode).addClass("fa-regular");
-						
-						$("#likeCount-" + movieCode).html(likeCount-1)
-					}
-					
-				}
-			});
-			
-		}
+	<script type="text/javascript" src="/resources/static/js/user/likeProc.js"></script>
 	
+	<script>
 		function setEmptyImage(img) {
 			img.src='/resources/static/image/noImg.png';
 			$(img).addClass('noImg');
@@ -178,12 +155,6 @@
 	
 		$(document).ready(function(){
 			var movieCode = $(this).data("no");
-			var form = $("form[name=form]");
-			
-			goForm = function(movieCode) {
-		    	movieCode.val(movieCode);
-				form.attr("action", "likeProc").submit();
-			}
 			
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});
@@ -212,8 +183,12 @@
 			
 			$(".btn-like").on("click", function(){
 				var movieCode = $(this).data("no");
-				
-				processLike(movieCode)
+				var usreSeq = "${sessSeq}"
+				if(usreSeq == null || usreSeq == '') {
+					alert("로그인 후 사용가능합니다.")
+				} else {
+					processLike(movieCode)
+				}
 				
 			})
 		});

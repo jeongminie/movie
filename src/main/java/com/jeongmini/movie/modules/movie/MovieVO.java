@@ -20,6 +20,8 @@ public class MovieVO {
 	private String actors;
 	private String story;
 	
+	private String shMovieNm;
+	
 	public Integer getSeq() {
 		return seq;
 	}
@@ -104,6 +106,13 @@ public class MovieVO {
 	public void setTotalCountLike(Integer totalCountLike) {
 		this.totalCountLike = totalCountLike;
 	}
+	public String getShMovieNm() {
+		return shMovieNm;
+	}
+	public void setShMovieNm(String shMovieNm) {
+		this.shMovieNm = shMovieNm;
+	}
+
 
 	//박스오피스
 	private Integer ranking;

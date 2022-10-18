@@ -6,7 +6,7 @@ public interface MovieService {
 	
 	public List<Movie> selectRunning(MovieVO vo) throws Exception;
 	
-	public List<Movie> selectPremovie() throws Exception;
+	public List<Movie> selectPremovie(MovieVO vo) throws Exception;
 	
 	public Movie selectMovie(MovieVO vo) throws Exception;
 	

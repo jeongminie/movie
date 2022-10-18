@@ -92,10 +92,17 @@
 								    <div class="rate-date">    
 								        <span class="date">개봉일 ${list.openDate }</span>
 								    </div>
-								    <div class="btn-util">    
-								        <button type="button" class="btn btn-like" data-no="22048000">
-								            <i class="fa-regular fa-heart"></i> <span></span>
-								        </button>    
+								    <div class="btn-util" id="btn-util-${list.movieCode }">    
+								        <button type="button" class="btn btn-like" data-no="${list.movieCode }">
+										    <c:choose> 
+										        <c:when test="${list.existLike eq 0 || empty list.existLike}">
+										            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+										        </c:when>
+										        <c:otherwise>
+										        	<i class="fa-solid fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+										        </c:otherwise>
+										    </c:choose>
+								        </button>   
 								        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
 								        <p class="txt movieStat5" style="display: none">개봉예정</p>    
 								        <div class="case movieStat4" style="">        
@@ -115,6 +122,8 @@
 	</div>
 	
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
+	
+	<script type="text/javascript" src="/resources/static/js/user/likeProc.js"></script>
 	
 	<script>
 		function setEmptyImage(img) {
@@ -147,6 +156,17 @@
 					$("#btnAddMovie").css("display", "none");
 				}
 			});
+			
+			$(".btn-like").on("click", function(){
+				var movieCode = $(this).data("no");
+				var usreSeq = "${sessSeq}"
+				
+				if(usreSeq == null || usreSeq == '') {
+					alert("로그인 후 사용가능합니다.")
+				} else {
+					processLike(movieCode)
+				}
+			})
 			
 		});
 	</script>
