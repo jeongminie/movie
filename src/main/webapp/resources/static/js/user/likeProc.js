@@ -5,21 +5,21 @@ function processLike(movieCode) {
 		data:{"movieCode":movieCode},
 		success:function(data) {
 			console.log(data)
-			var likeCount = $("#likeCount-" + movieCode).text();
+			var likeCount = Number($("#likeCount-" + movieCode).text());
 			
 			if(data.like){
 				$("#heartIcon-" + movieCode).removeClass("fa-regular");
 				$("#heartIcon-" + movieCode).addClass("fa-solid");
 				
-				$("#likeCount-" + movieCode).html((likeCount+1).replace(/(^0+)/, ""))
+				$("#likeCount-" + movieCode).html();
+				$("#likeCount-" + movieCode).html(likeCount+1);
 				
 			} else {
 				$("#heartIcon-" + movieCode).removeClass("fa-solid");
 				$("#heartIcon-" + movieCode).addClass("fa-regular");
 				
-				$("#likeCount-" + movieCode).html(likeCount-1)
+				$("#likeCount-" + movieCode).html(likeCount-1);
 			}
-			
 		}
 	});
 }

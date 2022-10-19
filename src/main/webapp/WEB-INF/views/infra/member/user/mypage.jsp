@@ -35,6 +35,13 @@
 	
 	<title>마이페이지</title>
 	<style>
+	
+	.inner-wrap {
+		width: 1100px;
+    	margin: 0 auto;
+    	
+	}
+	
 	.profile-img {
 		width:100px;
 		height:100px;
@@ -62,6 +69,157 @@
 	#preview,#saveBtn {
 		margin: auto;
 	}
+	
+	.lnb-area {
+	    float: left;
+	    width: 200px;
+	    padding: 40px 0 0 0;
+	    background-color: #fff;
+	}
+	
+	#lnb {
+	    margin: 0;
+	    padding: 0;
+	}
+	
+	#lnb .tit {
+	    overflow: hidden;
+	    margin: 0;
+	    padding: 0;
+	    border-radius: 10px 10px 0 0;
+	    background: url(https://img.megabox.co.kr/static/pc/images/common/bg/bg-lnb-tit.png) 0 0;
+	}
+	
+	#lnb .tit a {
+	    display: block;
+	    width: 100%;
+	    font-size: 1.2em;
+	    line-height: 90px;
+	    text-align: center;
+	    color: #fff;
+	    text-decoration: none;
+	}
+	
+	#lnb>ul {
+	    border: 1px solid #d8d9db;
+	    border-left-width: 2px;
+	    border-right-width: 2px;
+	    border-bottom-width: 2px;
+	    border-radius: 0 0 10px 10px;
+	}
+	
+	#lnb>ul>li {
+	    border-top: 1px solid #d8d9db;
+	}
+
+	#lnb>ul>li>a {
+	    display: block;
+	    color: #222;
+	    padding: 10px 15px;
+	    font-weight: 400;
+	    background-color: #f2f4f5;
+	}
+	
+	#lnb .depth3 {
+	    padding: 20px 0;
+	}
+
+	#lnb .depth3>li>a {
+	    position: relative;
+	    padding: 2px 0 2px 24px;
+	    color: #666;
+	}
+	
+	#contents {
+	    margin: 0;
+	    padding: 40px 0 0 0;
+	    float: right;
+	    width: calc(100% - 260px);
+	}
+	
+	.my-magabox-info {
+	    overflow: hidden;
+	    height: 367px;
+	    border-radius: 10px;
+	    background-color: #f3f4f6;
+	    margin-left: 50px;
+	}
+	
+	.my-magabox-info .top {
+	    position: relative;
+	    height: 198px;
+	    padding: 30px 30px 0 0;
+	}
+
+
+.my-magabox-info .top .photo {
+    float: left;
+    width: 200px;
+    padding: 20px 0 0 60px;
+}
+
+.my-magabox-info .top .photo .wrap {
+    position: relative;
+    width: 93px;
+    margin: 0;
+    padding: 0 0 7px 0;
+    background: url(https://img.megabox.co.kr/static/pc/images/mypage/bg-photo-back.png) no-repeat center bottom;
+}
+
+.my-magabox-info .top .photo .wrap i {
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    margin: 0;
+    border-radius: 19px;
+    box-shadow: -2px 2px 5px 0 rgb(45 45 45 / 30%);
+}
+
+.my-magabox-info .top .photo .wrap .img {
+    overflow: hidden;
+    display: block;
+    width: 93px;
+    height: 93px;
+    border-radius: 93px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 0;
+    line-height: 0;
+    background-color: transparent;
+    box-shadow: 0 5px 5px 0 rgb(45 45 45 / 20%);
+}
+
+.my-magabox-info .top .photo .wrap .img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 93px;
+}
+
+.my-magabox-info .top .grade {
+    float: left;
+    padding-top: 20px;
+}
+
+.my-magabox-info .top .grade .name {
+    font-size: 1.8666em;
+    line-height: 1.3;
+    color: #222;
+}
+
+.my-magabox-info .top .grade .link {
+    padding: 15px 0 0 0;
+}
+
+.my-magabox-info .top .grade .link a {
+    margin-right: 10px;
+    color: #666;
+}
+
+
+	
 	</style>	
 		
 </head>
@@ -76,13 +234,63 @@
 				</div>
 			</div>
 		</div>
- 		<form method="post" id="form" action="profileUploaded" enctype="multipart/form-data">
+		<div class="inner-wrap">
+			<div class="lnb-area">
+				<nav id="lnb">
+					<p class="tit"><a href="/mypage" title="나의 메가박스">나의 메가박스</a></p>
+					<ul>
+						<li><a href="/mypage/moviestory" titel="나의 무비스토리">나의 무비스토리</a></li>
+						<li>
+							<a href="/mypage/myinfo?returnURL=info" title="회원정보">회원정보</a>
+							<ul class="depth3">
+								<li class="on"><a href="/mypage/myinfo?returnURL=info" title="개인정보 수정">개인정보 수정</a></li>
+								<li><a href="/mypage/additionalinfo" title="선택정보 수정">선택정보 수정</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div id="contents">
+				<div class="my-magabox-info ">
+					<!-- top -->
+					<div class="top">
+						<div class="photo" id="myPhoto">
+							<div class="wrap">
+								<form method="post" id="form" action="profileUploaded" enctype="multipart/form-data">
+									<input type="file" id="profileUploaded" name="profileUploaded" class="d-none">
+									<input type="hidden" name="fileMbNo" value="12089821">
+								</form>
+		
+								<i class="fa-solid fa-circle-plus"></i>
+		
+								<button type="button" class="img">
+									<img src="https://img.megabox.co.kr/SharedImg/2022/10/07/l9vVLIk4eQ4vsPMsTYyCpzKM81rvmcSO_640.png" alt="윤정민" onerror="noImg(this, 'human')">
+								</button>
+							</div>
+						</div>
+		
+						<div class="grade">
+							<p class="name">윤정민님은<br>일반등급입니다.</p>
+		
+							<div class="link">
+								<a href="/mypage/myinfo?returnURL=info" title="개인정보수정 페이지로 이동">개인정보수정 <i class="iconset ico-arr-right-reverse"></i></a>
+								<a href="#layer_before_grade" id="bfrClassSearch" class="btn-modal-open" w-data="400" h-data="400" title="지난등급 상세보기">
+									지난등급조회 <i class="iconset ico-arr-right-reverse"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!--// top -->
+				</div>
+			</div>
+		</div>
+ 		<!-- <form method="post" id="form" action="profileUploaded" enctype="multipart/form-data">
 			<input type="file" id="profileUploaded" name="profileUploaded" class="col-10 mb-2 d-none" accept="image/*">
 			<div id="preview" class="profile-img border" style="cursor:pointer;">
 			   <img id="imageSection" src="#" class="w-100 d-none"/>
 			</div>
 			<button type="button" id="saveBtn" class="btn saveBtn d-flex justfy-content-center">저장</button>
-		</form>
+		</form> -->
 	</div> 
 	
 	<script>

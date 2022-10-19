@@ -16,6 +16,8 @@ public interface MovieService {
 	
 	public boolean existLike(MovieVO vo) throws Exception;
 	
+	public boolean existLikeDelN(MovieVO vo) throws Exception;
+	
 	public boolean movieLike(MovieVO vo) throws Exception;
 	
 	public int totalCountLike(MovieVO vo) throws Exception;

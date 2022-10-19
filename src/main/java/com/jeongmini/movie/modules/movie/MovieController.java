@@ -22,7 +22,7 @@ public class MovieController {
 	
 	@RequestMapping(value="running")
 	public String runningCurrentView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
-		System.out.println(vo.getShMovieNm());
+		System.out.println("검색어 : " + vo.getShMovieNm());
 		
 		HttpSession session = request.getSession();
 		

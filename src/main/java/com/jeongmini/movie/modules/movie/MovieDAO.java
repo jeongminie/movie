@@ -46,13 +46,23 @@ public class MovieDAO {
 		return result;
 	}
 	
+	public int selectLikeDely(MovieVO vo) {
+		int result = sqlSession.selectOne(namespace + ".selectLikeDely", vo);
+		return result;
+	}
+	
 	public int movieLikeInst(MovieVO vo) {
 		int result = sqlSession.insert(namespace + ".movieLikeInst", vo);
 		return result;
 	}
 	
-	public int movieLikeDel(MovieVO vo) {
-		int result = sqlSession.update(namespace + ".movieLikeDel", vo);
+	public int updateLikeDelY(MovieVO vo) {
+		int result = sqlSession.update(namespace + ".updateLikeDelY", vo);
+		return result;
+	}
+	
+	public int updateLikeDelN(MovieVO vo) {
+		int result = sqlSession.update(namespace + ".updateLikeDelN", vo);
 		return result;
 	}
 	

@@ -6,6 +6,12 @@
 <mapper namespace="com.jeongmini.movie.modules.movie.MovieMapper">
 	<resultMap id="resultMapObj" type="com.jeongmini.movie.modules.movie.Movie"></resultMap>
 	
+	<sql id="where">
+		<choose>
+			<when test="shMovieNm != null and !shMovieNm.equals('')">AND mi.title LIKE CONCAT('%',#{shMovieNm},'%')</when>
+		</choose>
+	</sql>
+	
 	<select id="selectRunning" resultMap="resultMapObj">
 		SELECT 
 			mi.*
@@ -25,7 +31,9 @@
 		JOIN 
 			runningCurrent rc 
 		ON 
-			mi.movieCode = rc.movieCode 
+			mi.movieCode = rc.movieCode
+		WHERE 1=1 
+		<include refid="where"></include>
 		ORDER BY ISNULL(boa.ranking), boa.ranking ASC, mi.openDate DESC
 	</select>
 	
@@ -41,10 +49,11 @@
 		FROM 
 			movieInfo2022 mi 
 		<![CDATA[
-		WHERE 
-			DATE_FORMAT(now(), '%Y.%m.%d') < STR_TO_DATE(mi.openDate , '%Y.%m.%d') 
-		ORDER BY mi.openDate ASC
+		WHERE 1=1
+			AND DATE_FORMAT(now(), '%Y.%m.%d') < STR_TO_DATE(mi.openDate , '%Y.%m.%d') 
 		]]>
+		<include refid="where"></include>
+		ORDER BY mi.openDate ASC
 	</select>
 	
 	<select id="selectMovie" resultMap="resultMapObj">
@@ -109,7 +118,17 @@
 		WHERE 1=1
 			AND userSeq = #{userSeq}
 			AND movieCode = #{movieCode}
-			AND delNy = 0 
+	</select>
+	
+	<select id="selectLikeDely" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			movieLike
+		WHERE 1=1
+			AND userSeq = #{userSeq}
+			AND movieCode = #{movieCode}
+			AND delNy = 1
 	</select>
 	
 	<insert id="movieLikeInst">
@@ -124,8 +143,24 @@
 		)
 	</insert>
 	
-	<update id="movieLikeDel">
-		UPDATE movieLike SET delNy = 1
+	<update id="updateLikeDelY">
+		UPDATE 
+			movieLike 
+		SET 
+			delNy = 1
+		WHERE 1=1
+			AND userSeq = #{userSeq}
+			AND movieCode = #{movieCode}
+	</update>
+	
+	<update id="updateLikeDelN">
+		UPDATE 
+			movieLike 
+		SET 
+			delNy = 0
+		WHERE 1=1
+			AND userSeq = #{userSeq}
+			AND movieCode = #{movieCode}
 	</update>
 	
 	<select id="selectTotalCountLike" resultType="int">

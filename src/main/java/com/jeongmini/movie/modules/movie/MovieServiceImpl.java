@@ -1,6 +1,5 @@
 package com.jeongmini.movie.modules.movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public List<Movie> selectRunning(MovieVO vo) throws Exception {
 		List<Movie> list = dao.selectRunning(vo);
-		
-		System.out.println();
  
 		return list;
 	}
@@ -68,12 +65,30 @@ public class MovieServiceImpl implements MovieService {
 	}
 	
 	@Override
-	public boolean movieLike(MovieVO vo) throws Exception {
-		if(this.existLike(vo)) {
-			dao.movieLikeDel(vo);	
-			return false;
+	public boolean existLikeDelN(MovieVO vo) {
+		int count = dao.selectLikeDely(vo);
+		System.out.println(count);
+		
+		if(count >= 1) {
+			return true;
 		} else {
-			dao.movieLikeInst(vo);
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean movieLike(MovieVO vo) throws Exception {
+		if(this.existLike(vo)) { //좋아요 존재
+			if(this.existLikeDelN(vo)) {
+				dao.updateLikeDelN(vo);
+				return true;
+			} else {
+				dao.updateLikeDelY(vo);	
+				return false;
+			}
+			
+		} else {
+			dao.movieLikeInst(vo); //좋아요 최초
 			return true;
 		}
 	}

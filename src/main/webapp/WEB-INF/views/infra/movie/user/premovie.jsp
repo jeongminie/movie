@@ -57,61 +57,80 @@
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-comingsoon" role="tabpanel" aria-labelledby="nav-comingsoon-tab" tabindex="0">
+					<div class="movie-list-util mt40">
+						<div class="topSort" style="display: block;">
+						    <div class="movie-sorting sortTab">
+						        <span><button type="button" class="btn on" sort-type="rfilmDe">개봉일순</button></span>
+						        <span><button type="button" class="btn" sort-type="title">가나다순</button></span>
+						    </div>
+						</div>
+						<!-- 검색결과 없을 때 -->
+						<p class="no-result-count"><strong id="totCnt"><c:out value="${fn:length(list)}"/></strong>개의 영화가 검색되었습니다.</p>
+						<!--// 검색결과 없을 때 -->
+						<div class="movie-search">
+						<form id="form" name="form" method="post" action="premovie">
+						    <input type="text" title="영화명을 입력하세요" id="shMovieNm" name="shMovieNm" placeholder="영화명 검색" class="input-text">
+						    <button type="submit" class="btn-search-input" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+						</form>
+						</div>
+					</div>
 					<div class="movie-list">
-						<ul class="list" id="movieList">
-							<c:forEach items="${list }" var="list" varStatus="status">
-								<li tabindex="0" class="no-img">
-								    <div class="movie-list-info">    
-								        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)"/>    
-								        <%-- <div class="movie-score" style="opacity: 0;">        
-								            <a href="#" class="wrap movieBtn" data-no="" title="">            
-								                <div class="summary">
-								                    ${list.story }
-								                </div>                   
-								            </a>    
-								        </div> --%>
-								    </div>
-								    <div class="tit-area">    
-								        <c:set var="age" value="${list.age }"/>
-								    	<c:choose> 
-								    		<c:when test="${fn:contains(age, '전체')}">
-										        <img src="/resources/static/image/txt-age-all.png" class="age-image">
-								    		</c:when>
-								    		<c:when test="${fn:contains(age, '12')}">
-										        <img src="/resources/static/image/txt-age-12.png" class="age-image">
-								    		</c:when>
-								    		<c:when test="${fn:contains(age, '15')}">
-										        <img src="/resources/static/image/txt-age-15.png" class="age-image">
-								    		</c:when>
-								    		<c:when test="${fn:contains(age, '청소년')}">
-										        <img src="/resources/static/image/txt-age-19.png" class="age-image">
-								    		</c:when>
-								        </c:choose>
-								        <p title="" class="tit">${list.title }</p>
-								    </div>
-								    <div class="rate-date">    
-								        <span class="date">개봉일 ${list.openDate }</span>
-								    </div>
-								    <div class="btn-util" id="btn-util-${list.movieCode }">    
-								        <button type="button" class="btn btn-like" data-no="${list.movieCode }">
-										    <c:choose> 
-										        <c:when test="${list.existLike eq 0 || empty list.existLike}">
-										            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
-										        </c:when>
-										        <c:otherwise>
-										        	<i class="fa-solid fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
-										        </c:otherwise>
-										    </c:choose>
-								        </button>   
-								        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
-								        <p class="txt movieStat5" style="display: none">개봉예정</p>    
-								        <div class="case movieStat4" style="">        
-								           <a href="#" class="btn alarmBtn" data-no="${list.movieCode }" title="영화 예매하기">알림신청</a>
-								        </div>
-								    </div>
-								</li>
-							</c:forEach>
-						</ul>
+						<c:choose>
+							<c:when test="${fn:length(list) eq 0}">
+								<div class="movie-list-no-result" id="noDataDiv" style="">
+									<p>현재 상영중인 영화가 없습니다.</p>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<ul class="list" id="movieList">
+									<c:forEach items="${list }" var="list" varStatus="status">
+										<li tabindex="0" class="no-img">
+										    <div class="movie-list-info">    
+										        <img src="/resources/static/2022/<c:out value='${list.movieCode }'/>.png" class="poster lozad" onerror="setEmptyImage(this)"/>    
+										    </div>
+										    <div class="tit-area">    
+										        <c:set var="age" value="${list.age }"/>
+										    	<c:choose> 
+										    		<c:when test="${fn:contains(age, '전체')}">
+												        <img src="/resources/static/image/txt-age-all.png" class="age-image">
+										    		</c:when>
+										    		<c:when test="${fn:contains(age, '12')}">
+												        <img src="/resources/static/image/txt-age-12.png" class="age-image">
+										    		</c:when>
+										    		<c:when test="${fn:contains(age, '15')}">
+												        <img src="/resources/static/image/txt-age-15.png" class="age-image">
+										    		</c:when>
+										    		<c:when test="${fn:contains(age, '청소년')}">
+												        <img src="/resources/static/image/txt-age-19.png" class="age-image">
+										    		</c:when>
+										        </c:choose>
+										        <p title="" class="tit">${list.title }</p>
+										    </div>
+										    <div class="rate-date">    
+										        <span class="date">개봉일 ${list.openDate }</span>
+										    </div>
+										    <div class="btn-util" id="btn-util-${list.movieCode }">    
+										        <button type="button" class="btn btn-like" data-no="${list.movieCode }">
+												    <c:choose> 
+												        <c:when test="${list.existLike eq 0 || empty list.existLike}">
+												            <i class="fa-regular fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+												        </c:when>
+												        <c:otherwise>
+												        	<i class="fa-solid fa-heart" id="heartIcon-${list.movieCode }"></i> <span id="likeCount-${list.movieCode }">${list.totalCountLike }</span>
+												        </c:otherwise>
+												    </c:choose>
+										        </button>   
+										        <p class="txt movieStat2" style="display: none">9월 개봉예정</p>    
+										        <p class="txt movieStat5" style="display: none">개봉예정</p>    
+										        <div class="case movieStat4" style="">        
+										           <a href="#" class="btn alarmBtn" data-no="${list.movieCode }" title="영화 예매하기">알림신청</a>
+										        </div>
+										    </div>
+										</li>
+									</c:forEach>
+								</ul>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="btn-more v1" id="addMovieDiv" style="">
 						<button type="button" class="btn" id="btnAddMovie">더보기</button>
@@ -123,14 +142,9 @@
 	
 	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	
-	<script type="text/javascript" src="/resources/static/js/user/likeProc.js"></script>
+	<%@ include file="../../../include/jsp/likeAndSearch.jsp"%>
 	
-	<script>
-		function setEmptyImage(img) {
-			img.src='/resources/static/image/noImg.png';
-			$(img).addClass('noImg');
-		}
-		
+	 <script>
 		$(document).ready(function(){
 			$('button[data-bs-toggle="tab"]').on("hidden.bs.tab", function(){
 			});
@@ -139,34 +153,9 @@
 				location.href="running"
 			});
 			
-			$(".alarmBtn").on("click", function(){
-				var movieCode = $(this).data("no");
-				
-				/* $("#form").submit(); */
-
-				location.href="../movie/openAlarm?movieCode="+movieCode;
+			$("#nav-comingsoon-tab").on("click", function(){
+				location.href="premovie";
 			});
-			
-			$(".movie-list ul li").slice(0, 20).show(); // 초기갯수
-		   
-			$("#btnAddMovie").on("click", function(){
-				$(".movie-list ul li:hidden").slice(0, 20).show();	
-				
-				if($(".movie-list ul li:hidden").length == 0){ 
-					$("#btnAddMovie").css("display", "none");
-				}
-			});
-			
-			$(".btn-like").on("click", function(){
-				var movieCode = $(this).data("no");
-				var usreSeq = "${sessSeq}"
-				
-				if(usreSeq == null || usreSeq == '') {
-					alert("로그인 후 사용가능합니다.")
-				} else {
-					processLike(movieCode)
-				}
-			})
 			
 		});
 	</script>
