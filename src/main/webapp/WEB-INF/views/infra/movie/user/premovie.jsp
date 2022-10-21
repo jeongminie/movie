@@ -38,7 +38,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_white.jsp" />
+		<jsp:include page="../../../include/user/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
 				<div class="location">
@@ -132,17 +132,18 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="btn-more v1" id="addMovieDiv" style="">
-						<button type="button" class="btn" id="btnAddMovie">더보기</button>
+					<div class="btn-more v1" id="addMovieDiv">
+						<button type="button" class="btn">더보기</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
-	<jsp:include page="../../../include/jsp/loginModal.jsp" />
+	<jsp:include page="../../../include/user/jsp/loginModal.jsp" />
 	
-	<%@ include file="../../../include/jsp/likeAndSearch.jsp"%>
+	<%@ include file="../../../include/user/jsp/likeAndSearch.jsp"%>
 	
 	 <script>
 		$(document).ready(function(){

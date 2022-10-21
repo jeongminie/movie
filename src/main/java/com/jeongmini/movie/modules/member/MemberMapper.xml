@@ -56,6 +56,15 @@
 			AND a.password = #{password}
 	</select>
 	
+	<select id="selectOneMember" resultMap="resultMapObj">
+		SELECT
+			*
+		FROM
+			user a
+		WHERE 1=1
+			AND seq = #{seq}
+	</select>
+	
 	<select id="idCheck" resultType="int">
 		SELECT
 			COUNT(*)
@@ -84,5 +93,17 @@
 			,#{pseq}
 		)
 	</insert>
+	
+	<select id="selectProfile" resultMap="resultMapObj">
+		SELECT
+			path
+			, originalName
+			, uuidName
+		FROM
+			memberUploaded
+		WHERE
+			pseq = #{pseq}
+	</select>
+	
 	
 </mapper>	

@@ -36,22 +36,21 @@
 	<title>현재 상영작</title>
 	
 	<style>
-
 	</style>
 	
 </head>
 <body>
-	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_white.jsp" />
-		<div class="page-util">
-			<div class="inner-wrap">
-				<div class="location">
-					<i class="fa-solid fa-house" onclick='location.href="/"' style="cursor:pointer"></i>
-					<a href="running">영화</a>
-					<a href="running">현재 상영작</a>
-				</div>
+	<jsp:include page="../../../include/user/jsp/header_white.jsp" />
+	<div class="page-util">
+		<div class="inner-wrap">
+			<div class="location">
+				<i class="fa-solid fa-house" onclick='location.href="/"' style="cursor:pointer"></i>
+				<a href="running">영화</a>
+				<a href="running">현재 상영작</a>
 			</div>
 		</div>
+	</div>
+	<div id="wrap">
 		<div class="tap-menu">
 			<nav>
 				<div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -130,16 +129,17 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="btn-more v1" id="addMovieDiv" style="">
-						<button type="button" class="btn" id="btnAddMovie">더보기</button>
+					<div class="btn-more v1" id="addMovieDiv">
+						<button type="button" class="btn">더보기</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<%@ include file="../../../include/user/jsp/footer.jsp"%>
 	
-	<%@ include file="../../../include/jsp/loginModal.jsp"%>
-	<%@ include file="../../../include/jsp/likeAndSearch.jsp"%>
+	<%@ include file="../../../include/user/jsp/likeAndSearch.jsp"%>
+	<%@ include file="../../../include/user/jsp/loginModal.jsp"%>
 	
 	<script>
 		$(document).ready(function(){

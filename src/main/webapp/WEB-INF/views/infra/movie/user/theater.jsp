@@ -77,13 +77,13 @@
 		#pagination {margin:10px auto;text-align: center;}
 		#pagination a {display:inline-block;margin-right:10px;}
 		#pagination .on {font-weight: bold; cursor: default;color:#777;}
-		.theaterInfo{height: 200px;margin-left: 70px; margin-top: 10px;}
+		.theaterInfo{margin-left: 70px; margin-top: 10px;}
 	</style>	
 		
 </head>
 <body>
 	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_white.jsp" />
+		<jsp:include page="../../../include/user/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
 				<div class="location">
@@ -121,6 +121,7 @@
 			</div>
 		</div>
 	</div> 
+	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	<!-- 카카오 지도 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services,clusterer,drawing"></script>
 	

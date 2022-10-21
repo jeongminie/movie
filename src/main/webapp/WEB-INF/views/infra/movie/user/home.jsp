@@ -35,7 +35,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_dark.jsp" />
+		<jsp:include page="../../../include/user/jsp/header_dark.jsp" />
 		<section class="main-movie">
 			<div class="bg">
 				<div class="bg-pattern"></div>
@@ -81,12 +81,10 @@
 				</div>
 			</div>
 		</section>
-		<footer>
-			
-		</footer>
 	</div>
+	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
-	<jsp:include page="../../../include/jsp/loginModal.jsp" />
+	<jsp:include page="../../../include/user/jsp/loginModal.jsp" />
 	
 	<script>
 		$(document).ready(function(){

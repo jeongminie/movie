@@ -48,12 +48,13 @@
 		$(".movie-list ul li").slice(0, 20).show(); // 초기갯수
 		console.log($(".movie-list ul li").length)
 		
-		$("#btnAddMovie").on("click", function(){
+		$("#addMovieDiv").on("click", function(){
 			$(".movie-list ul li:hidden").slice(0, 20).show();		
 			
 			if($(".movie-list ul li:hidden").length == 0){ 
-				$("#btnAddMovie").css("display", "none");
+				$("#addMovieDiv").css("display", "none");
 			}
+			
 		});
 		
 		$(".btn-like").on("click", function(){

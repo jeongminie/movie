@@ -113,12 +113,14 @@ public class TheaterController {
 		System.out.println(year);
 		System.out.println(month);
 		
-		List<String> dateList = new ArrayList<>();
+		List<String> dd = new ArrayList<>();
 		List<String> dayOfWeek = new ArrayList<>();
+		List<String> dateList = new ArrayList<>();
 
-		for(int i = 0; i <= 13; i++) {
+		for(int i = 0; i <= 9; i++) {
 			LocalDate twoWeek = localDate.plusDays(i);
 			String twoWeekStr = twoWeek.format(DateTimeFormatter.ofPattern("dd"));
+			String dateVal = twoWeek.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 			
 			DayOfWeek day = twoWeek.getDayOfWeek();
 			String dayStr = "";
@@ -146,16 +148,20 @@ public class TheaterController {
 				dayStr = "토";
 				break;
 			}
-
-			dateList.add(twoWeekStr);
+			
+			dd.add(twoWeekStr);
 			dayOfWeek.add(dayStr);
+			dateList.add(dateVal);
 			
 		}
-				
+		
+		model.addAttribute("today", formatDate);		
 		model.addAttribute("dayOfWeek", dayOfWeek);
+		model.addAttribute("dd", dd);
 		model.addAttribute("dateList", dateList);
-		model.addAttribute("year", year);
-		model.addAttribute("month", month);
+//		model.addAttribute("year", year);
+//		model.addAttribute("month", month);
+		
 		
 		return "infra/movie/user/time";
 	}

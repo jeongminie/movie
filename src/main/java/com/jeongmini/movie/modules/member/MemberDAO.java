@@ -32,8 +32,16 @@ public class MemberDAO {
 		return sqlSession.selectOne(namespace + ".login", dto); 
 	}
 	
+	public Member selectOneMember(Member dto) {
+		return sqlSession.selectOne(namespace + ".selectOneMember", dto); 
+	}
+	
 	public int idCheck(MemberVo vo) {
 		return sqlSession.selectOne(namespace + ".idCheck", vo);
+	}
+	
+	public Member selectProfile(Member dto) {
+		return sqlSession.selectOne(namespace + ".selectProfile", dto); 
 	}
 
 }

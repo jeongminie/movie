@@ -81,7 +81,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_white.jsp" />
+		<jsp:include page="../../../include/user/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
 				<div class="location">

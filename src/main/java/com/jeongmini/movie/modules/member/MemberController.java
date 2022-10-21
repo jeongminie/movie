@@ -130,9 +130,24 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="mypage")
-	public String mypageView() {
+	public String mypageView(Member dto, Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		dto.setPseq((Integer)session.getAttribute("sessSeq"));
+		dto.setSeq((Integer)session.getAttribute("sessSeq"));
+		
+		Member item = service.selectProfile(dto);
+		model.addAttribute("profile", item);
+		
+		Member member = service.member(dto);
+		model.addAttribute("member", member);
 		
 		return "infra/member/user/mypage";
+	}
+	
+	@RequestMapping(value="userinfo")
+	public String userinfoView(Model model) throws Exception {
+		
+		return "infra/member/user/userinfo";
 	}
 	
 	@RequestMapping(value="profileUploaded")

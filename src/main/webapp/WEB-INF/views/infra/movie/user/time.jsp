@@ -57,12 +57,17 @@
 	    border-bottom: 3px solid transparent;
 	    font-weight: 400;
 	}
+	
+	.td-ab:hover {
+		background-color: #875CF0;
+		
+	}
 	</style>
 		
 </head>
 <body>
 	<div id="wrap">
-		<jsp:include page="../../../include/jsp/header_white.jsp" />
+		<jsp:include page="../../../include/user/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
 				<div class="location">
@@ -145,22 +150,22 @@
 						<span class="d-flex justify-content-center mt-5">상영시간표</span>
 						<table class="table calendarTable">
 							<tr>
-								<c:forEach items="${dateList }" var="dateList" varStatus="status">
+								<c:forEach items="${dd }" var="dd" varStatus="status">
 									<td>
-									<input type="hidden" value="${year}${month}${dateList}" class="date">
-									<button type="button" class="dateBtn" data-date="${year}${month}${dateList}">
-										<c:choose>
-											<c:when test="${dayOfWeek[status.index] eq '토'}">
-												<span class="date" style="color: blue">${dateList }<br>${dayOfWeek[status.index]}</span> 
-											</c:when>
-											<c:when test="${dayOfWeek[status.index] eq '일'}">
-												<span class="date" style="color: red">${dateList }<br>${dayOfWeek[status.index]}</span> 
-											</c:when>
-											<c:otherwise>
-												<span class="date">${dateList }<br>${dayOfWeek[status.index]}</span>
-											</c:otherwise>
-										</c:choose>
-									</button>
+										<input type="hidden" value="${dateList[status.index]}" name="date" class="date">
+										<button type="button" class="dateBtn" data-date="${dateList[status.index]}">
+											<c:choose>
+												<c:when test="${dayOfWeek[status.index] eq '토'}">
+													<span class="date" style="color: blue" data-date="${dateList[status.index]}">${dd }<br>${dayOfWeek[status.index]}</span> 
+												</c:when>
+												<c:when test="${dayOfWeek[status.index] eq '일'}">
+													<span class="date" style="color: red" data-date="${dateList[status.index]}">${dd }<br>${dayOfWeek[status.index]}</span> 
+												</c:when>
+												<c:otherwise>
+													<span class="date">${dd }<br>${dayOfWeek[status.index]}</span>
+												</c:otherwise>
+											</c:choose>
+										</button>
 									</td>
 								</c:forEach>
 							</tr>
@@ -171,7 +176,10 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="today" value="<c:out value="${today}"/>"/>
+		<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	</div> 
+	
 	<script>
 	function ajax(date, theaterNm) {
 		var query = window.location.search;
@@ -195,7 +203,6 @@
 					var key2 = Object.keys(data[key])
 					
 					for(var key2 in data[key]) {
-						console.log(data[key][key2][0][2])
 						
 						var theaterType = '<div id="t'+count+'-'+'theater'+key2+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
 						
@@ -218,7 +225,7 @@
 						for(var i = 0; i < data[key][key2].length; i++) {
 							
 							var td = '<td>'
-										+'<div class="td-ab">'
+										+'<div class="td-ab" data-id="'+data[key][key2][i][3]+'" style="cursor:pointer;">'
 											+'<div class="txt-center">'
 												+'<p class="time">'+ data[key][key2][i][0] +'</p>'
 												+'<p class="chair">'+ data[key][key2][i][1] +'석</p>'
@@ -229,8 +236,9 @@
 							$('#t'+ count + '-' + 'theater'+ key2 + ' table tr').append(td)
 						}
 					}
-					count++
+					count++;
 				}
+				
 			},
 			error : function() {
 				alert('요청 실패쓰');
@@ -327,7 +335,7 @@
 			location.href="/theater/time?brchNo="+brchNo
 
 			$(".theater-list-box").empty();
-		})
+		});
 		
 		$(".dateBtn").on("click", function(){
 			
@@ -339,7 +347,58 @@
 		     }
 		})
 		
+		/* 오픈되지 않은 날짜 disabled 처리 */
+		var today = $("input[name='today']").val();
+		var compared = $("input[name='date']");
+		
+		$.ajax ({
+			type : 'post',
+			url : 'http://127.0.0.1:5000/tospring',
+			data : {"date":today, "brchNo":brchNo},
+			dataType : 'json',
+			success : function(data) {
+				for(var i = 1; i < compared.length; i++) {
+					var comparedDate = compared[i].value;
+					
+					(function(i) {
+						$.ajax({
+							type : 'post',
+							async: false,
+							url : 'http://127.0.0.1:5000/tospring',
+							data : {"date":comparedDate, "brchNo":brchNo},
+							dataType : 'json',
+							success : function(data2) {
+								if(JSON.stringify(data) == JSON.stringify(data2)) {
+									$('button[data-date='+comparedDate+']').attr("disabled",true);
+									$('span[data-date='+comparedDate+']').css("color","");
+								}
+							}
+						})
+					})(i);
+				}
+			}
+		});
+		/* 오픈되지 않은 날짜 disabled 처리 */
+		
+		/* 예매사이트 이동 */
+		$(document).on("click",'.td-ab', function(){
+			var playSchdlNo = $(this).data("id");
+			console.log(playSchdlNo)
+			
+			window.open("https://www.megabox.co.kr/booking?playSchdlNo="+playSchdlNo)
+		});
+		
+		/* $(document).on("mouseover",'.td-ab', function(){
+			$(this).css("background-color", "#503396");
+			
+			
+		}); */
+		/* 예매사이트 이동 */
+		
 	});
+	
+	
+		
 </script>
 	
 	

@@ -55,7 +55,7 @@
 <body>
 	<div id="wrap">
 		<div>
-			<jsp:include page="../../../include/jsp/menu.jsp" />				
+			<jsp:include page="../../../include/xdmin/jsp/menu.jsp" />				
  					<span class="m-4"><b>코드 관리</b></span>
  					<form method="post" id="form" name="form">
  					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
@@ -148,7 +148,7 @@
 							</tbody>
 						</table>
 						<!-- pagination s -->
-						<%@include file="../../../include/jsp/pagination.jsp"%>
+						<%@include file="../../../include/xdmin/jsp/pagination.jsp"%>
 						<!-- pagination e -->
 						<div class="d-flex justify-content-end">				
 							<div>
@@ -164,7 +164,6 @@
 	</div>
 	
 	<!-- modal -->
-	<jsp:include page="../../../include/jsp/loginModal.jsp" />
 	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content" role="document">

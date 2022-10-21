@@ -46,7 +46,7 @@
 <body>
 	<div id="wrap">
 		<div>
-			<%@include file="../../../include/jsp/menu.jsp" %>
+			<%@include file="../../../include/xdmin/jsp/menu.jsp" %>
  					<span class="m-4"><b>회원관리</b></span>
 					<div id="searchSection">
 						<div class="d-flex">

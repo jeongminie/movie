@@ -48,6 +48,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member member(Member dto) throws Exception {
+		
+		return dao.selectOneMember(dto);
+	}
+	
+	@Override
 	public boolean idCheck(MemberVo vo) throws Exception {
 		if(dao.idCheck(vo) == 0) {
 			return false;
@@ -80,6 +86,11 @@ public class MemberServiceImpl implements MemberService {
     	}
     	
     	return 1;
+	}
+	
+	@Override
+	public Member selectProfile(Member dto) throws Exception {
+		return dao.selectProfile(dto);
 	}
 
 }

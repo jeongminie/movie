@@ -47,7 +47,7 @@
 		</div>
 	</div>
 
-	<jsp:include page="../../../include/jsp/loginModal.jsp" />
+	<jsp:include page="../../../include/user/jsp/loginModal.jsp" />
 	
 	<script>
 		$(document).ready(function(){

@@ -12,6 +12,10 @@ public interface MemberService {
 	
 	public Member login(Member dto) throws Exception;
 	
+	public Member member(Member dto) throws Exception;
+	
 	public boolean idCheck(MemberVo vo) throws Exception;
+	
+	public Member selectProfile(Member dto) throws Exception;
 
 }
