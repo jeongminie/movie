@@ -152,6 +152,7 @@ public class MemberController {
 	
 	@RequestMapping(value="profileUploaded")
 	public String profileInst(Member dto, HttpServletRequest request) throws Exception {
+		System.out.println(dto.getFilePath());
 		HttpSession session = request.getSession();
 		dto.setPseq((Integer)session.getAttribute("sessSeq"));
 		

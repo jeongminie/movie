@@ -1,8 +1,7 @@
 package com.jeongmini.movie.modules.member;
 
+import java.io.File;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jeongmini.movie.common.constants.Constants;
 import com.jeongmini.movie.common.util.EncryptUtils;
 import com.jeongmini.movie.common.util.UtilUpload;
 
@@ -66,6 +66,9 @@ public class MemberServiceImpl implements MemberService {
 	public int profileUploaded(Member dto) throws Exception{
 		System.out.println(dto.getProfileUploaded());
 		
+		int count = dao.selectCountProfile(dto); 
+		System.out.println(count);
+		 
 		int j = 0;
 		
     	for(MultipartFile multipartFile : dto.getProfileUploaded()) {
@@ -79,8 +82,13 @@ public class MemberServiceImpl implements MemberService {
 	    		dto.setType(1);
 	    		dto.setDefaultNy(j == 0 ? 1 : 0);
 	    		dto.setSort(j + 1);
-
-				dao.profileUploaded(dto);
+	    		
+	    		if(count == 0) {
+	    			dao.profileUploaded(dto);
+	    		} else {
+	    			dao.profileUpdated(dto);
+	    		}
+	    		
 				j++;
     		}
     	}

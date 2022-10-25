@@ -22,6 +22,8 @@ public class MemberVo {
 	private String domain;
 	private String redirectUrl;
 	
+	private Integer pseq;
+	
 	public Integer getSeq() {
 		return seq;
 	}
@@ -105,6 +107,12 @@ public class MemberVo {
 	}
 	public void setRedirectUrl(String redirectUrl) {
 		this.redirectUrl = redirectUrl;
+	}
+	public Integer getPseq() {
+		return pseq;
+	}
+	public void setPseq(Integer pseq) {
+		this.pseq = pseq;
 	}
 	
 

@@ -47,17 +47,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="inner-wrap">
+		<div class="inner-wrap" style="height:500px;">
 			<jsp:include page="../../../include/user/jsp/mypageAside.jsp" />
 			<div id="contents">
-				<div class="my-magabox-info ">
+				<div class="my-magabox-info">
 					<!-- top -->
 					<div class="top">
 						<div class="photo" id="myPhoto">
 							<div class="wrap">
 								<form method="post" id="form" enctype="multipart/form-data">
 									<input type="file" id="profileUploaded" name="profileUploaded" class="d-none">
-									<input type="hidden" name="fileMbNo" value="12089821">
+									<input type="hidden" name="filePath" value="${profile.path }${profile.uuidName }">
 								</form>
 								<i class="fa-solid fa-circle-plus"></i>
 								<button type="button" class="img">
@@ -124,9 +124,12 @@
 				console.log($("#profileUploaded")[0].files[0])
 			
 				/* $("#form").submit(); */
+				var filePath = $("input[name='filePath']").val();
+				alert(filePath)
 				
  				var formData = new FormData();
 				formData.append("profileUploaded", $("#profileUploaded")[0].files[0]);
+				formData.append("filePath", filePath);
 				
 				$.ajax({
 					type : "POST",

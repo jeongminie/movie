@@ -94,11 +94,32 @@
 		)
 	</insert>
 	
+	<update id="profileUpdated">
+		UPDATE ${tableName}
+		SET path = #{path},
+			originalName = #{originalName},
+			uuidName = #{uuidName},
+			ext = #{ext},
+			size = #{size},
+			delNy = 0,
+			pseq = #{pseq}
+		WHERE pseq = #{pseq}
+	</update>
+	
 	<select id="selectProfile" resultMap="resultMapObj">
 		SELECT
 			path
 			, originalName
 			, uuidName
+		FROM
+			memberUploaded
+		WHERE
+			pseq = #{pseq}
+	</select>
+	
+	<select id="selectCountProfile" resultType="int">
+		SELECT
+			COUNT(*)
 		FROM
 			memberUploaded
 		WHERE

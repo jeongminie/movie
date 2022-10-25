@@ -17,5 +17,6 @@ public interface MemberService {
 	public boolean idCheck(MemberVo vo) throws Exception;
 	
 	public Member selectProfile(Member dto) throws Exception;
+	
 
 }

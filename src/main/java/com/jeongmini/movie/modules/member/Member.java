@@ -21,6 +21,7 @@ public class Member {
 	private Integer pseq;
 	
 	private MultipartFile[] profileUploaded;
+	private String filePath;
 	
 	private Integer seq;
 	private String loginId;
@@ -215,6 +216,12 @@ public class Member {
 	public void setProfileUploaded(MultipartFile[] profileUploaded) {
 		this.profileUploaded = profileUploaded;
 	}
-
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
 	
 }
