@@ -84,7 +84,10 @@
 				</div>
 			</div>
 		</div>
-	</div> 
+	</div>
+	<jsp:include page="../../../include/user/jsp/footer.jsp" />
+	
+	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
 	
 	<script>
 		function setEmptyImage(img) {

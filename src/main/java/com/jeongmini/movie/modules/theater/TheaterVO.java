@@ -5,6 +5,7 @@ public class TheaterVO {
 	private String city;
 	private String city2;
 	private String city3;
+	private Integer sort;
 
 	public String getCity() {
 		return city;
@@ -28,6 +29,14 @@ public class TheaterVO {
 
 	public void setCity3(String city3) {
 		this.city3 = city3;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 	
 	

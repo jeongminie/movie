@@ -104,4 +104,21 @@ public class MovieController {
 		
 	}
 	
+	@RequestMapping(value="movieOpenAlarm")
+	@ResponseBody
+	public Map<String, Object> movieOpenAlarm(Movie dto, HttpServletRequest request) throws Exception {
+		int count = service.movieOpenAlarm(dto);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+		
+	}
+	
 }

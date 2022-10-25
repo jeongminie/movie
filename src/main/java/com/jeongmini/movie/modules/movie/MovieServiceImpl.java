@@ -99,4 +99,9 @@ public class MovieServiceImpl implements MovieService {
 		return dao.selectTotalCountLike(vo);
 	}
 	
+	@Override
+	public int movieOpenAlarm(Movie dto) throws Exception {
+		return dao.movieOpenAlarm(dto);
+	}
+	
 }

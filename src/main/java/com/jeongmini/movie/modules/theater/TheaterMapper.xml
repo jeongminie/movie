@@ -17,19 +17,11 @@
 		FROM 
 			theater t
 		<choose>	
-			<when test="city != null or city2 != null or city3 != null">
+			<when test="sort != null">
 				WHERE
-					t.city IN (#{city}, #{city2}, #{city3})
+					sort = #{sort}
 				ORDER BY t.theaterNm
 			</when>
 		</choose>
-	</select>
-	
-	<select id="selectTheaterCity" resultMap="resultMapObj">
-		SELECT 
-			*
-		FROM 
-			theater t
-		GROUP BY t.city 
 	</select>
 </mapper>

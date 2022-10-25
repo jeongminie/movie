@@ -22,5 +22,7 @@ public interface MovieService {
 	
 	public int totalCountLike(MovieVO vo) throws Exception;
 	
+	public int movieOpenAlarm(Movie dto) throws Exception;
+	
 	
 }

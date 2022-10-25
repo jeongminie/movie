@@ -173,4 +173,16 @@
 			AND delNy = 0 
 	</select>
 	
+	<insert id="movieOpenAlarm">
+		INSERT INTO openAlarm (
+			brchNo
+			, rpstMovieNo
+			, playKindCd
+		) VALUES (
+			#{brchNo}
+			, #{rpstMovieNo}
+			, #{playKindCd}
+		)
+	</insert>
+	
 </mapper>

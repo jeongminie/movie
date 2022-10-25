@@ -14,9 +14,12 @@ public class Movie {
 	private String directors;
 	private String actors;
 	private String story;
-	
 	private Integer totalCountLike;
 	private Integer existLike;
+	private String brchNo;
+	private Integer rpstMovieNo;
+	private String rpstMovieNm;
+	private String playKindCd;
 	
 	public Integer getSeq() {
 		return seq;
@@ -96,13 +99,35 @@ public class Movie {
 	public void setTotalCountLike(Integer totalCountLike) {
 		this.totalCountLike = totalCountLike;
 	}
-	
-
 	public Integer getExistLike() {
 		return existLike;
 	}
 	public void setExistLike(Integer existLike) {
 		this.existLike = existLike;
+	}
+	public String getBrchNo() { 
+		return brchNo;
+	}
+	public void setBrchNo(String brchNo) {
+		this.brchNo = brchNo;
+	}
+	public Integer getRpstMovieNo() {
+		return rpstMovieNo;
+	}
+	public void setRpstMovieNo(Integer rpstMovieNo) {
+		this.rpstMovieNo = rpstMovieNo;
+	}
+	public String getRpstMovieNm() {
+		return rpstMovieNm;
+	}
+	public void setRpstMovieNm(String rpstMovieNm) {
+		this.rpstMovieNm = rpstMovieNm;
+	}
+	public String getPlayKindCd() {
+		return playKindCd;
+	}
+	public void setPlayKindCd(String playKindCd) {
+		this.playKindCd = playKindCd;
 	}
 
 

@@ -191,40 +191,39 @@
 				</div>
 			</div>
 			<div class="movie-tit">
-				<span>${item.title }</span>
+				<span id="movieNm">${item.title }</span>
 			</div>
 			<div class="select-wrap">
 				<div class="select-area">
 					<select class="form-select select">
 						<option value="" hidden>속성</option>
 					</select>
-					<select class="form-select select-option d-none" multiple>
-						<option value="1">DOLBY CINEMA</option>
-						<option value="2">THE BOUTIQUE</option>
-						<option value="3">MX</option>
-						<option value="4">COMFORT</option>
-						<option value="5">PUPPY CINEMA</option>
-						<option value="6">MEGABOX KIDS</option>
+					<select id="playKindCd" class="form-select select-option d-none" multiple>
+						<option value="MK16">DOLBY CINEMA</option>
+						<option value="2" disabled>THE BOUTIQUE</option>
+						<option value="3" disabled>MX</option>
+						<option value="4" disabled>COMFORT</option>
+						<option value="5" disabled>PUPPY CINEMA</option>
+						<option value="6" disabled>MEGABOX KIDS</option>
 					</select>
 				</div>
 				<div class="select-area mt-2">
 					<select class="form-select select">
 						<option disabled selected hidden>극장</option>
 					</select>
-					<select class="form-select select-option d-none" multiple>
-						<option value="1">강남</option>
-						<option value="2">강남대로(씨티)</option>
-						<option value="3">강동</option>
-						<option value="4">군자</option>
-						<option value="5">동대문</option>
-						<option value="6">마곡</option>
+					<select id="brchNo" class="form-select select-option d-none" multiple>
+						<option value="0019">남양주현대아울렛 스페이스원</option>
+						<option value="7011">대구신세계(동대구)</option>
+						<option value="0028">대전신세계 아트앤사이언스</option>
+						<option value="0020">안성스타필드</option>
+						<option value="1351">코엑스</option>
 					</select>
 				</div>
 				<div class="select-area mt-2">
 					<input type="text" class="form-control select-date" placeholder="날짜" id="startDate" onfocus="this.blur()" style="cursor:pointer">
 				</div>
 				<div class="alarm">
-					<button type="button" class="alarmBtn"><i class="fa-regular fa-bell"></i></button>
+					<button type="button" id="alarmBtn" class="alarmBtn"><i class="fa-regular fa-bell"></i></button>
 				</div>
 			</div>
 		</div>
@@ -273,10 +272,63 @@
 				}
 			});
 			
-			$(".alarmBtn").on("click", function(){
-				alert("알람신청 완료")
+			$("#alarmBtn").on("click", function(){
+				var brchNo = $("#brchNo option:selected").val();
+				console.log(brchNo)
+				
+				var playKindCd = $("#playKindCd option:selected").val();
+				console.log(playKindCd)
+				
+				var rpstMovieNo = $("input[name='movieNo']").val();
+				console.log(rpstMovieNo)
+				
+				$.ajax({
+					type : 'post',
+					url : 'movieOpenAlarm',
+					data : {"brchNo":brchNo, "playKindCd":playKindCd, "rpstMovieNo":rpstMovieNo},
+					success : function(data) {
+						if(data.result == "success") {
+							alert("성공");
+						} else {
+							alert("실패");
+						}
+					}
+				})
 			})
 			
+/* 			$(document).on("click",'#alarmBtn', function(){
+				var movieNo = $("input[name='movieNo']").val();
+				alert(movieNo)
+				
+				$.ajax({
+					type : 'post',
+					url : 'http://127.0.0.1:5000/dd',
+					data : {"movieNo":movieNo},
+					success : function(data) {
+						
+					},
+					error : function() {
+						alert('요청 실패쓰');
+					}
+				})
+				
+			}) */
+			
+			var movieNm = $("#movieNm").text().replace(" ","");
+			
+			$.ajax({
+				type : 'post',
+				url : 'http://127.0.0.1:5000/movieNo',
+				data : {"movieNm":movieNm},
+				success : function(data) {
+					$("#wrap").append("<input name='movieNo' type='hidden' value="+data+">")
+					
+				},
+				error : function() {
+					alert('요청 실패쓰');
+				}
+			})
+				
 		});	
 	</script>
 	

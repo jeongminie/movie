@@ -70,5 +70,10 @@ public class MovieDAO {
 		return sqlSession.selectOne(namespace + ".selectTotalCountLike", vo);
 	}
 	
+	public int movieOpenAlarm(Movie dto) {
+		int result = sqlSession.insert(namespace + ".movieOpenAlarm", dto);
+		return result;
+	}
+	
 
 }

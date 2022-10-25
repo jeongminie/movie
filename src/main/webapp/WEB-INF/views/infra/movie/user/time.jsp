@@ -58,10 +58,6 @@
 	    font-weight: 400;
 	}
 	
-	.td-ab:hover {
-		background-color: #875CF0;
-		
-	}
 	</style>
 		
 </head>
@@ -83,49 +79,49 @@
 			<div class="theater-all">
 				<div class="theater-area-list">
 					<ul class="area-depth1">
-						<li class="on area-li">
+						<li class="on area-li" value="1">
 							<a href="" class="depth1 area" title="서울 선택">서울</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="2">
 							<a href="" class="depth1 area" title="경기 선택">경기</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="3">
 							<a href="" class="depth1 area" title="경기 선택">인천</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="4">
 							<a href="" class="depth1 area" title="경기 선택">대전/충청/세종</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="5">
 							<a href="" class="depth1 area" title="경기 선택">부산/대구/경상</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="6">
 							<a href="" class="depth1 area" title="경기 선택">광주/전라</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
 								</ul>
 							</div>
 						</li>
-						<li class="on area-li">
+						<li class="on area-li" value="7">
 							<a href="" class="depth1 area" title="경기 선택">강원</a>
 							<div class="area-depth2">
 								<ul class="area-ul">
@@ -203,8 +199,8 @@
 					var key2 = Object.keys(data[key])
 					
 					for(var key2 in data[key]) {
-						
-						var theaterType = '<div id="t'+count+'-'+'theater'+key2+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'관</p></div></div></div>'
+						console.log(data[key][key2][0][4])
+						var theaterType = '<div id="t'+count+'-'+'theater'+data[key][key2][0][4]+'" class="theater-type-box"><div class="theater-type"><p class="theater-name">'+ key2 +'</p></div></div></div>'
 						
 						$('#title'+ count).append(theaterType);
 						
@@ -220,20 +216,21 @@
 							+'</div>'
 						+'</div>'
 						
-						$('#t'+ count + '-' + 'theater'+ key2).append(theaterTime);
+						$('#t'+ count + '-' + 'theater'+ data[key][key2][0][4]).append(theaterTime);
 						
 						for(var i = 0; i < data[key][key2].length; i++) {
 							
 							var td = '<td>'
 										+'<div class="td-ab" data-id="'+data[key][key2][i][3]+'" style="cursor:pointer;">'
 											+'<div class="txt-center">'
+												+'<div class="d-none test">예매하러가기</div>'
 												+'<p class="time">'+ data[key][key2][i][0] +'</p>'
 												+'<p class="chair">'+ data[key][key2][i][1] +'석</p>'
 											+'</div>'
 										+'</div>'
 									 +'</td>'
 							
-							$('#t'+ count + '-' + 'theater'+ key2 + ' table tr').append(td)
+							$('#t'+ count + '-' + 'theater'+ data[key][key2][0][4] + ' table tr').append(td)
 						}
 					}
 					count++;
@@ -305,17 +302,12 @@
 			var path = $(".area-li").children(".area-depth2").children(".area-ul");
 			path.empty();
 			
-			var ul = $(this).text();
- 			var cityArr = ul.split('/')
-			
- 			var city = cityArr[0]
- 			var city2 = cityArr[1]
- 			var city3 = cityArr[2]
+			var sort = $(this).parent(".area-li").val();
 			
 			$.ajax({
 				type:"POST"
 				, url:"selectTheater"
-				, data:{"city":city, "city2":city2, "city3":city3}
+				, data:{"sort":sort}
 				, success:function(data) {
 					for(var i = 0; i < data.length; i++) {
 						var title = data[i].theaterNm.replace("메가박스 ","")
@@ -388,11 +380,21 @@
 			window.open("https://www.megabox.co.kr/booking?playSchdlNo="+playSchdlNo)
 		});
 		
-		/* $(document).on("mouseover",'.td-ab', function(){
+		$(document).on("mouseover",'.td-ab', function(){
 			$(this).css("background-color", "#503396");
+			$(this).css("color", "#FFFFFF");
+			$(this).find(".test").removeClass("d-none");
+			$(this).find(".time, .chair").addClass("d-none");
 			
+		});
+		
+		$(document).on("mouseleave",'.td-ab', function(){
+			$(this).css("background-color", "");
+			$(this).find(".test").addClass("d-none");
+			$(this).find(".time, .chair").removeClass("d-none");
 			
-		}); */
+		});
+		
 		/* 예매사이트 이동 */
 		
 	});
