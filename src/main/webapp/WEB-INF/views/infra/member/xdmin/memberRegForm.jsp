@@ -22,8 +22,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="../css/style.css">
-	<title></title>
+	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
+	<title>회원등록</title>
 	
 	<style>
 		.frontSection {
@@ -46,8 +46,9 @@
 		}
 		
 		.text-input {
-			width : 350px;
-			margin: 20px;
+			width : 100%;
+			margin-top : 5px;
+			margin-bottom: 10px;
 		}
 		
 		#ui-datepicker-div {
@@ -57,69 +58,66 @@
 </head>
 <body>
 	<div id="wrap">
-		<form>
-			<header class="d-flex">
-				<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
-				<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
-					<ul class="nav">
-					    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-					    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-					    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
-					</ul>                        
-				</nav>
-			</header>
-			<section class="d-flex">
-				<aside class="col-2">
-					<nav class="main-nav">
-						<ul class="nav flex-column">
-							<li class="nav-item"><a href="#" class="nav-link">코드그룹관리</a></li>				
-							<li class="nav-item"><a href="#" class="nav-link">코드관리</a></li>
-							<li class="nav-item"><a href="#" class="nav-link">회원관리</a></li>
-						</ul>
-					</nav>
-				</aside>
-				<section class="col-10 p-4">
-					<div class="frontSection">
-						<span><b>STEP1.정보입력</b></span>
-						<span>STEP2.등록완료</span>
-						<h4 class="mt-4">코드그룹 정보를 입력해주세요</h4>
-					</div>
+		<jsp:include page="../../../include/xdmin/jsp/menu.jsp" />
+			<section class="col-10 p-4">
+				<div class="frontSection">
+					<span><b>STEP1.정보입력</b></span>
+					<span>STEP2.등록완료</span>
+					<h4 class="mt-4">회원 정보를 입력해주세요</h4>
+				</div>
+				<form method="post" name="form" id="form" autocomplete="off" enctype="multipart/form-data">
+					<input type="hidden" name="seq" value="${vo.seq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
-							<label class="m-2"><b>코드그룹 관리</b></label>
-							<div class="d-flex">
-								<input type="text" class="form-control text-input mb-0" placeholder="이름">
-								<div class="d-flex align-items-center mt-3">
-									<label class="m-2"><input type="radio" name="gender">남</label>
-									<label><input type="radio" name="gender">여</label>
-								</div>
+							<div>코드그룹 코드<input type="text" name="cgSeq" id="cgSeq" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgSeq }">value="${item.cgSeq  }"</c:if>></div>
+							<div>코드그룹 이름 (한글)<input type="text" name="cgName" id="cgName" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgName }">value="${item.cgName  }"</c:if>></div>
+							<div>
+								<span>사용여부</span>
+								<select class="form-select text-input" name="useNy" id="useNy">
+									<option value="1" <c:if test="${item.useNy eq 1 }">selected</c:if>>Y</option>
+									<option value="0" <c:if test="${item.useNy eq 0 }">selected</c:if>>N</option>
+								</select>
 							</div>
-							<input type="text" class="form-control text-input" placeholder="코드그룹 코드">
-							<!-- <input type="text" class="form-control text-input" placeholder="생년월일" id="birth"> -->
-							<input type="text" class="form-control text-input" placeholder="코드그룹 이름(한글)">
-							<input type="text" class="form-control text-input" placeholder="사용여부">
-							<input type="text" class="form-control text-input" placeholder="예비1 (varchan type)">
-							<input type="text" class="form-control text-input" placeholder="예비3 (varchan type)">
-							<input type="text" class="form-control text-input" placeholder="예비1 ()int type)">
-							<input type="text" class="form-control text-input" placeholder="예비3 ()int type)">
-							<input type="text" class="form-control text-input" placeholder="설명">
+							<div>설명<textarea cols="30" class="form-control text-input"></textarea></div>
+							<div>예비1 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
+							<div>예비3 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
+							<div>예비1 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
+							<div>예비3 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 						</div>
 						<div class="codeInfo col-6">
-							<label class="m-2"><b>가입정보</b></label>
-							<input type="text" class="form-control text-input mb-0" placeholder="아이디">
-							<input type="password" class="form-control text-input password" placeholder="비밀번호">
-							<input type="password" class="form-control text-input passwordRe mb-1" placeholder="비밀번호 확인">
-							<span class="text-danger m-4 passwordError d-none">비밀번호가 일치하지 않습니다.</span>
-							<input type="text" class="form-control text-input" placeholder="이메일">
+							<div>코드그룹 코드 (Another)<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
+							<div>코드그룹 이름 (영문)<input type="text" name="cgNameEng" id="cgNameEng" class="form-control text-input" <c:if test="${not empty item.cgNameEng }">value="${item.cgNameEng  }"</c:if> placeholder="코드그룹 코드"></div>
+							<div>순서<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
+							<div>
+								<span>삭제여부</span>
+								<select class="form-select text-input" name="delNy" id="delNy">
+									<option value="0" <c:if test="${item.delNy eq 0 }">selected</c:if>>N</option>
+									<option value="1" <c:if test="${item.delNy eq 1 }">selected</c:if>>Y</option>
+								</select>
+							</div>
+							<div style="margin-top:35px">예비2 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
+							<div style="margin-top:85px">예비2 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 						</div>
 					</div>
-					<div class="d-flex justify-content-between">
-						<button type="button" class="btn cancelBtn" onClick="location.href='memberList.html'">이전</button>
-						<button type="button" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button>
-					</div>
-				</section>
+				</form>
+				<div class="d-flex justify-content-between" style="padding-bottom: 10px;">
+					<button type="button" class="btn prevBtn">이전</button>
+					<c:choose>
+						<c:when test="${not empty item.seq }">
+							<div class="d-flex">
+								<button type="button" class="btn ueleteBtn" id="uelete">X</button>
+								<button type="button" class="btn deleteBtn" id="delete">삭제</button>
+								<button type="submit" class="btn saveBtn">수정</button>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn saveBtn">등록</button>
+						</c:otherwise>
+					</c:choose>
+					<!-- <button type="submit" class="btn createBtn" data-bs-toggle="modal" data-bs-target="#memberRegModal">등록하기</button> -->
+				</div>
 			</section>
-		</form>>
+		</section>
 	</div>
 	
 	<!-- modal -->

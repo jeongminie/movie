@@ -22,8 +22,8 @@ public class MemberServiceImpl implements MemberService {
 	MemberDAO dao;
 	
 	@Override
-	public List<Member> selectList() throws Exception {
-		return dao.selectList();
+	public List<Member> selectList(MemberVo vo) throws Exception {
+		return dao.selectList(vo);
 	}
 	
 	@Override
@@ -86,6 +86,7 @@ public class MemberServiceImpl implements MemberService {
 	    		if(count == 0) {
 	    			dao.profileUploaded(dto);
 	    		} else {
+	    			UtilUpload.removeFile(dto.getFilePath());
 	    			dao.profileUpdated(dto);
 	    		}
 	    		

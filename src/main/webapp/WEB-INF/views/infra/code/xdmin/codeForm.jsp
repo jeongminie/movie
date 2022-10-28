@@ -58,26 +58,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<header class="d-flex">
-			<a href="memberList.html" class="display-4 text-dark col-1" id="logo">Title</a>
-			<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
-				<ul class="nav">
-				    <!-- <li class="nav-item"><a href="#" class="nav-link small-link"><i class="fa-solid fa-circle-user"></i></a></li> -->
-				    <li class="nav-item"><a href="#" class="nav-link">로그인</a></li>
-				    <li class="nav-item"><a href="#" class="nav-link">회원가입</a></li>
-				</ul>                        
-			</nav>
-		</header>
-		<section class="d-flex">
-			<aside class="col-2">
-				<nav class="main-nav">
-					<ul class="nav flex-column">
-						<li class="nav-item"><a href="codeGroupList" class="nav-link">코드그룹관리</a></li>				
-						<li class="nav-item"><a href="codeList" class="nav-link">코드관리</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">회원관리</a></li>
-					</ul>
-				</nav>
-			</aside>
+		<jsp:include page="../../../include/xdmin/jsp/menu.jsp" />
 			<section class="col-10 p-4">
 				<div class="frontSection">
 					<span><b>STEP1.정보입력</b></span>

@@ -1,6 +1,10 @@
 package com.jeongmini.movie.common.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -47,5 +51,31 @@ public class UtilUpload {
 		}
 	}
 	
+	public static void removeFile(String filePath) throws IOException {
+//		String realFilePath = Constants.FILE_UPLOAD_PATH + filePath;
+		
+//		Path path = Paths.get(realFilePath);
+		
+		File file = new File(Constants.FILE_UPLOAD_PATH + filePath);
+		Path test = Paths.get(Constants.FILE_UPLOAD_PATH + filePath);
+		
+		System.out.println("---------------------");
+		System.out.println(test);
+		
+		Files.delete(test);
+
+		
+//		path = path.getParent(); 
+//		
+//		if(Files.exists(path)) {
+//			try {
+//				Files.delete(path);
+//			} catch (IOException e) {
+//				System.out.print("[FileManagerService removeFile] directory delete fail");
+//				e.printStackTrace();
+//			}
+//		}
+			
+	}
 
 }

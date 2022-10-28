@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="/resources/static/css/main.css">
 	
   	<!-- fontawesome -->
-	<script src="https://kit.fontawesome.com/9a0994e5cb.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/9a0994e5cb.js" crossorigin="anonymous"></script>	
 	
   	<!-- google font -->
   	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,14 +70,16 @@
 			<div class="search-area">
 				<div class="search-link">
 					<div class="cell">
-						<div class="search">
-							<input type="text" placeholder="영화명을 입력해 주세요" title="영화 검색" class="input-text" id="movieName">
-							<button type="button" class="btn" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i>검색</button>
-						</div>
+						<form id="form" name="form" method="post" action="/movie/running">
+							<div class="search">
+								<input type="text" id="shMovieNm" name="shMovieNm" placeholder="영화명을 입력해 주세요" title="영화 검색" class="input-text" id="movieName">
+								<button type="submit" class="btn" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+							</div>
+						</form>
 					</div>
-					<div class="cell"><a href="#" title="상영시간표 보기"><i class="fa-solid fa-calendar-days mr-2"></i>상영시간표</a></div>
-					<div class="cell"><a href="#" title="박스오피스 보기"><i class="fa-solid fa-film mr-2"></i>박스오피스</a></div>
-					<div class="cell"><a href="#" title="빠른예매 보기"><i class="fa-solid fa-ticket-simple mr-2"></i>예매</a></div>
+					<div class="cell"><a href="/theater/time?brchNo=1372" title="상영시간표 보기"><i class="fa-solid fa-calendar-days mr-2"></i>상영시간표</a></div>
+					<div class="cell"><a href="/movie/running" title="현재상영작 보기"><i class="fa-solid fa-film mr-2"></i>현재상영작</a></div>
+					<div class="cell"><a href="/theater/list" title="극장위치 보기"><i class="fa-solid fa-ticket-simple mr-2"></i>극장위치</a></div>
 				</div>
 			</div>
 		</section>

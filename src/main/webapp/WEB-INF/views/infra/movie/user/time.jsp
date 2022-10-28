@@ -174,6 +174,7 @@
 		</div>
 		<input type="hidden" name="today" value="<c:out value="${today}"/>"/>
 		<jsp:include page="../../../include/user/jsp/footer.jsp" />
+		<%@ include file="../../../include/user/jsp/loginModal.jsp"%>
 	</div> 
 	
 	<script>
@@ -188,6 +189,7 @@
 			data : {"date":date, "brchNo":brchNo},
 			dataType : 'json',
 			success : function(data) {
+				console.log(data)
 				var count = 1 
 				
 				for (var key in data) {

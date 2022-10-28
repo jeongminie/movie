@@ -1,5 +1,7 @@
 package com.jeongmini.movie.modules.member;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,6 +21,24 @@ public class AdminController {
 	
 	@Autowired
 	MemberServiceImpl service;
+	
+	@RequestMapping(value="memberList")
+	public String memberList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		List<Member> list = service.selectList(vo);
+		model.addAttribute("list", list);
+		
+		System.out.println("vo.getShValue() : " + vo.getShValue());
+		System.out.println("vo.getSeq() : " + vo.getSeq());
+		
+		return "infra/member/xdmin/memberList";
+		
+	}
+	
+	@RequestMapping(value="memberRegForm")
+	public String memberRegForm(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		
+		return "infra/member/xdmin/memberRegForm";
+	}
 	
 	//관리자 화면
 	@RequestMapping(value="login")

@@ -199,11 +199,11 @@
 		  <version>1.11.2</version>
 		</dependency>
 		
-		<!-- jython -->
+		<!-- https://mvnrepository.com/artifact/org.python/jython -->
 		<dependency>
-			<groupId>org.python</groupId>
-			<artifactId>jython-standalone</artifactId>
-			<version>2.7.1</version>
+		    <groupId>org.python</groupId>
+		    <artifactId>jython</artifactId>
+		    <version>2.7.2</version>
 		</dependency>
 		
 		<!-- fileupload s 2022.03.30 -->
@@ -213,8 +213,8 @@
 			<version>1.4</version>
 		</dependency>
 		<!-- fileupload e 2022.03.30 -->
-		
 	</dependencies>
+	
     <build>
         <plugins>
             <plugin>

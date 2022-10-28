@@ -19,7 +19,8 @@ public class Movie {
 	private String brchNo;
 	private Integer rpstMovieNo;
 	private String rpstMovieNm;
-	private String playKindCd;
+	private String theabKindCd;
+	private String playDe;
 	
 	public Integer getSeq() {
 		return seq;
@@ -123,11 +124,17 @@ public class Movie {
 	public void setRpstMovieNm(String rpstMovieNm) {
 		this.rpstMovieNm = rpstMovieNm;
 	}
-	public String getPlayKindCd() {
-		return playKindCd;
+	public String getTheabKindCd() {
+		return theabKindCd;
 	}
-	public void setPlayKindCd(String playKindCd) {
-		this.playKindCd = playKindCd;
+	public void setTheabKindCd(String theabKindCd) {
+		this.theabKindCd = theabKindCd;
+	}
+	public String getPlayDe() {
+		return playDe;
+	}
+	public void setPlayDe(String playDe) {
+		this.playDe = playDe;
 	}
 
 

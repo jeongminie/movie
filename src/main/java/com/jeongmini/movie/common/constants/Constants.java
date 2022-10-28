@@ -7,5 +7,6 @@ public class Constants {
 	
 	public static final String UPLOAD_PATH_PREFIX = "D:\\factory\\ws_sts_4151\\movie\\src\\main\\webapp\\resources\\uploaded";
 	public static final String UPLOAD_PATH_PREFIX_FOR_VIEW = "/resources/uploaded";
+	public static final String FILE_UPLOAD_PATH = "D:\\factory\\ws_sts_4151\\movie\\src\\main\\webapp/";
 
 }

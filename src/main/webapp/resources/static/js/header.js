@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	$(".nav-title-item, .nav-sub").on("mouseover", function(){
 		$(this).parent(".nav-title").children(".nav-sub").stop().show();
-		$(".page-util").css("backgroundColor", "#BEB4AF");
+		$(".page-util").css("backgroundColor", "#339EB2");
 		$(".location").css("display", "none");
 	});
 	

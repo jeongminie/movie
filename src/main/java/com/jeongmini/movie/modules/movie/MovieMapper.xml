@@ -177,11 +177,15 @@
 		INSERT INTO openAlarm (
 			brchNo
 			, rpstMovieNo
-			, playKindCd
+			, theabKindCd
+			, playDe
+			, state
 		) VALUES (
 			#{brchNo}
 			, #{rpstMovieNo}
-			, #{playKindCd}
+			, #{theabKindCd}
+			, #{playDe}
+			, 1
 		)
 	</insert>
 	

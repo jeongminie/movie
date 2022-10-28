@@ -5,6 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>    
 <!DOCTYPE html>
+<style>
+.nav-sub .nav-link {
+	color : white !important;
+}
+</style>
 <header>
 	<div class="front-area">
 		<div class="center-link">
@@ -44,8 +49,8 @@
 						<li><a class="nav-link" href="../theater/time?brchNo=1372">상영시간표</a></li>
 					</ul>
 				</li>
-				<li class="nav-item nav-title">
-					<a class="nav-link nav-title-item" href="../member/mypage" role="button" disabled>마이페이지</a>
+				<li class="nav-item" id="mypage">
+					<a class="nav-link" href="#" role="button" disabled>마이페이지</a>
 				</li>
 			</ul>
 		</nav>
@@ -54,3 +59,17 @@
 		</div>	
 	</div>
 </header>
+
+<script>
+	$(document).ready(function(){
+		$("#mypage").on("click", function(){
+			var loginId = "${loginId}"
+			if(loginId == null || loginId == ''){
+				alert("로그인이 필요한 서비스 입니다.")
+				return;
+			} else {
+				location.href="../member/mypage";
+			}
+		});
+	});
+</script>

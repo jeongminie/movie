@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeongmini.movie.modules.movie.Movie;
 import com.jeongmini.movie.modules.movie.MovieServiceImpl;
+import com.jeongmini.movie.modules.movie.MovieVO;
 
 @Controller
 
@@ -40,6 +41,12 @@ public class HomeController {
 //		
 //		return "home";
 //	}
+	
+	@RequestMapping(value = "/home")
+	public String home(Model model) throws Exception {
+		
+		return "home";
+	}
 	
 	@RequestMapping(value = "/")
 	public String main(Model model) throws Exception {

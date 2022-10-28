@@ -23,12 +23,11 @@
 			<ul class="nav flex-column">
 				<li class="nav-item"><a href="../codeGroup/codeGroupList" class="nav-link">코드그룹관리</a></li>				
 				<li class="nav-item"><a href="../code/codeList" class="nav-link">코드관리</a></li>
-				<li class="nav-item"><a href="../member/memberList" class="nav-link">회원관리</a></li>
+				<li class="nav-item"><a href="../admin/memberList" class="nav-link">회원관리</a></li>
 				<li class="nav-item"><a href="../movie/boxofficeApi" class="nav-link">박스오피스 API</a></li>
 			</ul>
 		</nav>
 	</aside>
-	<section class="col-10">
 <!-- 				
 		<div class="noticeSection d-flex justify-content-around">
 			<div class="box">

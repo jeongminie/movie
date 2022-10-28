@@ -360,13 +360,17 @@ ul {
 	top:0; 
 	width:30px; 
 	height:100%; 
-	font-size:0; 
 	line-height:0; 
 	margin:0; 
 	padding:0; 
 	border:0; 
 	background-color:transparent;
 }
+
+.fa-magnifying-glass {
+	color : white;
+}
+
 
 .search-link a {
 	display:inline-block; 

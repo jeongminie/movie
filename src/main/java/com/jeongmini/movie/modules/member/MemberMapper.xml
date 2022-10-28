@@ -6,11 +6,31 @@
 <mapper namespace="com.jeongmini.movie.modules.member.MemberMapper">
 
     <resultMap id="resultMapObj" type="com.jeongmini.movie.modules.member.Member"></resultMap>
+    
+    <sql id="where">
+		WHERE 1=1
+			<choose>
+				<when test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</when>
+				<otherwise>AND a.delNy = 0</otherwise>
+			</choose>
+			<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>  -->
+			<choose>
+				<when test="shOption == 1">AND name LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 2">AND emailFull LIKE CONCAT('%',#{shValue},'%')</when>
+				<when test="shOption == 3">AND phone LIKE CONCAT('%',#{shValue},'%')</when>
+			</choose>
+ 			<choose>
+ 				<when test="shDate == 1">AND date(createdAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+				<when test="shDate == 2">AND date(updatedAt) BETWEEN STR_TO_DATE(DATE_FORMAT(#{shStartDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T') AND STR_TO_DATE(DATE_FORMAT(#{shEndDate}, '%Y-%m-%d 00:00:00'), '%Y-%m-%d %T')</when>
+			</choose>
+	</sql>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
-			* 
-		FROM user;
+			a.* 
+		FROM user a
+		<include refid="where"></include>
+		ORDER BY seq DESC
 	</select>
 	
 	<insert id="insert">
@@ -24,6 +44,7 @@
 		    , postcode
 		    , address
 		    , marketingAgree
+		    , adminNy
 		) VALUES (
 		    #{loginId}
 		    , #{password}
@@ -34,6 +55,7 @@
 			, #{postcode}
 			, CONCAT(#{address},' ',#{detailAddress})
 		    , #{marketingAgree}
+		    , 0
 		)
 		<selectKey resultType="int" keyProperty="seq" order="AFTER">
 			SELECT last_insert_id()

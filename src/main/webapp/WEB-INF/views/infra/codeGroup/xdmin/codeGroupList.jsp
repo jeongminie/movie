@@ -64,6 +64,7 @@
 	<div id="wrap">
 		<div>
 			<%@include file="../../../include/xdmin/jsp/menu.jsp" %>
+				<section class="col-10">
  					<span class="m-4"><b>코드그룹 관리</b></span>
  					<form method="post" id="form" name="form">
  					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
@@ -135,7 +136,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="codeGroupView">
+											<tr class="codeGroupView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
 												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>

@@ -122,6 +122,8 @@
 		</div>
 	</div> 
 	<jsp:include page="../../../include/user/jsp/footer.jsp" />
+	<%@ include file="../../../include/user/jsp/loginModal.jsp"%>
+	
 	<!-- 카카오 지도 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services,clusterer,drawing"></script>
 	

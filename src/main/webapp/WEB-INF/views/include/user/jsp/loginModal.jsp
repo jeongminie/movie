@@ -24,7 +24,7 @@
 	border : 1px solid #DADADA;
 	width : 200px;
 	color : white;
-	background-color : #BEB4AF;
+	background-color : #BEB4AF!important;
 	border : 0px;
 }
   		
@@ -32,6 +32,10 @@
 	color : white;
 	background-color : #BEB4AF;
 	border : 0px;
+}
+
+.btn-close {
+	color :white;
 }
 
  </style>   
@@ -54,7 +58,7 @@
 					<p class="d-flex justify-content-center">
 						<a href="#" class="text-dark">ID/PW 찾기</a>
 						<span class="mr-3 ml-3">|</span>
-						<a href="#" class="text-dark">회원가입</a>
+						<a href="/member/signup" class="text-dark">회원가입</a>
 					</p>
 				</div>
 			</form>
@@ -85,7 +89,24 @@
 				return;
 			}
 			
-			$("#login").submit();
+			/* $("#login").submit(); */
+			
+			$.ajax({
+				type : 'post',
+				url : '/member/login',
+				data : {"loginId":loginId, "password":password},
+				success:function(data){
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("이메일과 비밀번호를 확인하세요");
+						return;
+					}
+				},
+				error:function(e){
+					alert("로그인실패");
+				}
+			})
 		})
 	});
 

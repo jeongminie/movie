@@ -125,7 +125,6 @@
 			
 				/* $("#form").submit(); */
 				var filePath = $("input[name='filePath']").val();
-				alert(filePath)
 				
  				var formData = new FormData();
 				formData.append("profileUploaded", $("#profileUploaded")[0].files[0]);
@@ -139,6 +138,8 @@
 					contentType: false,
 					data: formData,
 					dataType: "json",
+					success : function(data) {
+					}
 				});
 				
 				alert("프로필 사진이 등록되었습니다.")
