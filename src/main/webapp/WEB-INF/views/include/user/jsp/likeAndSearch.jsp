@@ -41,8 +41,16 @@
 			var movieCode = $(this).data("no");
 			
 			/* $("#form").submit(); */
+			
+			var loginId = "${loginId}"
+			
+			if(loginId == null || loginId == ''){
+				alert("로그인이 필요한 서비스 입니다.")
+				return false;
+			} else {
+				location.href="../movie/openAlarm?movieCode="+movieCode;
+			}
 
-			location.href="../movie/openAlarm?movieCode="+movieCode;
 		});
 		
 		$(".movie-list ul li").slice(0, 20).show(); // 초기갯수

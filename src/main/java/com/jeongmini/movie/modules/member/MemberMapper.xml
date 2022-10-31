@@ -45,6 +45,8 @@
 		    , address
 		    , marketingAgree
 		    , adminNy
+		    , gender
+		    , delNy
 		) VALUES (
 		    #{loginId}
 		    , #{password}
@@ -55,6 +57,8 @@
 			, #{postcode}
 			, CONCAT(#{address},' ',#{detailAddress})
 		    , #{marketingAgree}
+		    , 0
+		    , #{gender}
 		    , 0
 		)
 		<selectKey resultType="int" keyProperty="seq" order="AFTER">

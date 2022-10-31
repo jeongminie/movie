@@ -27,6 +27,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public Member selectOne(MemberVo vo) throws Exception {
+		return dao.selectOne(vo);
+	}
+	
+	@Override
 	public int insert(Member dto) throws Exception {
 		String encryptPassword = EncryptUtils.md5(dto.getPassword());
 		dto.setPassword(encryptPassword);
@@ -44,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 		String encryptPassword = EncryptUtils.md5(dto.getPassword());
 		dto.setPassword(encryptPassword);
 		
-		return dao.selectOne(dto);
+		return dao.login(dto);
 	}
 	
 	@Override

@@ -29,6 +29,12 @@
 	<title>회원관리</title>
 	
 	<style>
+		.text-input {
+			width : 250px;
+			margin-right: 10px;
+			margin-top: 10px;
+		}
+		
 		#ui-datepicker-div {
 			width : 250px;
 		}
@@ -113,7 +119,7 @@
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="memberView">
+											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
 												<th scope="col"><input type="checkbox" class="chk"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.name }</td>
@@ -132,10 +138,12 @@
 												<td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td>
 												<td>${list.emailFull }</td>
 												<td>
-													<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
-													<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />
-													<c:set var="phone3" value="${fn:substring(list.phone,7,11)}" />
-													${phone1 }-${phone2 }-${phone3 }
+													<c:if test="${not empty list.phone }">
+														<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
+														<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />
+														<c:set var="phone3" value="${fn:substring(list.phone,7,11)}" />
+														${phone1 }-${phone2 }-${phone3 }
+													</c:if>
 												</td>
 												<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 												<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
@@ -258,11 +266,6 @@
 					alert("dd")
 				}
 			});
-			
-			$(".memberView").on("click",function(){
-				location.href="memberView.html";
-			});
-			
 			
 		});
 	</script>

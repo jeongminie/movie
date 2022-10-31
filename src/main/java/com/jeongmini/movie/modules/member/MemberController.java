@@ -45,8 +45,8 @@ public class MemberController {
 		return "infra/member/user/signupCompleted";
 	}
 	
-	@RequestMapping(value="memberInst")
-	public String memberInst(Member dto) throws Exception {
+	@RequestMapping(value="signupProc")
+	public String signup(Member dto) throws Exception {
 		
 		int result = service.insert(dto);
 		

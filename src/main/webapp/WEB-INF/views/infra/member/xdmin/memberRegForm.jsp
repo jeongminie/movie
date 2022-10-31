@@ -4,12 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="rb" uri="http://www.springframework.org/tags" %>
+<jsp:useBean id="CodeServiceImpl" class="com.jeongmini.movie.modules.code.CodeServiceImpl"/>
 <!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -52,7 +54,7 @@
 		}
 		
 		#ui-datepicker-div {
-			width : 350px;
+			width : 320px;
 		}
 	</style>
 </head>
@@ -69,25 +71,55 @@
 					<input type="hidden" name="seq" value="${vo.seq }">
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
-							<div>코드그룹 코드<input type="text" name="cgSeq" id="cgSeq" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgSeq }">value="${item.cgSeq  }"</c:if>></div>
-							<div>코드그룹 이름 (한글)<input type="text" name="cgName" id="cgName" class="form-control text-input" placeholder="코드그룹 코드" <c:if test="${not empty item.cgName }">value="${item.cgName  }"</c:if>></div>
-							<div>
-								<span>사용여부</span>
-								<select class="form-select text-input" name="useNy" id="useNy">
-									<option value="1" <c:if test="${item.useNy eq 1 }">selected</c:if>>Y</option>
-									<option value="0" <c:if test="${item.useNy eq 0 }">selected</c:if>>N</option>
+							<div>이름<input type="text" name="name" id="name" class="form-control text-input" placeholder="이름" <c:if test="${not empty item.name }">value="${item.name  }"</c:if>></div>
+							<div>아이디<input type="text" name="loginId" id="loginId" class="form-control text-input" placeholder="아이디" <c:if test="${not empty item.loginId }">value="${item.loginId  }"</c:if>></div>
+							<div>비밀번호<input type="password" name="password" id="password" class="form-control text-input" placeholder="비밀번호"></div>
+							<div>비밀번호 확인<input type="password" name="passwordRe" id="passwordRe" class="form-control text-input" placeholder="비밀번호 확인"></div>
+							<span>이메일</span>
+							<c:set var="listCodeEmail" value="${CodeServiceImpl.selectListCachedCode('1001')}"/>
+							<div class="d-flex">
+								<input type="text" class="form-control text-input" name="email" id="email" <c:if test="${not empty item.emailFull }">value="${fn:split(item.emailFull, '@')[0]}"</c:if>><span style="margin: 10px 10px 0 10px;">@</span>
+								<select class="form-select text-input" name="useNy" id="useNy" name="domain" id="domain">
+									<option value="0">선택</option>
+									<c:forEach items="${listCodeEmail}" var="listEmail" varStatus="statusEmail">
+										<option value="${listEmail.seq }" <c:if test="${fn:containsIgnoreCase(item.emailFull, listEmail.ccNameEng)}">selected</c:if>><c:out value="${listEmail.ccNameEng }"></c:out></option>
+									</c:forEach>
 								</select>
 							</div>
-							<div>설명<textarea cols="30" class="form-control text-input"></textarea></div>
-							<div>예비1 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
-							<div>예비3 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
-							<div>예비1 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
-							<div>예비3 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 						</div>
 						<div class="codeInfo col-6">
-							<div>코드그룹 코드 (Another)<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
-							<div>코드그룹 이름 (영문)<input type="text" name="cgNameEng" id="cgNameEng" class="form-control text-input" <c:if test="${not empty item.cgNameEng }">value="${item.cgNameEng  }"</c:if> placeholder="코드그룹 코드"></div>
-							<div>순서<input type="text" class="form-control text-input" placeholder="코드그룹 코드"></div>
+							<div>성별
+								<select class="form-select text-input" name="gender" id="gender">
+									<option value="0">선택</option>
+									<option value="90" <c:if test="${item.gender eq 90 }">selected</c:if>>남</option>
+									<option value="89" <c:if test="${item.gender eq 89 }">selected</c:if>>여</option>
+								</select>
+							</div>
+							<fmt:formatDate var="birth" value="${item.birth}" pattern="yyyyMMdd"/>
+							<div>생년월일<input type="text" name="birth" id="birth" class="form-control text-input" <c:if test="${not empty item.birth }">value="${birth }"</c:if> placeholder="YYYY-MM-DD"></div>
+							<div>상태
+								<select class="form-select text-input" name="adminNy" id="adminNy">
+									<option value="0" <c:if test="${item.adminNy eq 0 }">selected</c:if>>사용자</option>
+									<option value="1" <c:if test="${item.adminNy eq 1 }">selected</c:if>>관리자</option>
+								</select>
+							</div>
+							<div>전화번호<input type="text" name="phone" id="phone" class="form-control text-input" placeholder="전화번호" <c:if test="${not empty item.phone }">value="${item.phone  }"</c:if>></div>
+							<span>주소</span>
+							<div id="addressWrap">
+								<div class="d-flex">
+									<input type="text" class="form-control text-input mb-2 mr-2" name="postcode" id="postcode" placeholder="우편번호">
+									<button type="button" id="reset" class="btn btn-sm"><i class="fa-solid fa-trash"></i></button>
+								</div>
+								<input type="text" class="form-control text-input mb-2" name="address" id="address" placeholder="주소">
+								<div class="d-flex mb-2"> 
+									<input type="text" class="form-control text-input" name="detailAddress" id="detailAddress" placeholder="상세주소" style="width : 60% !important; margin-right: 10px;">
+									<input type="text" class="form-control text-input" name="extraAddress" id="extraAddress" placeholder="참고항목" style="width : 40% !important">
+								</div>
+								<div class="d-flex">
+									<input type="text" class="form-control text-input col-6 mr-2" name="x" id="x" placeholder="x" style="width : 30% !important; margin-right: 10px;">
+									<input type="text" class="form-control text-input col-6" name="y" id="y" placeholder="y" style="width : 30% !important">
+								</div>
+							</div>
 							<div>
 								<span>삭제여부</span>
 								<select class="form-select text-input" name="delNy" id="delNy">
@@ -95,8 +127,6 @@
 									<option value="1" <c:if test="${item.delNy eq 1 }">selected</c:if>>Y</option>
 								</select>
 							</div>
-							<div style="margin-top:35px">예비2 (varchar type)<input type="text" class="form-control text-input" placeholder="영문(대소문자),숫자"></div>
-							<div style="margin-top:85px">예비2 (int type)<input type="text" class="form-control text-input" placeholder="숫자"></div>
 						</div>
 					</div>
 				</form>
@@ -138,15 +168,67 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 카카오 지도 api -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		
 	<script>
+		function execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	            	var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                if(data.userSelectedType === 'R'){
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    document.getElementById("extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                document.getElementById('postcode').value = data.zonecode;
+	                document.getElementById("address").value = addr;
+	                document.getElementById("detailAddress").focus();
+	                
+	                geocoder.addressSearch(addr, callback);
+	            }
+	        }).open();
+	    }
+		
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var callback = function(result, status) {
+	        if (status === kakao.maps.services.Status.OK) {
+	            console.log(result);
+	            document.getElementById('x').value = result[0].x;
+	           	document.getElementById('y').value = result[0].y;
+	            
+	        }
+	    };
+	    
 		$(document).ready(function(){
 			$("#birth").datepicker({
 				changeYear: true //option값 년 선택 가능
 		        , changeMonth: true //option값  월 선택 가능   
                 , showButtonPanel: true
                 , currentText: '오늘'
-                , dateFormat: "yy-mm-dd"
+                , dateFormat: "yymmdd"
                 , dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
 			});
 			
@@ -164,6 +246,31 @@
 			$(".modal .createBtn").on("click",function(){
 				location.href="memberList.html"
 			});
+			
+			$("#postcode").on("click", function(){
+				execDaumPostcode();
+			})
+			
+	    	$("#reset").on("click", function(){
+	    		var input = $("#addressWrap").find('input[type=text]')
+			    input.val('');
+	    	});
+			
+			var seq = $("input:hidden[name=seq]");
+			var form = $("form[name=form]");
+			
+			$(".saveBtn").on("click", function(){
+				if(seq.val() == 0 || seq.val() == "") { //insert
+					form.attr("action", "/admin/memberInst").submit();
+					alert("저장완료");
+				} else { //update
+					form.attr("action", "/admin/memberUpdate").submit();
+					alert("수정완료");
+				}
+				
+			});
+	    	
+	    	
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

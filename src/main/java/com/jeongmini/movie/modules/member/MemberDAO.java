@@ -20,6 +20,8 @@ public class MemberDAO {
 	
 	public List<Member> selectList(MemberVo vo){ return sqlSession.selectList(namespace + ".selectList", vo); }
 	
+	public Member selectOne(MemberVo vo){ return sqlSession.selectOne(namespace + ".selectOneMember", vo); }
+	
 	public int insert(Member dto) {
 		return sqlSession.insert(namespace + ".insert", dto);
 	}
@@ -32,7 +34,7 @@ public class MemberDAO {
 		return sqlSession.update(namespace + ".profileUpdated", dto);
 	}
 
-	public Member selectOne(Member dto) {
+	public Member login(Member dto) {
 		return sqlSession.selectOne(namespace + ".login", dto); 
 	}
 	

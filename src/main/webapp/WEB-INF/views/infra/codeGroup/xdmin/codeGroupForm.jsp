@@ -204,7 +204,7 @@
 			
  			$(".saveBtn").on("click", function(){
 				
-				/* var cgSeq = $("#cgSeq").val();
+				var cgSeq = $("#cgSeq").val();
 				var cgName = $("#cgName").val();
 				var cgNameEng = $("#cgNameEng").val();
 				var useNy = $("#useNy").val();
@@ -237,7 +237,7 @@
 				} else { //update
 					form.attr("action", "/codeGroup/codeGroupUpdate").submit();
 					alert("수정완료");
-				} */
+				}
 				
 			});
 			
@@ -288,11 +288,6 @@
                 , currentText: '오늘'
                 , dateFormat: "yy-mm-dd"
                 , dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
-			});
-			
-			
-			$(".modal .saveBtn").on("click",function(){
-				location.href="memberList.html"
 			});
 			
 			$(".prevBtn").click(function(){

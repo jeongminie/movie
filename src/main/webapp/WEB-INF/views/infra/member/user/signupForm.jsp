@@ -84,7 +84,7 @@
 					<li class="step">STEP4. 가입완료</li>
 				</ul>
 			</section>
-			<form method="post" action="memberInst" id="signupForm" autocomplete="off">
+			<form method="post" action="signupProc" id="signupForm" autocomplete="off">
 				<section class="d-flex justify-content-center input-box">
 					<table class="table">
 						<caption>회원정보를 입력해주세요.</caption>

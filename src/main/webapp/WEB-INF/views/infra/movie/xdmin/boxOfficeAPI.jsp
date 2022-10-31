@@ -31,6 +31,7 @@
 	<div id="wrap">
 		<div>
 			<%@include file="../../../include/xdmin/jsp/menu.jsp" %>
+				<section class="col-10">
  					<span class="m-4"><b>박스오피스 API</b></span>
 					<div class="memberList">
 						<div class="d-flex p-2" style="float: right;">
