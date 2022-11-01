@@ -78,6 +78,7 @@ public class MemberController {
 			session.setAttribute("loginId", member.getLoginId());
 			session.setAttribute("name", member.getName());
 			session.setAttribute("adminNy", member.getAdminNy());
+			session.setAttribute("phone", member.getPhone());
 
 			result.put("result", "success");
 		} else {

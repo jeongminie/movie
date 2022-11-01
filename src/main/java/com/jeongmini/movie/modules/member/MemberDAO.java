@@ -51,9 +51,13 @@ public class MemberDAO {
 	}
 	
 	
-	  public int selectCountProfile(Member dto) { 
-		  return sqlSession.selectOne(namespace + ".selectCountProfile", dto); 
-	  }
+	public int selectCountProfile(Member dto) { 
+		return sqlSession.selectOne(namespace + ".selectCountProfile", dto); 
+	}
+  
+	public int selectMemberCount(MemberVo vo) {
+		return (Integer) sqlSession.selectOne(namespace + ".selectMemberCount", vo);
+	}
 	 
 
 }

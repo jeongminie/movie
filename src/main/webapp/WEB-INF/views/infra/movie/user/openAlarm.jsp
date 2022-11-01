@@ -216,12 +216,15 @@
 					<select class="form-select select">
 						<option disabled selected hidden>극장</option>
 					</select>
-					<select id="brchNo" class="form-select select-option d-none" multiple>
+					<select id="brchNo" class="DBC form-select select-option d-none" multiple>
 						<option value="0019">남양주현대아울렛 스페이스원</option>
 						<option value="7011">대구신세계(동대구)</option>
 						<option value="0028">대전신세계 아트앤사이언스</option>
 						<option value="0020">안성스타필드</option>
 						<option value="1351">코엑스</option>
+					</select>
+					<select id="brchNo" class="TB form-select select-option d-none" multiple>
+						<option value="0028">대전신세계 아트앤사이언스</option>
 					</select>
 				</div>
 				<div class="select-area mt-2">
@@ -232,6 +235,8 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="phone" value="${phone }">
+		<input type="hidden" name="userSeq" value="${sessSeq }">
 	</div>
 	<%-- <jsp:include page="../../../include/user/jsp/footer.jsp" /> --%>
 	
@@ -243,7 +248,6 @@
 				if ($(e.target).is('.movie-poster')) {
 					$(".fade-wrap").fadeIn();
 			    }
-				
 			}); 
 			
 			$(".movie-info").on("mouseleave", function(){
@@ -261,8 +265,16 @@
 			$(".select-area").on("click", function(){
 				var selected = $(this).children(".select-option");
 				
+				var theabKindCd = $("#theabKindCd option:selected").val();
+				console.log(theabKindCd)
+				
 				if(selected.hasClass('d-none')) {
 					selected.removeClass('d-none');
+					
+					if(theabKindCd == 'DBC'){
+						$(".DBC").removeClass('d-none');
+					}
+					
 				} else  {
 					selected.addClass('d-none');
 				}
@@ -275,6 +287,7 @@
 				if(selectedTxt != null) {
 					$(this).prev(".select").find('option:selected').text(selectedTxt);
 				}
+				
 			});
 			
 			$("#alarmBtn").on("click", function(){
@@ -287,12 +300,16 @@
 				var rpstMovieNo = $("input[name='movieNo']").val();
 				console.log(rpstMovieNo)
 				
+				var userSeq = $("input[name='userSeq']").val();
+				var phone = $("input[name='phone']").val();
+				console.log(phone)
+				
 				var playDe = $("#startDate").val().replaceAll("-","");
 				
 				$.ajax({
 					type : 'post',
 					url : 'movieOpenAlarm',
-					data : {"brchNo":brchNo, "theabKindCd":theabKindCd, "rpstMovieNo":rpstMovieNo, "playDe":playDe},
+					data : {"brchNo":brchNo, "theabKindCd":theabKindCd, "rpstMovieNo":rpstMovieNo, "playDe":playDe, "phone":phone, "userSeq":userSeq},
 					success : function(data) {
 						if(data.result == "success") {
 							alert("알람신청이 완료되었습니다");

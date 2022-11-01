@@ -17,7 +17,7 @@ public class CheckLoginSessionInterception extends HandlerInterceptorAdapter {
 		String uri = request.getRequestURI();
 		
 		if(session.getAttribute("sessSeq") == null ) {
-			if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.equals("/member/memberList")) {
+			if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.equals("/admin/memberList") || uri.equals("/movie/boxofficeApi")) {
 				response.sendRedirect("/admin/login");
 				return false;
 			} 

@@ -26,7 +26,7 @@
 	
 	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
 	
-	<title>회원관리</title>
+	<title>예매오픈 관리</title>
 	
 	<style>
 		.text-input {
@@ -54,10 +54,8 @@
 		<div>
 			<%@include file="../../../include/xdmin/jsp/menu.jsp" %>
 				<section class="col-10">
- 					<span class="m-4"><b>회원관리</b></span>
+ 					<span class="m-4"><b>예매오픈 관리</b></span>
  					<form method="post" id="form" name="form">
- 					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
-					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow}"/>">
  					<input type="hidden" name="seq" value="<c:out value="${vo.seq}"/>"/>
 					<div id="searchSection">
 						<div class="d-flex">
@@ -77,9 +75,9 @@
 						<div class="d-flex">
 							<select id="shOption" name="shOption" class="form-select text-input">
 								<option value="0">검색구분</option>
-								<option value="1" <c:if test="${vo.shOption eq 1 }">selected</c:if>>이름</option>
-								<option value="2" <c:if test="${vo.shOption eq 2 }">selected</c:if>>이메일</option>
-								<option value="3" <c:if test="${vo.shOption eq 3 }">selected</c:if>>전화번호</option>
+								<option value="1" <c:if test="${vo.shOption eq 1 }">selected</c:if>>상태</option>
+								<option value="2" <c:if test="${vo.shOption eq 2 }">selected</c:if>>영화코드</option>
+								<option value="3" <c:if test="${vo.shOption eq 3 }">selected</c:if>>상영관코드</option>
 							</select>
 							<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.shValue }"/>">
 							<!-- <input type="submit" class="btn searchBtn"> -->
@@ -90,7 +88,8 @@
 					<div class="memberList">
 						<div class="d-flex p-2 justify-content-between">
 							<div class="mt-2">
-								<span class="p-2">Total : ${shTotal }</span>
+								<span class="p-2">검색 결과 : N</span>
+								<span class="p-2 memberCount">Total : N</span>
 							</div>
 							<div>
 								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
@@ -102,13 +101,13 @@
 								<tr>
 									<th scope="col"><input type="checkbox" id="chkAll"></th>
 									<th scope="col">No</th>
-									<th scope="col">이름</th>
-									<th scope="col">성별</th>
-									<th scope="col">생년월일</th>
-									<th scope="col">이메일</th>
-									<th scope="col">전화번호</th>
-									<th scope="col">가입날짜</th>
-									<th scope="col">마지막 접속 날짜</th>
+									<th scope="col">영화관 코드</th>
+									<th scope="col">영화 코드</th>
+									<th scope="col">상영관 코드</th>
+									<th scope="col">상영 날짜</th>
+									<th scope="col">상태</th>
+									<th scope="col">등록 날짜</th>
+									<th scope="col">업데이트 날짜</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -155,7 +154,6 @@
 							</tbody>
 						</table>
 						<!-- pagination s -->
-						<%@include file="../../../include/xdmin/jsp/pagination.jsp"%>
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>

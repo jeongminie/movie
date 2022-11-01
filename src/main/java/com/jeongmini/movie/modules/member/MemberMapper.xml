@@ -31,6 +31,7 @@
 		FROM user a
 		<include refid="where"></include>
 		ORDER BY seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
 	<insert id="insert">
@@ -150,6 +151,14 @@
 			memberUploaded
 		WHERE
 			pseq = #{pseq}
+	</select>
+	
+	<select id="selectMemberCount" resultType="Integer">
+		SELECT
+			count(*)
+		FROM 
+			user a
+		<include refid="where"></include>
 	</select>
 	
 	

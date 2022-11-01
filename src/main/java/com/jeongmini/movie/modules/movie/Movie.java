@@ -3,6 +3,8 @@ package com.jeongmini.movie.modules.movie;
 public class Movie {
 	
 	private Integer seq;
+	private Integer userSeq;
+	private String phone;
 	private Integer openYear;
 	private int movieCode;
 	private String title;
@@ -27,6 +29,18 @@ public class Movie {
 	}
 	public void setSeq(Integer seq) {
 		this.seq = seq;
+	}
+	public Integer getUserSeq() {
+		return userSeq;
+	}
+	public void setUserSeq(Integer userSeq) {
+		this.userSeq = userSeq;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public Integer getOpenYear() {
 		return openYear;

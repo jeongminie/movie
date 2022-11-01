@@ -179,12 +179,16 @@
 			, rpstMovieNo
 			, theabKindCd
 			, playDe
+			, phone
+			, userSeq
 			, state
 		) VALUES (
 			#{brchNo}
 			, #{rpstMovieNo}
 			, #{theabKindCd}
 			, #{playDe}
+			, #{phone}
+			, #{userSeq}
 			, 1
 		)
 	</insert>

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jeongmini.movie.common.constants.Constants;
 import com.jeongmini.movie.common.util.EncryptUtils;
 import com.jeongmini.movie.common.util.UtilUpload;
+import com.jeongmini.movie.modules.codegroup.CodeGroupVo;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -105,6 +106,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member selectProfile(Member dto) throws Exception {
 		return dao.selectProfile(dto);
+	}
+	
+	@Override
+	public int selectMemberCount(MemberVo vo) throws Exception {
+		return dao.selectMemberCount(vo);
 	}
 
 }

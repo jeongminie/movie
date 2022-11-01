@@ -27,8 +27,13 @@ public class AdminController {
 	
 	@RequestMapping(value="memberList")
 	public String memberList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		vo.setParamsPaging(service.selectMemberCount(vo));
+		
 		List<Member> list = service.selectList(vo);
 		model.addAttribute("list", list);
+		
+		int shTotal = service.selectMemberCount(vo);
+		model.addAttribute("shTotal", shTotal);
 		
 		System.out.println("vo.getShValue() : " + vo.getShValue());
 		System.out.println("vo.getSeq() : " + vo.getSeq());

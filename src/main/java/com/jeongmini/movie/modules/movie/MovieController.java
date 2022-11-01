@@ -121,4 +121,10 @@ public class MovieController {
 		
 	}
 	
+	@RequestMapping(value="alarmList")
+	public String oalarmList(Model model, MovieVO vo) throws Exception {
+		
+		return "infra/movie/xdmin/alarmList";
+	}
+	
 }
