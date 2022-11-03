@@ -24,5 +24,8 @@ public interface MovieService {
 	
 	public int movieOpenAlarm(Movie dto) throws Exception;
 	
+	public List<Movie> selectOpenAlarm(MovieVO vo) throws Exception;
+	
+	
 	
 }

@@ -203,29 +203,28 @@
 					<select class="form-select select">
 						<option value="" hidden>속성</option>
 					</select>
-					<select id="theabKindCd" class="form-select select-option d-none" multiple>
+					<select id="theabKindCd" class="form-select select-option d-none" multiple onchange="categoryChange(this)">
 						<option value="DBC">DOLBY CINEMA</option>
-						<option value="TB" disabled>THE BOUTIQUE</option>
-						<option value="MX" disabled>MX</option>
-						<option value="CFT" disabled>COMFORT</option>
-						<option value="PTC" disabled>PUPPY CINEMA</option>
-						<option value="MKB" disabled>MEGABOX KIDS</option>
+						<option value="TB">THE BOUTIQUE</option>
+						<option value="MX">MX</option>
+						<option value="PTC">PUPPY CINEMA</option>
+						<option value="MKB">MEGABOX KIDS</option>
 					</select>
 				</div>
 				<div class="select-area mt-2">
 					<select class="form-select select">
 						<option disabled selected hidden>극장</option>
 					</select>
-					<select id="brchNo" class="DBC form-select select-option d-none" multiple>
-						<option value="0019">남양주현대아울렛 스페이스원</option>
+					<select id="brchNo" class="form-select select-option d-none" multiple>
+						<!-- <option value="0019">남양주현대아울렛 스페이스원</option>
 						<option value="7011">대구신세계(동대구)</option>
 						<option value="0028">대전신세계 아트앤사이언스</option>
 						<option value="0020">안성스타필드</option>
-						<option value="1351">코엑스</option>
+						<option value= -->"1351">코엑스</option>
 					</select>
-					<select id="brchNo" class="TB form-select select-option d-none" multiple>
+					<!-- <select id="brchNo" class="TB form-select select-option d-none" multiple>
 						<option value="0028">대전신세계 아트앤사이언스</option>
-					</select>
+					</select> -->
 				</div>
 				<div class="select-area mt-2">
 					<input type="text" class="form-control select-date" placeholder="날짜" id="startDate" onfocus="this.blur()" style="cursor:pointer">
@@ -243,7 +242,64 @@
 	<%@ include file="../../../include/user/jsp/loginModal.jsp"%>
 	
 	<script>
+		function categoryChange(e) {
+			var target = document.getElementById("brchNo");
+
+			if(e.value == "DBC") {
+				var DBC = '<select id="brchNo" class="form-select select-option d-none">'
+							+'<option value="0019">남양주현대아울렛 스페이스원</option>'
+							+'<option value="7011">대구신세계(동대구)</option>'
+							+ '<option value="0028">대전신세계 아트앤사이언스</option>'
+							+'<option value="0020">안성스타필드</option>'
+							+'<option value="1351">코엑스</option>'
+						+'</select>'
+					
+				$("#brchNo").html(DBC)
+			} else if(e.value == "TB") {
+				var TB = '<select id="brchNo" class="form-select select-option d-none">'
+							+'<option value="0028">대전신세계 아트앤사이언스</option>'
+							+'<option value="4631">분당</option>'
+							+ '<option value="1331">성수</option>'
+							+'<option value="1371">센트럴</option>'
+							+'<option value="4104">일산벨라시타</option>'
+							+'<option value="1351">코엑스</option>'
+							+'<option value="4112">킨텍스</option>'
+							+'<option value="4651">하남스타필드</option>'
+						+'</select>'
+					
+				$("#brchNo").html(TB)
+			} else if(e.value == "MX") {
+				var MX = '<select id="brchNo" class="form-select select-option d-none">'
+							+'<option value="4121">고양스타필드</option>'
+							+'<option value="0017">대전현대아울렛</option>'
+							+ '<option value="1581">목동</option>'
+							+'<option value="1211">상암월드컵경기장</option>'
+							+'<option value="1351">성수</option>'
+							+'<option value="4062">송도</option>'
+							+'<option value="4431">영통</option>'
+							+'<option value="4651">하남스타필드</option>'
+						+'</select>'
+					
+				$("#brchNo").html(MX)
+			} else if(e.value == "PTC") {
+				var PTC = '<select id="brchNo" class="form-select select-option d-none">'
+							+'<option value="4431">영통</option>'
+						+'</select>'
+					
+				$("#brchNo").html(PTC)
+			} else if(e.value == "MKB") {
+				var MKB = '<select id="brchNo" class="form-select select-option d-none">'
+							+'<option value="6312">마산</option>'
+							+'<option value="4651">하남스타필드</option>'
+							+ '<option value="6121">해운대(장산)</option>'
+						+'</select>'
+					
+				$("#brchNo").html(MKB)
+			}
+		}
+			
 		$(document).ready(function(){
+			
 			$(".movie-info").on("mouseover", function(e){
 				if ($(e.target).is('.movie-poster')) {
 					$(".fade-wrap").fadeIn();
@@ -266,18 +322,13 @@
 				var selected = $(this).children(".select-option");
 				
 				var theabKindCd = $("#theabKindCd option:selected").val();
-				console.log(theabKindCd)
-				
+				 
 				if(selected.hasClass('d-none')) {
 					selected.removeClass('d-none');
-					
-					if(theabKindCd == 'DBC'){
-						$(".DBC").removeClass('d-none');
-					}
-					
 				} else  {
 					selected.addClass('d-none');
 				}
+				
 			});
 			
 			$(".select-area").children(".select-option").change(function(e){
@@ -306,10 +357,12 @@
 				
 				var playDe = $("#startDate").val().replaceAll("-","");
 				
+				var movieNm = $("#movieNm").text();
+				
 				$.ajax({
 					type : 'post',
 					url : 'movieOpenAlarm',
-					data : {"brchNo":brchNo, "theabKindCd":theabKindCd, "rpstMovieNo":rpstMovieNo, "playDe":playDe, "phone":phone, "userSeq":userSeq},
+					data : {"brchNo":brchNo, "theabKindCd":theabKindCd, "rpstMovieNo":rpstMovieNo, "movieNm":movieNm, "playDe":playDe, "phone":phone, "userSeq":userSeq},
 					success : function(data) {
 						if(data.result == "success") {
 							alert("알람신청이 완료되었습니다");

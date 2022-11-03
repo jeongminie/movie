@@ -20,7 +20,9 @@ public class CheckLoginSessionInterception extends HandlerInterceptorAdapter {
 			if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.equals("/admin/memberList") || uri.equals("/movie/boxofficeApi")) {
 				response.sendRedirect("/admin/login");
 				return false;
-			} 
+			} else if(uri.startsWith("/mypage")) {
+				response.sendRedirect("/");
+			}
 		} else {
 			if(uri.equals("/member/signup") ||  uri.equals("/member/signupCompleted")) { 
 				response.sendRedirect("/");

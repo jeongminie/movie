@@ -187,13 +187,13 @@
 		
 <div class="lnb-area">
 	<nav id="lnb">
-		<p class="tit"><a href="/member/mypage" title="나의 메가박스">나의 메가박스</a></p>
+		<p class="tit"><a href="/mypage" title="나의 메가박스">나의 메가박스</a></p>
 		<ul>
-			<li><a href="/mypage/moviestory" titel="나의 무비스토리">나의 무비스토리</a></li>
+			<li><a href="/mypage/openAlarmList" titel="예매오픈 알림 신청 내역">예매오픈 알림 신청 내역</a></li>
 			<li>
-				<a href="userinfo" title="회원정보">회원정보</a>
+				<a href="myinfo" title="회원정보">회원정보</a>
 				<ul class="depth3">
-					<li class="on"><a href="userinfo" title="개인정보 수정">개인정보 수정</a></li>
+					<li class="on"><a href="myinfo" title="개인정보 수정">개인정보 수정</a></li>
 				</ul>
 			</li>
 		</ul>

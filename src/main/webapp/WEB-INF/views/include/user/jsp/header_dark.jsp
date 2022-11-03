@@ -63,7 +63,7 @@
 				alert("로그인이 필요한 서비스 입니다.")
 				return;
 			} else {
-				location.href="../member/mypage";
+				location.href="../mypage";
 			}
 		});
 	});

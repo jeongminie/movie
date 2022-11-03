@@ -165,6 +165,7 @@
 				</section>
 			</section>
 		</div>
+		<input type="hidden" name="userSeq" value="${sessSeq }">
 	</div>
 	
 	<!-- modal -->
@@ -187,7 +188,10 @@
 	</div>
 	
 	<script>
+	
 		$(document).ready(function(){
+			var userSeq = $("input[name='userSeq']").val();
+			
 			/* var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);

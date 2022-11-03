@@ -177,6 +177,7 @@
 		INSERT INTO openAlarm (
 			brchNo
 			, rpstMovieNo
+			, movieNm
 			, theabKindCd
 			, playDe
 			, phone
@@ -185,6 +186,7 @@
 		) VALUES (
 			#{brchNo}
 			, #{rpstMovieNo}
+			, #{movieNm}
 			, #{theabKindCd}
 			, #{playDe}
 			, #{phone}
@@ -192,5 +194,19 @@
 			, 1
 		)
 	</insert>
+	
+	<select id="selectOpenAlarm" resultMap="resultMapObj">
+		SELECT
+			(SELECT cc.ccName FROM commonCode cc WHERE a.theabKindCd LIKE cc.ccNameEng) as theabNm
+			, (SELECT t.theaterNm FROM theater t WHERE a.brchNo LIKE t.brchNo) as brchNm
+			, a.movieNm
+			, a.playDe 
+			, a.state 
+		FROM 
+			openAlarm a
+		WHERE 1=1
+			AND userSeq = #{userSeq}
+		ORDER BY a.seq DESC;
+	</select>
 	
 </mapper>

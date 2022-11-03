@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.jeongmini.movie.modules.member.MemberVo;
+
 @Repository
 public class MovieDAO {
 	@Inject
@@ -75,5 +77,6 @@ public class MovieDAO {
 		return result;
 	}
 	
+	public List<Movie> selectOpenAlarm(MovieVO vo){ return sqlSession.selectList(namespace + ".selectOpenAlarm", vo); }
 
 }

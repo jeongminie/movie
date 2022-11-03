@@ -23,6 +23,10 @@ public class Movie {
 	private String rpstMovieNm;
 	private String theabKindCd;
 	private String playDe;
+	private Integer state;
+	private String theabNm;
+	private String brchNm;
+	
 	
 	public Integer getSeq() {
 		return seq;
@@ -150,6 +154,25 @@ public class Movie {
 	public void setPlayDe(String playDe) {
 		this.playDe = playDe;
 	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
+	public String getTheabNm() {
+		return theabNm;
+	}
+	public void setTheabNm(String theabNm) {
+		this.theabNm = theabNm;
+	}
+	public String getBrchNm() {
+		return brchNm;
+	}
+	public void setBrchNm(String brchNm) {
+		this.brchNm = brchNm;
+	}
+
 
 
 	//박스오피스
@@ -189,6 +212,5 @@ public class Movie {
 	public void setAudiAcc(String audiAcc) {
 		this.audiAcc = audiAcc;
 	}
-	
 
 }

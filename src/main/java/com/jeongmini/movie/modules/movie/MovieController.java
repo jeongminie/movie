@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeongmini.movie.modules.theater.Theater;
+import com.jeongmini.movie.modules.theater.TheaterServiceImpl;
+
 @Controller
 @RequestMapping(value="/movie/")
 public class MovieController {

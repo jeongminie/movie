@@ -104,4 +104,9 @@ public class MovieServiceImpl implements MovieService {
 		return dao.movieOpenAlarm(dto);
 	}
 	
+	@Override
+	public List<Movie> selectOpenAlarm(MovieVO vo) throws Exception {
+		return dao.selectOpenAlarm(vo);
+	}
+	
 }

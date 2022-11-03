@@ -5,9 +5,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import com.jeongmini.movie.modules.movie.Movie;
 
 @Repository
 public class MemberDAO {
@@ -58,6 +59,5 @@ public class MemberDAO {
 	public int selectMemberCount(MemberVo vo) {
 		return (Integer) sqlSession.selectOne(namespace + ".selectMemberCount", vo);
 	}
-	 
-
+	
 }

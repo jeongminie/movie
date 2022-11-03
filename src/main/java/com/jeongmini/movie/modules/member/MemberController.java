@@ -3,6 +3,7 @@ package com.jeongmini.movie.modules.member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,15 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeongmini.movie.common.util.CoolSms;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
+import com.jeongmini.movie.modules.movie.Movie;
+import com.jeongmini.movie.modules.movie.MovieServiceImpl;
+import com.jeongmini.movie.modules.movie.MovieVO;
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 @Controller
-@RequestMapping(value= "/member/")
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
@@ -30,7 +33,10 @@ public class MemberController {
 	@Autowired
 	CodeServiceImpl codeServiceImpl;
 	
-	@RequestMapping(value="signup")
+	@Autowired
+	MovieServiceImpl movieServiceImpl;
+	
+	@RequestMapping(value="/member/signup")
 	public String signupView(Model model) throws Exception {
 		
 //		List<Code> codeList = codeServiceImpl.emailSelectList();
@@ -39,13 +45,13 @@ public class MemberController {
 		return "infra/member/user/signupForm";
 	}
 	
-	@RequestMapping(value="signupCompleted")
+	@RequestMapping(value="/member/signupCompleted")
 	public String signupCompletedView() throws Exception {
 		
 		return "infra/member/user/signupCompleted";
 	}
 	
-	@RequestMapping(value="signupProc")
+	@RequestMapping(value="/member/signupProc")
 	public String signup(Member dto) throws Exception {
 		
 		int result = service.insert(dto);
@@ -59,7 +65,7 @@ public class MemberController {
 		return "redirect:/member/signupCompleted"; 
 	}
 	
-	@RequestMapping(value="login")
+	@RequestMapping(value="/member/login")
 	@ResponseBody
 	public Map<String, Object> login(Member dto, MemberVo vo, Model model, HttpServletRequest request) throws Exception {
 		Member member = service.login(dto);
@@ -96,7 +102,7 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping(value="idCheck")
+	@RequestMapping(value="/member/idCheck")
 	@ResponseBody
 	public Map<String, Boolean> idCheck(Model model, MemberVo vo) throws Exception {
 		Map<String, Boolean> result = new HashMap<>();
@@ -111,7 +117,7 @@ public class MemberController {
 		return result;
 	}
 	
-	@RequestMapping(value="logout")
+	@RequestMapping(value="/member/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
@@ -142,13 +148,25 @@ public class MemberController {
 		return "infra/member/user/mypage";
 	}
 	
-	@RequestMapping(value="userinfo")
-	public String userinfoView(Model model) throws Exception {
+	@RequestMapping(value="/mypage/openAlarmList")
+	public String openAlarmListView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		vo.setUserSeq((Integer)session.getAttribute("sessSeq"));
+		System.out.println(vo.getUserSeq());
 		
-		return "infra/member/user/userinfo";
+		List<Movie> list = movieServiceImpl.selectOpenAlarm(vo);
+		model.addAttribute("list", list);
+		
+		return "infra/member/user/openAlarmList";
 	}
 	
-	@RequestMapping(value="profileUploaded")
+	@RequestMapping(value="/mypage/myinfo")
+	public String userinfoView(Model model) throws Exception {
+		
+		return "infra/member/user/myinfo";
+	}
+	
+	@RequestMapping(value="/member/profileUploaded")
 	@ResponseBody
 	public Map<String, Object> profileInst(Member dto, HttpServletRequest request) throws Exception {
 		System.out.println(dto.getFilePath());
@@ -169,6 +187,26 @@ public class MemberController {
 		return result;
 		
 	}
+	
+	@RequestMapping("/check/sendSMS")
+    @ResponseBody
+    public String sendSMS(Member dto) {
+		System.out.println(dto.getPhone());
+
+        Random rand  = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr+=ran;
+        }
+        
+        System.out.println("수신자 번호 : " + dto.getPhone());
+        System.out.println("인증번호 : " + numStr);
+        
+        CoolSms.singleSms(dto.getPhone(), numStr);
+        
+        return numStr;
+    }
 	
 	
 
