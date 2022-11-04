@@ -78,5 +78,7 @@ public class MovieDAO {
 	}
 	
 	public List<Movie> selectOpenAlarm(MovieVO vo){ return sqlSession.selectList(namespace + ".selectOpenAlarm", vo); }
+	
+	public int selectAlarmCount(MovieVO vo){ return sqlSession.selectOne(namespace + ".selectAlarmCount", vo); }
 
 }

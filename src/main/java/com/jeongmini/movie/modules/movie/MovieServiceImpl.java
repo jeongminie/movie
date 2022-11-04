@@ -109,4 +109,8 @@ public class MovieServiceImpl implements MovieService {
 		return dao.selectOpenAlarm(vo);
 	}
 	
+	@Override
+	public int selectAlarmCount(MovieVO vo) throws Exception {
+		return dao.selectAlarmCount(vo);
+	}
 }

@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeongmini.movie.common.constants.Constants;
 import com.jeongmini.movie.common.util.CoolSms;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
 import com.jeongmini.movie.modules.movie.Movie;
@@ -159,10 +159,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/mypage/openAlarmList")
-	public String openAlarmListView(Model model, MovieVO vo, HttpServletRequest request) throws Exception {
+	public String openAlarmListView(Model model, @ModelAttribute("vo") MovieVO vo, HttpServletRequest request) throws Exception {
+		
 		HttpSession session = request.getSession();
 		vo.setUserSeq((Integer)session.getAttribute("sessSeq"));
-		System.out.println(vo.getUserSeq());
+		vo.setParamsPaging(movieServiceImpl.selectAlarmCount(vo));
 		
 		List<Movie> list = movieServiceImpl.selectOpenAlarm(vo);
 		model.addAttribute("list", list);

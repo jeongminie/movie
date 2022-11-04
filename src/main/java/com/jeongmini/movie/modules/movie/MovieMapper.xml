@@ -206,7 +206,17 @@
 			openAlarm a
 		WHERE 1=1
 			AND userSeq = #{userSeq}
-		ORDER BY a.seq DESC;
+		ORDER BY a.seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
+	
+	<select id="selectAlarmCount" resultType="Integer">
+		SELECT
+			count(*)
+		FROM 
+			openAlarm
+		WHERE 
+			userSeq = #{userSeq}
 	</select>
 	
 </mapper>

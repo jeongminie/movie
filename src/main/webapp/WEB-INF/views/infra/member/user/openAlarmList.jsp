@@ -214,8 +214,13 @@
 						</tbody>
 					</table>
 				</div>
-				<!-- pagination -->
-				<!--// pagination -->
+				<form method="post" id="pagination" name="pagination">
+					<input type="hidden" name="thisPage" value="<c:out value="${vo.thisPage}" default="1"/>">
+					<input type="hidden" name="rowNumToShow" value="<c:out value="${vo.rowNumToShow}"/>">
+					<!-- pagination s -->
+					<%@include file="../../../include/xdmin/jsp/pagination.jsp"%>
+					<!--// pagination -->
+				</form>
 			</div>
 		</div>
 	</div>
@@ -224,62 +229,12 @@
 	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
 	
 	<script>
-		function setEmptyImage(img) {
-			img.src='/resources/static/image/noImg2.png';
-			$(img).addClass('noImg');
-		}
+		var form = $("form[name=pagination]");
 		
-		function readURL(input) {
-			var file = input.files[0];
-			
-			if(file.type.startsWith("image")) {
-				var reader = new FileReader();
-
-				reader.onload = function (e) {
-					$("img").attr("src", e.target.result); 
-				}
-				reader.readAsDataURL(input.files[0]);
-			} else {
-				alert("이미지 파일만 가능합니다.")
-			}
+		goList = function(thisPage) {
+			$("input:hidden[name=thisPage]").val(thisPage);
+			form.attr("action", "/mypage/openAlarmList").submit();
 		}
-		
-		$(document).ready(function(){
-				 
-			$("#profileUploaded").change(function(e){
-				readURL(this);
-			});
-				
-			$(".fa-circle-plus").on("click", function(){
-				$("#profileUploaded").click();
-			});
-			
-			$("#profileUploaded").on("change", function(e){
-				console.log($("#profileUploaded")[0].files[0])
-			
-				/* $("#form").submit(); */
-				var filePath = $("input[name='filePath']").val();
-				
- 				var formData = new FormData();
-				formData.append("profileUploaded", $("#profileUploaded")[0].files[0]);
-				formData.append("filePath", filePath);
-				
-				$.ajax({
-					type : "POST",
-					enctype:"mutipart/form-data",
-					url:"profileUploaded",
-					processData: false,
-					contentType: false,
-					data: formData,
-					dataType: "json",
-					success : function(data) {
-					}
-				});
-				
-				alert("프로필 사진이 등록되었습니다.")
-			})
-			
-		})
 	
 	</script>
 	

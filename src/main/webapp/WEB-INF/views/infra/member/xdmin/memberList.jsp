@@ -219,7 +219,7 @@
 			
 			goList = function(thisPage) {
 				$("input:hidden[name=thisPage]").val(thisPage);
-				form.submit();
+				form.attr("action", "/admin/memberList").submit();
 			}
 		
 			$('#memberDeleteModal').on('show.bs.modal', function () {
