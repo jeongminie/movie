@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.time.*" %>
 <%@ page import="java.time.format.*" %>
@@ -24,6 +26,7 @@
 	
 	<script type="text/javascript" src="/resources/static/js/header.js"></script>
 	<link rel="stylesheet" href="/resources/static/css/style.css">
+	<link rel="stylesheet" href="/resources/static/css/mypage.css">
 	
   	<!-- fontawesome -->
 	<script src="https://kit.fontawesome.com/9a0994e5cb.js" crossorigin="anonymous"></script>
@@ -36,210 +39,7 @@
 	<title>마이페이지</title>
 	
 	<style>
-		.container.has-lnb #contents {
-		    /* float: right; */
-		    width: calc(100% - 260px);
-		}
 		
-		h2.tit {
-		    padding: 0 0 26px 0;
-		    font-size: 1.8666em;
-		    font-weight: 400;
-		    letter-spacing: -1px;
-		    line-height: 1.1;
-		    color: #222;
-		}
-		
-		.table-wrap {
-		    position: relative;
-		    border-top: 1px solid #555;
-		}
-		
-		table {
-		    width: 100%;
-		    margin: 0;
-		    border: 0;
-		    table-layout: fixed;
-		    border-collapse: collapse;
-		    empty-cells: show;
-		}
-		
-		table caption {
-		    overflow: hidden;
-		    width: 0;
-		    height: 0;
-		    font-size: 0;
-		    line-height: 0;
-		    opacity: 0;
-		}
-		
-		.board-form tbody th {
-		    background: #f7f8f9;
-		}
-		
-		.input-text+.button {
-		    height: 32px;
-		    /* line-height: 29px; */
-		}
-		
-		.button.gray {
-		    color: #fff;
-		    line-height: 36px;
-		    border: 0;
-		    background: #666;
-		}
-		
-		.board-form tbody th {
-		    background: #f7f8f9;
-		}
-		
-		.board-form tbody td, .board-form tbody th {
-		    position: relative;
-		    height: 50px;
-		    padding: 7px 15px;
-		    text-align: left;
-		    border-bottom: 1px solid #d1d5dd;
-		}
-		
-		.member-wrap .table-wrap .board-form tr td:last-child {
-		    padding-right: 0;
-		}
-		
-		.member-wrap {
-		    width: 710px;
-		    min-height: 100%;
-		    margin: 0 auto;
-		    padding: 80px 100px;
-		    background-color: #fff;
-		}
-		
-		.button {
-		    display: inline-block;
-		    height: 36px;
-		    margin: 0;
-		    padding: 0 15px;
-		    text-align: center;
-		    line-height: 34px;
-		    color: #503396;
-		    font-weight: 400;
-		    border-radius: 4px;
-		    text-decoration: none;
-		    border: 1px solid #503396;
-		    vertical-align: middle;
-		    background-color: #fff;
-		    cursor: pointer;
-		}
-		
-		.member-wrap .table-wrap .board-form tr td .button {
-		    padding: 0 5px;
-		}
-		
-		.w75px {
-		    width: 75px!important;
-		}
-		
-		.ml08 {
-		    margin-left: 8px!important;
-		}
-		
-		.input-text[disabled], .input-text[readonly] {
-		    color: #aaa;
-		    background-color: #f7f8f9;
-		}
-		
-		.w230px {
-		    width: 230px!important;
-		}
-		
-		.input-text {
-		    display: inline-block;
-		    width: 100%;
-		    height: 32px;
-		    padding: 0 10px;
-		    line-height: 30px;
-		    color: #444;
-		    border: 1px solid #d8d9db;
-		    vertical-align: middle;
-		}
-		
-		.chk-num {
-		    display: inline-block;
-		    position: relative;
-		    padding: 0;
-		    vertical-align: middle;
-		}
-		
-		.chk-num .line {
-		    position: relative;
-		    height: 36px;
-		    padding: 0 50px 0 0;
-		    border: 1px solid #d8d9db;
-		    background-color: #fff;
-		}
-		
-		.chk-num .line .input-text {
-		    height: 100%;
-		    border: 0;
-		}
-		
-		.chk-num .time-limit {
-		    display: block;
-		    position: absolute;
-		    right: 0;
-		    top: 50%;
-		    width: 50px;
-		    height: 100%;
-		    line-height: 34px;
-		    margin: -17px 0 0 0;
-		    padding: 0 10px 0 0;
-		    text-align: right;
-		    color: #e81002;
-		}
-		
-		.btn-group {
-		    padding: 20px 0 30px 0;
-		    margin: 0;
-		    text-align: center;
-		    display: block;
-		    width : 100%;
-		}
-		
-		.btn-group:after, .btn-group:before {
-		    content: '';
-		    display: table;
-		}
-		
-		.btn-group:after {
-		    clear: both;
-		}
-		
-		.btn-group .button {
-		    margin: 0 3px;
-		}
-		
-		.button.large {
-		    height: 46px;
-		    padding: 0 30px;
-		    line-height: 44px;
-		}
-		
-		.button.purple.large {
-		    line-height: 46px;
-		}
-		
-		.button.purple {
-		    color: #fff;
-		    line-height: 36px;
-		    border: 0;
-		    background: #503396;
-		}
-		
-		.button[disabled] {
-		    color: #777!important;
-		    cursor: default!important;
-		    background-color: #e0e0e0!important;
-		    border-color: #e0e0e0!important;
-		}
 
 	</style>
 		
@@ -274,8 +74,9 @@
 									<tr>
 										<th scope="row"><label for="ibxSchPwdMblpTelno">휴대폰 번호<!--휴대폰 번호--></label></th>
 										<td>
-											<input type="hidden" id="ibxSchPwdMblpTelno" value="01025116861">
-											<input type="text" value="010-****-6861" placeholder="'-' 없이 입력" class="input-text w230px" disabled>
+											<input type="hidden" id="ibxSchPwdMblpTelno" value="${sessPhone }">
+											<c:set var="phone" value="${sessPhone }" />
+											<input type="text" value="${fn:substring(phone, 0, 3)}-****-${fn:substring(phone, 7, 12)}" placeholder="'-' 없이 입력" class="input-text w230px" disabled>
 											<button id="btnSchPwdMbCertNoSend" type="button" class="button gray w75px ml08">인증요청<!--인증요청--></button>
 										</td>
 									</tr>
@@ -300,7 +101,7 @@
 				</div>
 				<div class="btn-group">
 					<button class="button large" id="cancelBtn" title="취소">취소
-					</button><button class="button large purple" id="ckBtn" data-url="/mypage/userinfo" title="확인" disabled="">확인
+					</button><button class="button large purple" id="ckBtn" onclick="location.href='/mypage/userinfo'" title="확인" disabled="">확인
 				</button></div>
 			</div>
 		</div> <!-- innerwrap -->
@@ -441,6 +242,7 @@
 					})
 				}
 			})
+			
 		});
 	
 	</script>

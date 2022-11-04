@@ -12,7 +12,7 @@
 		</div>
 		<div class="right-link d-flex justify-content-end">
 			<c:choose>
-				<c:when test="${not empty loginId}" >
+				<c:when test="${not empty sessSeq}" >
 					<a href="#" class="mr-3 userName">${name } 님</a>
 					<a href="member/logout" class="logout">로그아웃</a>
 				</c:when>
@@ -58,8 +58,8 @@
 <script>
 	$(document).ready(function(){
 		$("#mypage").on("click", function(){
-			var loginId = "${loginId}"
-			if(loginId == null || loginId == ''){
+			var sessSeq = "${sessSeq}"
+			if(sessSeq == null || sessSeq == ''){
 				alert("로그인이 필요한 서비스 입니다.")
 				return;
 			} else {

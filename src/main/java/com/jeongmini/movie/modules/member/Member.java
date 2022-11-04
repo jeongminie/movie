@@ -29,8 +29,8 @@ public class Member {
 	private String phone;
 	private String name;
 	private Integer gender;
-	@DateTimeFormat(pattern = "yyyyMMdd")
-	private Date birth;
+	/* @DateTimeFormat(pattern = "yyyyMMdd") */
+	private String birth;
 	private String emailFull;
 	private Integer marketingAgree;
 	private Date createdAt;
@@ -41,6 +41,32 @@ public class Member {
 	private String address;
 	private String detailAddress;
 	private Integer adminNy; 
+	private String pwnow;
+	private String pwnew;
+	
+	//카카오 로그인
+	private String snsId;
+	private String snsImg;
+	private String token;
+	
+	public String getSnsId() {
+		return snsId;
+	}
+	public void setSnsId(String snsId) {
+		this.snsId = snsId;
+	}
+	public String getSnsImg() {
+		return snsImg;
+	}
+	public void setSnsImg(String snsImg) {
+		this.snsImg = snsImg;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	
 	public Integer getSeq() {
 		return seq;
@@ -72,10 +98,10 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 	public Integer getMarketingAgree() {
@@ -221,6 +247,18 @@ public class Member {
 	}
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+	public String getPwnow() {
+		return pwnow;
+	}
+	public void setPwnow(String pwnow) {
+		this.pwnow = pwnow;
+	}
+	public String getPwnew() {
+		return pwnew;
+	}
+	public void setPwnew(String pwnew) {
+		this.pwnew = pwnew;
 	}
 	
 	

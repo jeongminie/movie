@@ -12,9 +12,15 @@ public interface MemberService {
 	
 	public int insert(Member dto) throws Exception;
 	
+	public int kakaoInsert(Member dto) throws Exception;
+	
+	public int update(Member dto) throws Exception;
+	
 	public int profileUploaded(Member dto) throws Exception;
 	
 	public Member login(Member dto) throws Exception;
+	
+	public Member snsLoginCheck(Member dto) throws Exception;
 	
 	public Member member(Member dto) throws Exception;
 	

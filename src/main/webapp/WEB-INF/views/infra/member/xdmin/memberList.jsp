@@ -103,12 +103,13 @@
 									<th scope="col"><input type="checkbox" id="chkAll"></th>
 									<th scope="col">No</th>
 									<th scope="col">이름</th>
+									<th scope="col">아이디</th>
 									<th scope="col">성별</th>
 									<th scope="col">생년월일</th>
 									<th scope="col">이메일</th>
 									<th scope="col">전화번호</th>
 									<th scope="col">가입날짜</th>
-									<th scope="col">마지막 접속 날짜</th>
+									<th scope="col">수정일</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -122,8 +123,9 @@
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
 												<th scope="col"><input type="checkbox" class="chk"></th>
-												<th scope="row">${status.count }</th>
+												<th scope="row">${seq }</th>
 												<td>${list.name }</td>
+												<td>${list.loginId }</td>
 												<%-- <td>
 													<c:choose>
 														<c:when test="${list.gender eq 0}">남</c:when>
@@ -136,7 +138,16 @@
 														<c:if test="${list.gender eq listGender.seq}"><c:out value="${listGender.ccName }"/></c:if>
 													</c:forEach>
 												</td>
-												<td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td>
+												<%-- <td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td> --%>
+												<c:choose>
+													<c:when test="${list.loginId eq '카카오로그인' }">
+														<td>${list.birth}</td>
+													</c:when>
+													<c:otherwise>
+														<c:set var="birth" value="${list.birth }" />
+														<td>${fn:substring(birth, 0, 4)}-${fn:substring(birth, 4, 6)}-${fn:substring(birth, 6, 8)}</td>
+													</c:otherwise>
+												</c:choose>
 												<td>${list.emailFull }</td>
 												<td>
 													<c:if test="${not empty list.phone }">
@@ -267,6 +278,10 @@
 				if(chkValue == false) {
 					alert("dd")
 				}
+			});
+			
+			$(".excelBtn").click(function() {
+				form.attr("action", "/admin/excelDownload").submit();
 			});
 			
 		});

@@ -17,7 +17,7 @@
 		</div>
 		<div class="right-link d-flex justify-content-end">
 			<c:choose>
-				<c:when test="${not empty loginId}" >
+				<c:when test="${not empty sessSeq}" >
 					<a href="#" class="mr-3 userName">${name } 님</a>
 					<a href="../member/logout" class="logout">로그아웃</a>
 				</c:when>

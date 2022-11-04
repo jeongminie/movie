@@ -46,11 +46,35 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public int kakaoInsert(Member dto) throws Exception {
+		return dao.kakaoInsert(dto);
+	}
+	
+	@Override
+	public int update(Member dto) throws Exception {
+		String encryptPassword = EncryptUtils.md5(dto.getPwnow());
+		
+		if(dto.getPwnew() != "" && dto.getPwnew() != null) {
+			String encryptPassword2 = EncryptUtils.md5(dto.getPwnew());
+			dto.setPwnew(encryptPassword2);
+		}
+		
+		dto.setPwnow(encryptPassword);
+		
+		return dao.update(dto);
+	}
+	
+	@Override
 	public Member login(Member dto) throws Exception {
 		String encryptPassword = EncryptUtils.md5(dto.getPassword());
 		dto.setPassword(encryptPassword);
 		
 		return dao.login(dto);
+	}
+	
+	@Override
+	public Member snsLoginCheck(Member dto) throws Exception {
+		return dao.snsLoginCheck(dto);
 	}
 	
 	@Override

@@ -24,6 +24,7 @@
 	
 	<script type="text/javascript" src="/resources/static/js/header.js"></script>
 	<link rel="stylesheet" href="/resources/static/css/style.css">
+	<link rel="stylesheet" href="/resources/static/css/mypage.css">
 	
   	<!-- fontawesome -->
 	<script src="https://kit.fontawesome.com/9a0994e5cb.js" crossorigin="anonymous"></script>
@@ -55,28 +56,38 @@
 					<div class="top">
 						<div class="photo" id="myPhoto">
 							<div class="wrap">
-								<form method="post" id="form" enctype="multipart/form-data">
-									<input type="file" id="profileUploaded" name="profileUploaded" class="d-none">
-									<input type="hidden" name="filePath" value="${profile.path }${profile.uuidName }">
-								</form>
-								<i class="fa-solid fa-circle-plus"></i>
-								<button type="button" class="img">
-									<c:choose>
-										<c:when test="${not empty profile}">
-											<img src="<c:out value="${profile.path }${profile.uuidName }"/>" onerror="setEmptyImage(this)">
-										</c:when>
-										<c:otherwise>
-											<img src="#" onerror="setEmptyImage(this)">
-										</c:otherwise>
-									</c:choose>
-								</button>
+							<c:choose>
+								<c:when test="${loginId eq '카카오로그인'}">
+									<button type="button" class="img">
+										<img id="test" src="${member.snsImg }" onerror="setEmptyImage(this)">
+									</button>
+								</c:when>
+								<c:otherwise>
+									<form method="post" id="form" enctype="multipart/form-data">
+										<input type="file" id="profileUploaded" name="profileUploaded" class="d-none">
+										<input type="hidden" name="filePath" value="${profile.path }${profile.uuidName }">
+									</form>
+									<i class="fa-solid fa-circle-plus"></i>
+									<button type="button" class="img">
+										<c:choose>
+											<c:when test="${not empty profile}">
+												<img src="<c:out value="${profile.path }${profile.uuidName }"/>" onerror="setEmptyImage(this)">
+											</c:when>
+											<c:otherwise>
+												<img src="#" onerror="setEmptyImage(this)">
+											</c:otherwise>
+										</c:choose>
+									</button>
+								</c:otherwise>
+							</c:choose>
 							</div>
 						</div>
 						<div class="grade">
 							<p class="name">${member.name }님<br>환영합니다.</p>
 		
 							<div class="link">
-								<a href="/mypage/myinfo?returnURL=info" title="개인정보수정 페이지로 이동">개인정보수정 <i class="iconset ico-arr-right-reverse"></i></a>
+								<a href="/mypage/myinfo?returnURL=info" title="개인정보수정 페이지로 이동" >개인정보수정 <i class="iconset ico-arr-right-reverse"></i></a>
+								<a data-bs-toggle="modal" data-bs-target="#alertModal">test</a>
 							</div>
 						</div>
 					</div>
@@ -85,9 +96,25 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" name="profile"/>
 	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
 	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
+	
+	<!-- modal -->
+	<div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content" role="document">
+				<div class="modal-header">
+					<span class="modal-title">알림</span>
+				</div>
+				<div class="modal-body">
+					<p>프로필 사진이 등록되었습니다.</p>
+					<button type="button" class="btn close-btn mb-3" data-bs-dismiss="modal" aria-label="Close">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script>
 		function setEmptyImage(img) {
@@ -95,7 +122,7 @@
 			$(img).addClass('noImg');
 		}
 		
-		function readURL(input) {
+		/* function readURL(input) {
 			var file = input.files[0];
 			
 			if(file.type.startsWith("image")) {
@@ -108,13 +135,12 @@
 			} else {
 				alert("이미지 파일만 가능합니다.")
 			}
-		}
+		} */
 		
 		$(document).ready(function(){
-				 
-			$("#profileUploaded").change(function(e){
-				readURL(this);
-			});
+			/* $("#profileUploaded").change(function(e){
+				readURL(this)
+			}); */
 				
 			$(".fa-circle-plus").on("click", function(){
 				$("#profileUploaded").click();
@@ -133,17 +159,22 @@
 				$.ajax({
 					type : "POST",
 					enctype:"mutipart/form-data",
-					url:"profileUploaded",
+					url:"/profileUploaded",
 					processData: false,
 					contentType: false,
 					data: formData,
 					dataType: "json",
 					success : function(data) {
+						setTimeout(function() {
+							$("#alertModal").modal('show');
+						}, 3000);
 					}
 				});
-				
-				alert("프로필 사진이 등록되었습니다.")
-			})
+			});
+			
+			$('#alertModal').on('hide.bs.modal', function() {
+				location.reload();
+			});
 			
 		})
 	

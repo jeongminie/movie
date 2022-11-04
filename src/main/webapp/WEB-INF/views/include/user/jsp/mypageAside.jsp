@@ -193,7 +193,7 @@
 			<li>
 				<a href="myinfo" title="회원정보">회원정보</a>
 				<ul class="depth3">
-					<li class="on"><a href="myinfo" title="개인정보 수정">개인정보 수정</a></li>
+					<li class="on"><a href="/mypage/myinfo" title="개인정보 수정">개인정보 수정</a></li>
 				</ul>
 			</li>
 		</ul>

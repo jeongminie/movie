@@ -38,6 +38,16 @@
 	color :white;
 }
 
+.w300px {
+	width : 300px !important;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
  </style>   
     
 <!-- modal -->
@@ -52,9 +62,9 @@
 			<form method="post" action="../member/login" id="login">
 			<%-- <input type="hidden" name="redirectUrl" value="<%= request.getRequestURI().toString()%>"> --%>
 				<div>
-					<input type="text" id="loginId" name="loginId" class="form-control mb-2" placeholder="아이디">
-					<input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호">
-					<button type="button" id="loginBtn" class="btn login-btn w-100 mb-3">로그인</button>
+					<input type="text" id="loginId" name="loginId" class="form-control mb-2 w300px" placeholder="아이디">
+					<input type="password" id="password" name="password" class="form-control mb-3 w300px" placeholder="비밀번호">
+					<button type="button" id="loginBtn" class="btn login-btn w300px mb-3">로그인</button>
 					<p class="d-flex justify-content-center">
 						<a href="#" class="text-dark">ID/PW 찾기</a>
 						<span class="mr-3 ml-3">|</span>
@@ -64,15 +74,101 @@
 			</form>
 			</div>
 			<div class="modal-footer">
-				<!-- <button type="button" class="btn" data-bs-dismiss="modal">취소</button>
-				<button type="button" class="btn deleteBtn">삭제하기</button> -->
+				<div class="sns-login">
+					<a href="#" id="kakaoBtn" title="카카오톡으로 로그인 선택"><img src="/resources/static/image/ico-kakao.png" alt="카카오톡"><span class="text-dark">카카오톡으로 로그인</span></a>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<form name="form">
+	<input type="hidden" name="name"/>
+	<input type="hidden" name="snsId"/>
+	<input type="hidden" name="phone"/>
+	<input type="hidden" name="email"/>
+	<input type="hidden" name="gender"/>
+	<input type="hidden" name="birth"/>
+	<input type="hidden" name="snsImg"/>
+	<input type="hidden" name="token"/>
+</form>
+
+<!-- kakao login -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
+	Kakao.init('07294d6c3c28278176fbea6c96ff7670'); // test 용
+	console.log(Kakao.isInitialized());
+	
 	$(document).ready(function(){
+		
+		$("#kakaoBtn").on("click", function() {
+			Kakao.Auth.login({
+			      success: function (response) {
+			        Kakao.API.request({
+			          url: '/v2/user/me',
+			          success: function (response) {
+			        	  
+			        	  var accessToken = Kakao.Auth.getAccessToken();
+			        	  Kakao.Auth.setAccessToken(accessToken);
+		
+			        	  var account = response.kakao_account;
+			        	  
+			        	  console.log(response)
+			        	  console.log("email : " + account.email);
+			        	  console.log("name : " + account.name);
+			        	  console.log("nickname : " + account.profile.nickname);
+			        	  console.log("picture : " + account.profile.thumbnail_image_url);
+			        	  console.log("picture : " + account.gender);
+			        	  console.log("picture : " + account.birthday);
+			        	  console.log("picture : " + account.birthday.substring(0,2) + "-" + account.birthday.substring(2,account.birthday.length));
+		      	  
+			        	  $("input[name=snsId]").val("카카오로그인");
+			        	  $("input[name=name]").val(account.profile.nickname);
+			        	  $("input[name=phone]").val(account.profile.phone_number);
+			        	  $("input[name=email]").val(account.email);
+			        	  $("input[name=birth]").val(account.birthday.substring(0,2) + "-" + account.birthday.substring(2,account.birthday.length));
+			        	  $("input[name=snsImg]").val(account.profile.thumbnail_image_url);
+			        	  $("input[name=token]").val(accessToken);
+			        	  
+			        	  if (account.gender === "male") {
+			        		  $("input[name=gender]").val(90);
+		      		  } else {
+		      			  $("input[name=gender]").val(89);
+		 			  } 
+			        	  
+			        	 /*  $("form[name=form]").attr("action", "/member/kakaoLoginProc").submit(); */
+					
+			        	  $.ajax({
+								async: true
+								,cache: false
+								,type:"POST"
+								,url: "/member/kakaoLoginProc"
+								,data: {"name": $("input[name=name]").val(), "snsId": $("input[name=snsId]").val(), "phone": $("input[name=phone]").val(), "emailFull": $("input[name=email]").val(), "gender": $("input[name=gender]").val(), "birth": $("input[name=birth]").val(), "snsImg": $("input[name=snsImg]").val(), "token": $("input[name=token]").val()}
+								,success : function(response) {
+									if (response.rt == "fail") {
+										alert("아이디와 비밀번호를 다시 확인 후 시도해 주세요.");
+										return false;
+									} else {
+										window.location.href = "/";
+									}
+								},
+								error : function(jqXHR, status, error) {
+									alert("알 수 없는 에러 [ " + error + " ]");
+								}
+						});
+			          },
+			          fail: function (error) {
+			            console.log(error)
+			          },
+			        })
+			      },
+			      fail: function (error) {
+			        console.log(error)
+			      },
+			    })
+		});
+		
 		$("#loginBtn").on("click", function(){
 			var loginId = $("#loginId").val();
 			var password = $("#password").val();

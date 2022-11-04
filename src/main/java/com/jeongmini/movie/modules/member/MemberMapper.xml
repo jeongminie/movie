@@ -67,6 +67,48 @@
 		</selectKey>
 	</insert>
 	
+	<insert id="kakaoInsert">
+		INSERT INTO user (
+		   	loginId
+		    , phone
+		    , name
+		    , birth
+		    , emailFull
+		    , gender
+		    , snsImg
+		    , adminNy
+		    , delNy
+		) VALUES (
+		    #{snsId}
+		    , #{phone}
+		    , #{name}
+		    , #{birth}
+		    , #{emailFull}
+		    , #{gender}
+		    , #{snsImg}
+		    , 0
+		    , 0
+		)
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		UPDATE user
+		SET 
+		    phone = #{phone}
+		    , emailFull = CONCAT(#{email},'@',(SELECT cc.ccNameEng FROM commonCode cc WHERE cc.seq = #{domain}))
+		    , postcode = #{postcode}
+		    , address = #{address}
+			<if test="pwnew != null and pwnew != ''">
+				,password = #{pwnew}
+			</if>
+		WHERE 1=1
+			AND seq = #{seq}
+			AND password = #{pwnow}
+	</update>
+	
 	<select id="login" resultMap="resultMapObj">
 		SELECT
 			a.seq
@@ -81,6 +123,22 @@
 		WHERE 1=1
 			AND a.loginId = #{loginId}
 			AND a.password = #{password}
+	</select>
+	
+	<select id="snsLoginCheck" resultMap="resultMapObj">
+		SELECT
+			a.seq
+			,a.loginId
+			,a.phone
+			,a.name
+			,a.birth
+			,a.emailFull
+			,a.adminNy
+		FROM
+			user a
+		WHERE 1=1
+			AND a.loginId = #{snsId}
+			AND a.name = #{name}
 	</select>
 	
 	<select id="selectOneMember" resultMap="resultMapObj">

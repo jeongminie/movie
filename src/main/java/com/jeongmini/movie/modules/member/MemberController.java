@@ -16,12 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeongmini.movie.common.constants.Constants;
 import com.jeongmini.movie.common.util.CoolSms;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
 import com.jeongmini.movie.modules.movie.Movie;
 import com.jeongmini.movie.modules.movie.MovieServiceImpl;
 import com.jeongmini.movie.modules.movie.MovieVO;
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 @Controller
 public class MemberController {
@@ -65,6 +65,22 @@ public class MemberController {
 		return "redirect:/member/signupCompleted"; 
 	}
 	
+	@RequestMapping(value="/member/update")
+	@ResponseBody
+	public Map<String, Object> update(Member dto, HttpServletRequest request) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		HttpSession session = request.getSession();
+		dto.setSeq((Integer)session.getAttribute("sessSeq"));
+		
+		if(service.update(dto) == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value="/member/login")
 	@ResponseBody
 	public Map<String, Object> login(Member dto, MemberVo vo, Model model, HttpServletRequest request) throws Exception {
@@ -78,14 +94,8 @@ public class MemberController {
 		if(member != null) {
 			logger.info("로그인성공 login ID : " + member.getLoginId() + " user name : " + member.getName() + " user name : " + member.getSeq());
 			
-			HttpSession session = request.getSession();
+			session(member, request); 
 			
-			session.setAttribute("sessSeq", member.getSeq());
-			session.setAttribute("loginId", member.getLoginId());
-			session.setAttribute("name", member.getName());
-			session.setAttribute("adminNy", member.getAdminNy());
-			session.setAttribute("phone", member.getPhone());
-
 			result.put("result", "success");
 		} else {
 			logger.info("로그인 실패 ");
@@ -161,12 +171,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/mypage/myinfo")
-	public String userinfoView(Model model) throws Exception {
+	public String myinfoView(Model model) throws Exception {
 		
 		return "infra/member/user/myinfo";
 	}
 	
-	@RequestMapping(value="/member/profileUploaded")
+	@RequestMapping(value="/mypage/userinfo")
+	public String userinfoView(Member dto, Model model, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		dto.setPseq((Integer)session.getAttribute("sessSeq"));
+		dto.setSeq((Integer)session.getAttribute("sessSeq"));
+		
+		Member item = service.selectProfile(dto);
+		model.addAttribute("profile", item);
+		
+		Member member = service.member(dto);
+		model.addAttribute("member", member);
+		
+		return "infra/member/user/userinfo";
+	}
+	
+	@RequestMapping(value="profileUploaded")
 	@ResponseBody
 	public Map<String, Object> profileInst(Member dto, HttpServletRequest request) throws Exception {
 		System.out.println(dto.getFilePath());
@@ -183,9 +208,7 @@ public class MemberController {
 			logger.info("image 실패");
 			result.put("result", "fail");
 		}
-		
 		return result;
-		
 	}
 	
 	@RequestMapping("/check/sendSMS")
@@ -208,6 +231,43 @@ public class MemberController {
         return numStr;
     }
 	
+	@ResponseBody
+	@RequestMapping(value = "/member/kakaoLoginProc")
+	public Map<String, Object> kakaoLoginProc(Member dto, HttpServletRequest request) throws Exception {
+		Map<String, Object> result = new HashMap<String, Object>();
+	    
+		Member kakaoLogin = service.snsLoginCheck(dto);
+		
+		
+		 System.out.println("test : " + dto.getToken());
+		
+		if (kakaoLogin == null) {
+			service.kakaoInsert(dto);
+			
+			// session(dto.getSeq(), dto.getId(), dto.getName(), dto.getEmail(), dto.getUser_div(), dto.getSnsImg(), dto.getSns_type(), httpSession);
+            session(dto, request); 
+            result.put("rt", "success");
+		} else {
+			
+			// session(kakaoLogin.getSeq(), kakaoLogin.getId(), kakaoLogin.getName(), kakaoLogin.getEmail(), kakaoLogin.getUser_div(), kakaoLogin.getSnsImg(), kakaoLogin.getSns_type(), httpSession);
+			session(kakaoLogin, request);
+			result.put("rt", "success");
+		}
+		return result;
+	}
+
+	 public void session(Member dto, HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+
+		 session.setAttribute("sessSeq", dto.getSeq());    
+		 session.setAttribute("loginId", dto.getLoginId());
+		 session.setAttribute("name", dto.getName());
+		 session.setAttribute("eamil", dto.getEmail());
+		 session.setAttribute("sessPhone", dto.getPhone());
+		 session.setAttribute("snsImg", dto.getSnsImg());
+		 session.setAttribute("adminNy", dto.getAdminNy());
+//	     httpSession.setAttribute("sessSns", dto.getSns_type());
+	 }
 	
 
 }

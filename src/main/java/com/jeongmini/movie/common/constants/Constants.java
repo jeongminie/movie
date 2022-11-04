@@ -11,5 +11,7 @@ public class Constants {
 	
 	public static final String COOL_SMS_API_KEY = "NCSRFMHDTQYIKPZP";
 	public static final String COOL_SMS_API_SECRET = "PXNQNRPPTFIG6HTWL6XOH5GTC34SKDLV";
+	
+	public static final int SESSION_MINUTE = 30;
 
 }

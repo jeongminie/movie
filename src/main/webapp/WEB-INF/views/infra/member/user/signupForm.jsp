@@ -138,7 +138,7 @@
 								</div>
 							</td>
 						</tr>
-						<tr>
+<!-- 						<tr>
 							<th>주소</th>
 							<td id="addressWrap">
 								<div class="d-flex">
@@ -153,10 +153,10 @@
 								<div class="d-flex">
 									<input type="text" class="text-input col-6 mr-2" name="x" id="x">
 									<input type="text" class="text-input col-6" name="y" id="y">
-									<!-- <div id="map" style="width:200px;height:200px;"></div> -->
+									<div id="map" style="width:200px;height:200px;"></div>
 								</div>
 							</td>
-						</tr>
+						</tr> -->
 						<tr>
 							<th>마케팅 활용을 위한 개인정보 수집 이용 안내(선택)</th>
 							<td>
@@ -174,78 +174,47 @@
 		</div>
 	</div>
 		
-	<!-- 카카오 주소 api -->
+	<!-- 카카오 지도 api -->
 	<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 	</div>
-		
-	<!-- 카카오 지도 api -->
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	<script>
-		function execDaumPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	            	var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
+		function last_day(date_str) {
+		    var yyyyMMdd = String(date_str);
+		    var days = "31";
+		    var year = yyyyMMdd.substring(0,4);
+		    var month = yyyyMMdd.substring(4,6);
 	
-	                if(data.userSelectedType === 'R'){
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    document.getElementById("extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("sample6_extraAddress").value = '';
-	                }
+		    if (Number(month) == 2) {
+		        if (is_leap_year(year+month+"01"))
+		            days = "29";
+		        else
+		            days = "28";
+		    } else if (Number(month) == 4 || Number(month) == 6 || Number(month) == 9 || Number(month) == 11)
+		      	days = "30";
 	
-	                document.getElementById('postcode').value = data.zonecode;
-	                document.getElementById("address").value = addr;
-	                document.getElementById("detailAddress").focus();
-	                
-	                geocoder.addressSearch(addr, callback);
-	            }
-	        }).open();
-	    }
-		
-		var geocoder = new kakao.maps.services.Geocoder();
-		
-		var callback = function(result, status) {
-	        if (status === kakao.maps.services.Status.OK) {
-	            console.log(result);
-	            document.getElementById('x').value = result[0].x;
-	           	document.getElementById('y').value = result[0].y;
-	            
-	        }
-	    };
+		    return days;
+		}
 	
-		 $(document).ready(function(){
-			$("#postcode").on("click", function(){
-				execDaumPostcode();
-			})
-			
-	    	$("#reset").on("click", function(){
-	    		var input = $("#addressWrap").find('input[type=text]')
-			    input.val('');
-	    	})
-	    })
-	</script>
-
+		function is_valid_date(date_str) {
+		    var yyyyMMdd = String(date_str);
+		    var year = yyyyMMdd.substring(0,4);
+		    var month = yyyyMMdd.substring(4,6);
+		    var day = yyyyMMdd.substring(6,8);
 	
-	<script>
+		    if (isNaN(date_str) || date_str.length!=8)
+		        return false;
+	
+		    if (Number(month)>12 || Number(month)<1)
+		        return false;
+	
+		    if (Number(last_day(date_str))<day)
+		        return false;
+	
+		    return true;
+		}
+	
 		$(document).ready(function(){
 			//체크안함 
 			var isIdCheck = false;
@@ -264,9 +233,9 @@
 				var email = $("#email").val().trim();
 				var domain = $("#domain").val().trim();
 				
-				var postcode = $("#postcode").val().trim();
+				/* var postcode = $("#postcode").val().trim();
 				var address = $("#address").val().trim();
-				var detailAddress = $("#detailAddress").val().trim();
+				var detailAddress = $("#detailAddress").val().trim(); */
 				
 				if(name == null || name == "") {
 					alert("이름을 입력하세요");
@@ -280,7 +249,15 @@
 					$("#birth").focus();
 					
 					return false;
-				}
+				} else {
+					if(is_valid_date(birth)){
+					//pass
+					} else {
+						alert("생년월일이 유효하지 않습니다.")
+						return false;
+					}
+				} 
+					
 				
 				if(phone == null || phone == "") {
 					alert("휴대폰 번호를 입력하세요");
