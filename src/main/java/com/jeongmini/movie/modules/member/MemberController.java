@@ -263,8 +263,8 @@ public class MemberController {
 		 session.setAttribute("sessSeq", dto.getSeq());    
 		 session.setAttribute("loginId", dto.getLoginId());
 		 session.setAttribute("name", dto.getName());
-		 session.setAttribute("eamil", dto.getEmail());
-		 session.setAttribute("sessPhone", dto.getPhone());
+		 session.setAttribute("email", dto.getEmail());
+		 session.setAttribute("phone", dto.getPhone());
 		 session.setAttribute("snsImg", dto.getSnsImg());
 		 session.setAttribute("adminNy", dto.getAdminNy());
 //	     httpSession.setAttribute("sessSns", dto.getSns_type());

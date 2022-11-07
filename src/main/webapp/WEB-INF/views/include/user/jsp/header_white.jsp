@@ -9,6 +9,16 @@
 .nav-sub .nav-link {
 	color : white !important;
 }
+
+#logo {
+	position: absolute;
+    left: 51%;
+    top: 23px;
+    width: 140px;
+    height: 90px;
+    margin: 0 0 0 -70px;
+    padding: 0;
+}
 </style>
 <header>
 	<div class="front-area">
@@ -27,6 +37,9 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		<a id="logo" href="/">
+			<img src="/resources/static/image/logo_black.png">
+		</a>
 		<nav class="menu mt-3">
 			<ul class="nav nav-pills nav-fill">
 				<li class="nav-item nav-title dropdown">

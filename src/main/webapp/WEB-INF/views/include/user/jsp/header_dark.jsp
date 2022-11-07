@@ -22,6 +22,9 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		<a id="logo" href="/">
+			<img src="/resources/static/image/logo_white.png">
+		</a>
 		<nav class="menu mt-3">
 			<ul class="nav nav-pills nav-fill">
 				<li class="nav-item nav-title dropdown">

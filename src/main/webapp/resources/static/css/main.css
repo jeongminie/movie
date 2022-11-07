@@ -13,6 +13,16 @@ header {
 	padding-top: 10px;
 }
 
+#logo {
+	position: absolute;
+    left: 51%;
+    top: 23px;
+    width: 140px;
+    height: 90px;
+    margin: 0 0 0 -70px;
+    padding: 0;
+}
+
 .front-area {
 	margin: auto;
 	width : 60%;
@@ -28,7 +38,7 @@ header {
 
 .user {
 	position: absolute;
-	bottom: 9%;
+	bottom: 10%;
 	right : 20%;
 }
 

@@ -220,7 +220,7 @@
 						<option value="7011">대구신세계(동대구)</option>
 						<option value="0028">대전신세계 아트앤사이언스</option>
 						<option value="0020">안성스타필드</option>
-						<option value= -->"1351">코엑스</option>
+						<option value= "1351">코엑스</option>-->
 					</select>
 					<!-- <select id="brchNo" class="TB form-select select-option d-none" multiple>
 						<option value="0028">대전신세계 아트앤사이언스</option>
@@ -341,7 +341,7 @@
 				
 			});
 			
-			$("#alarmBtn").on("click", function(){
+			$(document).on("click",'#alarmBtn', function(){
 				var brchNo = $("#brchNo option:selected").val();
 				console.log(brchNo)
 				
