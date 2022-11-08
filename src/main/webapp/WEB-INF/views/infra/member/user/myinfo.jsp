@@ -74,8 +74,8 @@
 									<tr>
 										<th scope="row"><label for="ibxSchPwdMblpTelno">휴대폰 번호<!--휴대폰 번호--></label></th>
 										<td>
-											<input type="hidden" id="ibxSchPwdMblpTelno" value="${sessPhone }">
-											<c:set var="phone" value="${sessPhone }" />
+											<input type="hidden" id="ibxSchPwdMblpTelno" value="${phone }">
+											<c:set var="phone" value="${phone }" />
 											<input type="text" value="${fn:substring(phone, 0, 3)}-****-${fn:substring(phone, 7, 12)}" placeholder="'-' 없이 입력" class="input-text w230px" disabled>
 											<button id="btnSchPwdMbCertNoSend" type="button" class="button gray w75px ml08">인증요청<!--인증요청--></button>
 										</td>

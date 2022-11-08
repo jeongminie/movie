@@ -236,20 +236,21 @@ public class MemberController {
 	@RequestMapping(value = "/member/kakaoLoginProc")
 	public Map<String, Object> kakaoLoginProc(Member dto, HttpServletRequest request) throws Exception {
 		Map<String, Object> result = new HashMap<String, Object>();
-	    
-		Member kakaoLogin = service.snsLoginCheck(dto);
 		
+		Member kakaoLogin = service.snsLoginCheck(dto);
 		
 		 System.out.println("test : " + dto.getToken());
 		
 		if (kakaoLogin == null) {
 			service.kakaoInsert(dto);
+			dto.setAdminNy(0);
+			dto.setLoginId("카카오로그인");
 			
+			System.out.println("---------------" + dto.getAdminNy());
 			// session(dto.getSeq(), dto.getId(), dto.getName(), dto.getEmail(), dto.getUser_div(), dto.getSnsImg(), dto.getSns_type(), httpSession);
             session(dto, request); 
             result.put("rt", "success");
 		} else {
-			
 			// session(kakaoLogin.getSeq(), kakaoLogin.getId(), kakaoLogin.getName(), kakaoLogin.getEmail(), kakaoLogin.getUser_div(), kakaoLogin.getSnsImg(), kakaoLogin.getSns_type(), httpSession);
 			session(kakaoLogin, request);
 			result.put("rt", "success");
@@ -260,7 +261,7 @@ public class MemberController {
 	 public void session(Member dto, HttpServletRequest request) {
 		 HttpSession session = request.getSession();
 
-		 session.setAttribute("sessSeq", dto.getSeq());    
+		 session.setAttribute("sessSeq", dto.getSeq());
 		 session.setAttribute("loginId", dto.getLoginId());
 		 session.setAttribute("name", dto.getName());
 		 session.setAttribute("email", dto.getEmail());

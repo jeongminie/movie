@@ -24,7 +24,7 @@ public class CheckLoginSessionInterception extends HandlerInterceptorAdapter {
 				response.sendRedirect("/");
 			}
 		} else {
-			if(uri.equals("/member/signup") ||  uri.equals("/member/signupCompleted")) { 
+			if(uri.equals("/member/signup") ||  uri.equals("/member/signupCompleted")) {
 				response.sendRedirect("/");
 				return false; 
 			} else if(session.getAttribute("adminNy").equals(0)) {

@@ -57,7 +57,7 @@
 						<div class="photo" id="myPhoto">
 							<div class="wrap">
 							<c:choose>
-								<c:when test="${loginId eq '카카오로그인'}">
+								<c:when test="${member.loginId eq '카카오로그인'}">
 									<button type="button" class="img">
 										<img id="test" src="${member.snsImg }" onerror="setEmptyImage(this)">
 									</button>
@@ -87,7 +87,6 @@
 		
 							<div class="link">
 								<a href="/mypage/myinfo?returnURL=info" title="개인정보수정 페이지로 이동" >개인정보수정 <i class="iconset ico-arr-right-reverse"></i></a>
-								<a data-bs-toggle="modal" data-bs-target="#alertModal">test</a>
 							</div>
 						</div>
 					</div>

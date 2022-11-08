@@ -131,7 +131,7 @@
 									</th>
 									<td>
 										<div class="clearfix">
-											<input type="text" name="phone" id="phone" class="input-text w300px" oninput="autoHyphen(this)" value="${fn:substring(member.phone, 0, 3)}- ${fn:substring(member.phone, 3, 7)}-${fn:substring(member.phone, 7, 12)}">
+											<input type="text" name="phone" id="phone" class="input-text w300px" oninput="autoHyphen(this)" value="${fn:substring(member.phone, 0, 3)}-${fn:substring(member.phone, 3, 7)}-${fn:substring(member.phone, 7, 12)}">
 											<p class="reset float-l w170px lh32 changeVal" data-name="phoneNo"></p>
 										</div>
 									</td>
