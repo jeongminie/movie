@@ -219,4 +219,19 @@
 		<include refid="where"></include>
 	</select>
 	
+	<delete id="delete">
+		DELETE FROM user
+		WHERE seq = #{seq};
+	</delete>
+	
+	<update id="uelete">
+		UPDATE
+			user a
+		SET
+			a.delNy = 1
+			, updatedAt = now()
+		WHERE
+			a.seq = #{seq}
+	</update>
+	
 </mapper>	

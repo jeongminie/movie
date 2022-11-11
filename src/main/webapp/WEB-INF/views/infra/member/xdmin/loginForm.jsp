@@ -24,47 +24,84 @@
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 	
-	<link rel="stylesheet" href="/resources/static/css/xdmin/style.css">
-	
 	<title>로그인</title>
 	
 	<style>
-	.login-box {
-		background-color: white;
-		border: 1px solid #dee2e6;
-		box-shadow: 2px 2px 1px #e8eaeb;
-		padding: 30px;
-		margin: auto;
-		margin-top: 50px;
-		width : 400px;
+	*{
+	  padding: 0;
+	  margin: 0;
+	  box-sizing: border-box;
+	  font-family: poppins;
 	}
 	
-	.login-btn {
-		border : 1px solid #DADADA;
-		width : 200px;
-		background-color : #e8eaeb;
-		border : 0px;
-		border-radius: .375rem;
+	body{
+	  background-color: #E8EDF2;
 	}
 	
-	.login-btn:hover {
-		background-color : #e8eaeb;
-		border : 0px;
+	div.container{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%,-50%);
+	  width : 35%;
+	  display: flex;
+	  flex-direction: row;
+	  align-items: center;
+	
+	  background-color: white;
+	  padding: 30px;
+	  box-shadow: 0 50px 50px -50px darkslategray;
 	}
 	
+	div.container div.myform{
+	  width: 270px;
+	  margin-right: 30px;
+	}
+	
+	div.container div.myform h2{
+	  color: #1c1c1e;
+	  margin-bottom: 20px;
+	}
+	
+	div.container div.myform input{
+	  border: none;
+	  outline: none;
+	  border-radius: 0;
+	  width: 100%;
+	  border-bottom: 2px solid #1c1c1e;
+	  margin-bottom: 25px;
+	  padding: 7px 0;
+	  font-size: 14px;
+	}
+	div.container div.myform button{
+	  color: white;
+	  background-color: #1c1c1e;
+	  border: none;
+	  outline: none;
+	  border-radius: 2px;
+	  font-size: 14px;
+	  padding: 5px 12px;
+	  font-weight: 500;
+	}
+	div.container div.image img{
+	  width: 300px;
+	}
 	</style>
 	
 </head>
 <body>
-	<div id="wrap">
-		<div class="login-box">
-			<form method="post" action="../admin/loginProc" id="login">
-				<h4 style="text-align: center; margin-bottom: 10px;">로그인</h4>
-				<input type="text" id="loginId" name="loginId" class="form-control mb-2" placeholder="아이디">
-				<input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호">
-				<button type="button" id="loginBtn" class="btn login-btn w-100 mb-3">로그인</button>
-			</form>
-		</div>
+	<div class="container">
+	  <div class="myform">
+	    <form method="post" action="../admin/loginProc" id="login">
+	      <h2>ADMIN LOGIN</h2>
+	      <input type="text" id="loginId" name="loginId" placeholder="Admin Name" value="admin">
+	      <input type="password" id="password" name="password" placeholder="Password" value="admin">
+	      <button type="button" id="loginBtn">LOGIN</button>
+	    </form>
+	  </div>
+	  <div class="image">
+	    <img src="/resources/static/image/admin_login.jpg">
+	  </div>
 	</div>
 
 	<script>

@@ -446,11 +446,12 @@ ul {
     display: block;
     float: left;
     width: 150px;
-    height: 50px;
+    height: 80px;
     margin: 0 20px 0 0;
     padding: 0;
     text-indent: -9999px;
-    background: url(https://img.megabox.co.kr/static/pc/images/common/ci/logo-opacity_new2.png) no-repeat center;
+    background: url(/resources/static/image/logo_black.png) no-repeat center;
+    margin-top: 10px;
 }
 
 #footer .footer-bottom .footer-info {

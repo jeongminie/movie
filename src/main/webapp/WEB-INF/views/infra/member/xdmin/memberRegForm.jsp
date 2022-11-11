@@ -95,15 +95,14 @@
 									<option value="89" <c:if test="${item.gender eq 89 }">selected</c:if>>여</option>
 								</select>
 							</div>
-							<fmt:formatDate var="birth" value="${item.birth}" pattern="yyyyMMdd"/>
-							<div>생년월일<input type="text" name="birth" id="birth" class="form-control text-input" <c:if test="${not empty item.birth }">value="${birth }"</c:if> placeholder="YYYY-MM-DD"></div>
+							<div>생년월일<input type="text" name="birth" id="birth" class="form-control text-input" <c:if test="${not empty item.birth }">value="${item.birth }"</c:if> placeholder="YYYYMMDD"></div>
 							<div>상태
 								<select class="form-select text-input" name="adminNy" id="adminNy">
 									<option value="0" <c:if test="${item.adminNy eq 0 }">selected</c:if>>사용자</option>
 									<option value="1" <c:if test="${item.adminNy eq 1 }">selected</c:if>>관리자</option>
 								</select>
 							</div>
-							<div>전화번호<input type="text" name="phone" id="phone" class="form-control text-input" placeholder="전화번호" <c:if test="${not empty item.phone }">value="${item.phone  }"</c:if>></div>
+							<div>전화번호<input type="text" name="phone" id="phone" class="form-control text-input" placeholder="전화번호" <c:if test="${not empty item.phone }">value="${item.phone }"</c:if>></div>
 							<span>주소</span>
 							<div id="addressWrap">
 								<div class="d-flex">
@@ -150,24 +149,7 @@
 		</section>
 	</div>
 	
-	<!-- modal -->
-	<div class="modal fade" id="memberRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">회원등록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p>등록하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn cancelBtn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn createBtn">등록하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
 	
 	<!-- 카카오 지도 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services"></script>
@@ -269,7 +251,6 @@
 				}
 				
 			});
-	    	
 	    	
 		});
 	</script>

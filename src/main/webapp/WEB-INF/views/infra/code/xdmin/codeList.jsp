@@ -126,7 +126,7 @@
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
-												<th scope="col"><input type="checkbox" class="chk"></th>
+												<th scope="col"><input type="checkbox" class="chk" data-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
 												<td>${list.cgName }</td>
@@ -154,7 +154,7 @@
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#codeGroupDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
+								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#listDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
 							</div>
 						</div>
 					</div>
@@ -164,27 +164,7 @@
 		</div>
 	</div>
 	
-	<!-- modal -->
-	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">코드 삭제</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex align-items-center">
-					<p></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-					<button type="button" class="btn deleteBtn modalDeleteBtn">삭제</button>
-				</div>
-			</div>
-		</div>
-	</div>
-		
-		<!-- form -->
-
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
 	
 	<script>
 		$(document).ready(function(){
@@ -197,22 +177,6 @@
 			
 			var totalCount = document.getElementsByClassName('totalCount');
 			totalCount[0].innerHTML='<span class="p-2 totalCount">Total : ' + tableRowCount + '</span>'; */
-		
-			$('#codeGroupDeleteModal').on('shown.bs.modal', function() {
-				var button = $(event.relatedTarget);
-				var recipient = button.data('whatever');
-				var modal = $(this);
-				
-				if($(".chk").is(":checked") == false) {
-					modal.find('.modal-body p').text('삭제할 항목을 선택해주세요.');
-					modal.find('.closeBtn').text('확인');
-					$(".modalDeleteBtn").hide();
-				} else {
-					modal.find('.modal-body p').text('삭제하시겠습니까?');
-					modal.find('.closeBtn').text('취소');
-					$(".modalDeleteBtn").show();
-				}
-			});
 
 			$("#startDate").datepicker({
                 dateFormat: "yy-mm-dd",
@@ -233,19 +197,6 @@
                 yearSuffix: '년'
 			});
 			
-			$("#chkAll").on("click", function(){
-				if ($(this).is(":checked")) {
-					$(".chk").prop("checked", true);
-				} else {
-					$(".chk").prop("checked", false);
-				}
-				console.log($(this).prop("checked"))
-			});
-			
-			$(".chk").on("click", function(){
-				event.cancelBubble=true;
-			});
-			
 			$('#createBtn').on("click", function() {
 				goForm(0);                
 			});
@@ -263,18 +214,6 @@
 			
 			$(".resetBtn").on("click", function(){
 				location.href="codeList";
-			});
-			
-			$(".deleteBtn").on("click", function(e){
-				var chkValue = $(this).data("chk-id");
-				console.log(chkValue);
-				
-				/* var chkValue = $(".chk").is(":checked");
-				console.log(chkValue); */
-				
-				if(chkValue == false) {
-					alert("hi")
-				}
 			});
 			
 		});

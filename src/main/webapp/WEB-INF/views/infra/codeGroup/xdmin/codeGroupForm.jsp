@@ -133,24 +133,7 @@
 		</section>
 	</div>
 	
-	<!-- modal -->
-	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">코드그룹 삭제</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex align-items-center">
-					<p>삭제하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-					<button type="button" class="btn deleteBtn" id="cgDeleteBtn">삭제</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
 	
 	<!-- form -->
 	<form method="post" name="formVo" id="formVo">
@@ -190,17 +173,11 @@
 				$("#fileInput").click();
 			});
 			
-			var action;
-			var modal = $("#codeGroupDeleteModal");
-			var deleteurl = "codeGroupDelete";
-			var ueleteurl = "codeGroupUelete";
-			
+			var seq = $("input:hidden[name=seq]");
 			var form = $("form[name=form]");
 			var formVo = $("form[name=formVo]");
 			
 			/* var submitType = $("button[type=submit]").val(); //0수정 1등록 */
-			var seq = $("input:hidden[name=seq]");
-			console.log(seq)
 			
  			$(".saveBtn").on("click", function(){
 				
@@ -239,46 +216,6 @@
 					alert("수정완료");
 				}
 				
-			});
-			
-			/* uelete 버튼 */
-			$("#uelete").on("click", function(){
-				action = "uelete";
-				modal.modal('show');
-			});
-			
-			/* delete 버튼 */
-			$("#delete").on("click", function(){
-				action = "delete"
-				modal.modal('show');
-			});
-			
-			$("#cgDeleteBtn").on("click", function(e){
-				if(action == "uelete") {
-					$.ajax({
-						type:"post"
-						, url:ueleteurl
-						, data:{"seq":seq.val()}
-						, success:function(data){
-							if(data.result) {
-								alert("삭제 완료");
-								location.href="codeGroupList";
-							}
-						}
-					});
-				} else if(action == "delete") {
-					$.ajax({
-						type:"post"
-						, url:deleteurl
-						, data:{"seq":seq.val()}
-						, success:function(data){
-							if(data.result) {
-								alert("삭제 완료");
-								location.href="codeGroupList";
-							}
-						}
-					});
-				}
 			});
 			
 			$("#birth").datepicker({

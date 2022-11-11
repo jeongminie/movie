@@ -91,10 +91,6 @@
 								<span class="p-2">검색 결과 : N</span>
 								<span class="p-2 memberCount">Total : N</span>
 							</div>
-							<div>
-								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="#" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
-							</div>
 						</div>
 						<table class="table text-center memberTable">
 							<thead>
@@ -102,8 +98,8 @@
 									<th scope="col"><input type="checkbox" id="chkAll"></th>
 									<th scope="col">No</th>
 									<th scope="col">영화관 코드</th>
-									<th scope="col">영화 코드</th>
-									<th scope="col">상영관 코드</th>
+									<th scope="col">영화명</th>
+									<th scope="col">상영관</th>
 									<th scope="col">상영 날짜</th>
 									<th scope="col">상태</th>
 									<th scope="col">등록 날짜</th>
@@ -156,8 +152,7 @@
 						<!-- pagination s -->
 						<div class="d-flex justify-content-end">				
 							<div>
-								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#memberDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></a>
+								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#listDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
 							</div>
 						</div>
 					</div>
@@ -166,25 +161,6 @@
 			</section>
 		</div>
 		<input type="hidden" name="userSeq" value="${sessSeq }">
-	</div>
-	
-	<!-- modal -->
-	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">회원삭제</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex align-items-center">
-					<p>삭제하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn deleteBtn">삭제하기</button>
-				</div>
-			</div>
-		</div>
 	</div>
 	
 	<script>

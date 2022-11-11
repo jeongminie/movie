@@ -118,7 +118,7 @@ public class CodeGroupController {
 			result.put("result", false);
 		}
 		
-		System.out.println("delete 성공 : " + result);
+		System.out.println("delete : " + result);
 		
 		return result;
 	}
@@ -134,7 +134,7 @@ public class CodeGroupController {
 			result.put("result", false);
 		}
 		
-		System.out.println("uelete 성공 : " + result);
+		System.out.println("uelete : " + result);
 		
 		return result;
 		

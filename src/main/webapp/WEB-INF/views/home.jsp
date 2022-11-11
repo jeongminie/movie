@@ -14,55 +14,75 @@
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>	
-    <style type="text/css">
-    	.wrap{background-color: rgba(204,204,204,0.2); width: 100%; height: 937px; margin: auto;}
-    	.header{height: 50px;}
-    	.name{background-color: #503396; color: white; display: block; height: 5%; font-size: 18px; padding-top: 5px;}
-        .box{border-radius: 8px; width: 100%; overflow: hidden; text-align: center; height: 750px;}
-        .box img{width: 100%; height: 95%;}
-        .imgbutton{width: 100px; height: 40px; opacity: 0; margin-top: 380px; border-radius: 10px; background-color: #503396; color: white; border : 0px;}
-        a{position: relative; margin-bottom: -750px; width: 100%; height: 750px; display: block;}
-		a:hover{background-color: rgba(255,255,255,0.5); transition: background 0.6s ease-out;}
-		a:hover .imgbutton{opacity:1; transition: 1s;}     
+    
+    <style>
+   	*{
+	  padding: 0;
+	  margin: 0;
+	  box-sizing: border-box;
+	  font-family: poppins;
+	}
+	
+	body{
+	  background-color: #E8EDF2;
+	}
+	
+	div.container{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%,-50%);
+	  display: flex;
+	  justify-content : center;
+	  flex-direction: row;
+	  align-items: center;
+	  padding: 30px;
+	  width : 50%;
+	  margin: auto;
+	}
+	
+	div.container div.myform{
+	  height : 300px;
+	  width: 270px;
+	  margin-right: 60px;
+	  background-color: white;
+	  box-shadow: 0 50px 50px -50px darkslategray;
+	  padding: 30px;
+	  cursor: pointer;
+	}
+	
+	div.container div.myform h2{
+	  color: #1c1c1e;
+	  margin-bottom: 40px;
+	  text-align: center;
+	}
+	
+	i{
+	  font-size : 150px;
+	}
+	
+	.myform {
+	  transition: all 0.2s linear;
+	  overflow: hidden;
+	}
+	
+	.myform:hover {
+	  transform: scale(1.1);
+	}
     </style>
 </head>
 <body>
-<!-- start -->
-
-	<div class="wrap">
-	    <!-- header -->
-	    <div class="header">
-	    </div>
-	    <!-- contents -->
-	    <div class="container">
-		    <div class="row">
-		    	<div class="col" style="width: 100%; height:100%; margin-left: 15px;">
-		            <div class="box">
-		                <a href="/">
-		                	<button type="button" class="imgbutton">들어가기</button>
-		                </a>
-		                <img src="/resources/static/image/userpage.PNG" alt="user mainPage">
-		                <div class="name">
-		                	<span>유저 화면</span>
-		                </div>
-		            </div>
-		        </div>
-		        <div class="col" style="width: 100%; height: 100%; margin-right: 15px;">
-		            <div class="box">
-		                <a href="/code/codeList">
-		                	<button type="button" class="imgbutton">들어가기</button>
-		                </a>
-		                <img src="/resources/static/image/adminpage.PNG" alt="user mainPage">
-		                <div class="name">
-		                	<span>관리자 화면</span>
-		                </div>
-		            </div>
-		        </div>
-		     </div>			 
-		</div>    		
+	<div class="container">
+	  <div class="myform" onclick="location.href='/admin/login'">
+	      <h2>ADMIN</h2>
+	      <i class="fa-solid fa-screwdriver-wrench" style="margin-left : 30px;"></i>
+	  </div>
+	  <div class="myform" onclick="location.href='/'">
+	      <h2>USER</h2>
+	      <i class="fa-solid fa-users-between-lines" style="margin-left : 15px;"></i>
+	  </div>
 	</div>
-
-<!-- end -->
+	
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/188ea9a4c6.js" crossorigin="anonymous"></script>	
 </body>

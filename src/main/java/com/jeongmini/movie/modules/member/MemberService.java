@@ -2,6 +2,7 @@ package com.jeongmini.movie.modules.member;
 
 import java.util.List;
 
+import com.jeongmini.movie.modules.codegroup.CodeGroupVo;
 import com.jeongmini.movie.modules.movie.Movie;
 
 public interface MemberService {
@@ -29,5 +30,9 @@ public interface MemberService {
 	public Member selectProfile(Member dto) throws Exception;
 	
 	public int selectMemberCount(MemberVo vo) throws Exception;
+	
+	public boolean uelete(MemberVo vo) throws Exception;
+	
+	public boolean delete(MemberVo vo) throws Exception;
 	
 }

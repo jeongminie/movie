@@ -137,7 +137,7 @@
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr class="codeGroupView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
-												<th scope="col"><input type="checkbox" class="chk" data-cg-seq="${list.seq }"></th>
+												<th scope="col"><input type="checkbox" class="chk" data-seq="${list.seq }"></th>
 												<th scope="row">${status.count }</th>
 												<td>${list.cgSeq }</td>
 												<td>${list.cgName }</td>
@@ -154,7 +154,7 @@
 						<!-- pagination s -->
 						<%@include file="../../../include/xdmin/jsp/pagination.jsp"%>
 						<!-- pagination e -->
-<%-- 						<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                   <%-- <nav aria-label="Page navigation example" class="d-flex justify-content-center">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev }">
 									<li class="page-item">
@@ -176,7 +176,7 @@
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#codeGroupDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
+								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#listDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
 							</div>
 						</div>
 					</div>
@@ -186,24 +186,7 @@
 		</div>
 	</div>
 	
-	<!-- modal -->
-	<div class="modal fade" id="codeGroupDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">코드그룹 삭제</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex align-items-center">
-					<p></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn closeBtn" data-bs-dismiss="modal"></button>
-					<button type="button" class="btn deleteBtn modalDeleteBtn" id="cgDeleteBtn">삭제</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
 	
 	<script>
 		$("#startDate").datepicker({
@@ -246,39 +229,6 @@
 				}
 			}); */
 			
-		
-			$('#codeGroupDeleteModal').on('shown.bs.modal', function() {
-				var button = $(event.relatedTarget);
-				var recipient = button.data('whatever');
-				var modal = $(this);
-				
-				if($(".chk").is(":checked") == false) {
-					modal.find('.modal-body p').text('삭제할 항목을 선택해주세요.');
-					modal.find('.closeBtn').text('확인');
-					$(".modalDeleteBtn").css("display", "none");
-				} else {
-					modal.find('.modal-body p').text('삭제하시겠습니까?');
-					modal.find('.closeBtn').text('취소');
-					$(".modalDeleteBtn").css("display", "inline");
-				}
-			});
-			
-			$("#chkAll").on("click", function(){
-				if ($(this).is(":checked")) {
-					$(".chk").prop("checked", true);
-				} else {
-					$(".chk").prop("checked", false);
-				}
-				console.log($(this).prop("checked"))
-			});
-			
-			$(".chk").on("click", function(e){
-				e.stopPropagation();
-				
-				var chkSeq = $(this).data("cg-seq");
-				$("#cgDeleteBtn").data("cg-seq", chkSeq);
-			});
-			
 			goForm = function(keyValue) {
 		    	/* if(keyValue != 0) seq.val(btoa(keyValue)); */
 		    	seq.val(keyValue);
@@ -298,21 +248,6 @@
 				location.href="codeGroupList";
 			});
 			
-			$("#cgDeleteBtn").on("click", function(e){
-				var chkSeq = $(this).data("cg-seq");
-				alert(chkSeq)
-				$.ajax({
-					type:"post"
-					, url:"codeGroupDelete"
-					, data:{"seq":chkSeq}
-					, success:function(data){
-						if(data.result) {
-							alert("삭제 완료");
-							location.href="codeGroupList";
-						}
-					}
-				});
-			});
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

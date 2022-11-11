@@ -1,6 +1,8 @@
 package com.jeongmini.movie.modules.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +22,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jeongmini.movie.common.util.UtilDateTime;
 import com.jeongmini.movie.modules.code.CodeServiceImpl;
+import com.jeongmini.movie.modules.codegroup.CodeGroupVo;
 
 @Controller
 @RequestMapping(value= "/admin/")
@@ -104,6 +108,40 @@ public class AdminController {
 		
 		return "redirect:../code/codeList";
 	}
+	
+	@RequestMapping(value="adminDelete")
+	@ResponseBody
+	public Map<String, Boolean> memberDelete(MemberVo vo) throws Exception {
+		Map<String, Boolean> result = new HashMap<>(); 
+		
+		if(service.delete(vo)) {
+			result.put("result", true);
+		} else {
+			result.put("result", false);
+		}
+		
+		System.out.println("delete : " + result);
+		
+		return result;
+	}
+	
+	@RequestMapping(value="adminUelete")
+	@ResponseBody
+	public Map<String, Boolean> memberUelete(MemberVo vo) throws Exception {
+		Map<String, Boolean> result = new HashMap<>(); 
+		
+		if(service.uelete(vo)) {
+			result.put("result", true);
+		} else {
+			result.put("result", false);
+		}
+		
+		System.out.println("uelete : " + result);
+		
+		return result;
+		
+	}	
+	
 	
 	@RequestMapping("excelDownload")
     public void excelDownload(MemberVo vo, HttpServletResponse httpServletResponse) throws Exception {

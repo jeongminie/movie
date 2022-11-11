@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.jeongmini.movie.modules.codegroup.CodeGroupVo;
 import com.jeongmini.movie.modules.movie.Movie;
 
 @Repository
@@ -70,6 +71,16 @@ public class MemberDAO {
   
 	public int selectMemberCount(MemberVo vo) {
 		return (Integer) sqlSession.selectOne(namespace + ".selectMemberCount", vo);
+	}
+	
+	public int uelete(MemberVo vo) {
+		int result = sqlSession.update(namespace + ".uelete", vo);
+		return result;
+	}
+	
+	public int delete(MemberVo vo) {
+		int result = sqlSession.delete(namespace + ".delete", vo);
+		return result;
 	}
 	
 }

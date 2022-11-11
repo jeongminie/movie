@@ -96,7 +96,7 @@
 						</div>
 						<div class="codeInfo col-6">
 							<div style="margin-top:77px">코드 (Another)<input type="text" name="ccAnother" id="ccAnother" class="form-control text-input"></div>
-							<div>코드 이름 (영문)<input type="text" name="ccNameEng" id="ccNameEng" class="form-control text-input"></div>
+							<div>코드 이름 (영문)<input type="text" name="ccNameEng" id="ccNameEng" class="form-control text-input" <c:if test="${not empty item.ccNameEng }">value="${item.ccNameEng  }"</c:if>></div>
 							<div>순서<input type="text" id="order" class="form-control text-input"></div>
 							<div>
 								<span>삭제여부</span>
@@ -130,28 +130,11 @@
 		</section>
 	</div>
 	
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
+	
 	<form name="formVo" id="formVo" method="post">
 		<%@include file="codeVo.jsp"%>		<!-- #-> -->
 	</form>
-	
-	<!-- modal -->
-	<div class="modal fade" id="memberRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">회원등록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p>등록하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn cancelBtn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn createBtn">등록하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
 		
 	<script>
 		function test(){
@@ -200,9 +183,6 @@
 		}
 		
 		$(document).ready(function(){
-			var action;
-			var deleteurl = "codeDelete";
-			var ueleteurl = "codeUelete";
 			var form = $("form[name=form]");
 			var formVo = $("form[name=formVo]");
 			
@@ -240,46 +220,6 @@
 					$(".passwordError").removeClass("d-none");
 				} else {
 					$(".passwordError").addClass("d-none");
-				}
-			});
-			
-			/* uelete 버튼 */
-			$("#uelete").on("click", function(){
-				action = "uelete";
-				modal.modal('show');
-			});
-			
-			/* delete 버튼 */
-			$("#delete").on("click", function(){
-				action = "delete"
-				modal.modal('show');
-			});
-			
-			$("#cgDeleteBtn").on("click", function(e){
-				if(action == "uelete") {
-					$.ajax({
-						type:"post"
-						, url:ueleteurl
-						, data:{"seq":seq}
-						, success:function(data){
-							if(data.result) {
-								alert("삭제 완료");
-								location.href="codeList";
-							}
-						}
-					});
-				} else if(action == "delete") {
-					$.ajax({
-						type:"post"
-						, url:deleteurl
-						, data:{"seq":seq}
-						, success:function(data){
-							if(data.result) {
-								alert("삭제 완료");
-								location.href="codeList";
-							}
-						}
-					});
 				}
 			});
 			

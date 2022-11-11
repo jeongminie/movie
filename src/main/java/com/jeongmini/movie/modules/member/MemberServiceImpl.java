@@ -136,5 +136,23 @@ public class MemberServiceImpl implements MemberService {
 	public int selectMemberCount(MemberVo vo) throws Exception {
 		return dao.selectMemberCount(vo);
 	}
+	
+	@Override
+	public boolean uelete(MemberVo vo) throws Exception {
+		if(dao.uelete(vo) == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	@Override
+	public boolean delete(MemberVo vo) throws Exception {
+		if(dao.delete(vo) == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }

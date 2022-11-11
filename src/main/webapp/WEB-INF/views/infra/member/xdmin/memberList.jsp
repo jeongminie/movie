@@ -122,7 +122,7 @@
 									<c:otherwise>
 										<c:forEach items="${list }" var="list" varStatus="status">
 											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
-												<th scope="col"><input type="checkbox" class="chk"></th>
+												<th scope="col"><input type="checkbox" class="chk" data-seq="${list.seq }"></th>
 												<th scope="row">${seq }</th>
 												<td>${list.name }</td>
 												<td>${list.loginId }</td>
@@ -143,6 +143,9 @@
 													<c:when test="${list.loginId eq '카카오로그인' }">
 														<td>${list.birth}</td>
 													</c:when>
+													<c:when test="${empty list.birth }">
+														<td>${list.birth}</td>
+													</c:when>
 													<c:otherwise>
 														<c:set var="birth" value="${list.birth }" />
 														<td>${fn:substring(birth, 0, 4)}-${fn:substring(birth, 4, 6)}-${fn:substring(birth, 6, 8)}</td>
@@ -153,7 +156,7 @@
 													<c:if test="${not empty list.phone }">
 														<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
 														<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />
-														<c:set var="phone3" value="${fn:substring(list.phone,7,11)}" />
+														<c:set var="phone3" value="${fn:substring(list.phone,7,12)}" />
 														${phone1 }-${phone2 }-${phone3 }
 													</c:if>
 												</td>
@@ -170,7 +173,7 @@
 						<div class="d-flex justify-content-end">				
 							<div>
 								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#memberDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></a>
+								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#listDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
 							</div>
 						</div>
 					</div>
@@ -180,24 +183,7 @@
 		</div>
 	</div>
 	
-	<!-- modal -->
-	<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<h5 class="modal-title">회원삭제</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body d-flex align-items-center">
-					<p>삭제하시겠습니까?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn deleteBtn">삭제하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
 	
 	<script>
 		$(document).ready(function(){
@@ -221,18 +207,6 @@
 				$("input:hidden[name=thisPage]").val(thisPage);
 				form.attr("action", "/admin/memberList").submit();
 			}
-		
-			$('#memberDeleteModal').on('show.bs.modal', function () {
-				if($(".chk").is(":checked") == false) {
-					var button = $(event.relatedTarget);
-					var recipient = button.data('whatever');
-					var modal = $(this);
-					modal.find('.modal-body p').text('삭제할 항목을 선택해주세요.');
-					modal.find('.btn').text('확인');
-					modal.find('.deleteBtn').remove();
-					
-				} 
-			});
 
 			$("#startDate").datepicker({
                 showButtonPanel: true, 
@@ -247,37 +221,12 @@
                 dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
 			});
 			
-			$("#chkAll").on("click", function(){
-				if ($(this).is(":checked")) {
-					$(".chk").prop("checked", true);
-				} else {
-					$(".chk").prop("checked", false);
-				}
-				console.log($(this).prop("checked"))
-			});
-			
-			$(".chk").on("click", function(){
-				event.cancelBubble=true;
-			});
-			
 			$(".resetBtn").on("click", function(){
 				location.href="memberList";
 			});
 			
 			$(".createBtn").on("click", function(){
 				goForm(0);
-			});
-			
-			$(".deleteBtn").on("click", function(e){
-				var chkValue = $(this).data("chk-id");
-				console.log(chkValue);
-				
-				/* var chkValue = $(".chk").is(":checked");
-				console.log(chkValue); */
-				
-				if(chkValue == false) {
-					alert("dd")
-				}
 			});
 			
 			$(".excelBtn").click(function() {

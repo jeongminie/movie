@@ -98,7 +98,7 @@
 						</tr>
 						<tr>
 							<th>휴대폰 번호</th>
-							<td><input type="text" class="text-input"name="phone" id="phone"></td>
+							<td><input type="text" class="text-input" name="phone" id="phone"></td>
 						</tr>
 						<tr>
 							<th>아이디</th>
