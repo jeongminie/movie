@@ -44,6 +44,8 @@ public class UtilUpload {
 	public static void createPath (String path) {
 		File uploadPath = new File(path);
 		
+		System.out.println("uploadPath : " + uploadPath);
+		
 		if (!uploadPath.exists()) {
 			uploadPath.mkdir();
 		} else {

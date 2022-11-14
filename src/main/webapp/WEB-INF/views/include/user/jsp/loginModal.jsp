@@ -62,8 +62,8 @@
 			<form method="post" action="../member/login" id="login">
 			<%-- <input type="hidden" name="redirectUrl" value="<%= request.getRequestURI().toString()%>"> --%>
 				<div>
-					<input type="text" id="loginId" name="loginId" class="form-control mb-2 w300px" placeholder="아이디">
-					<input type="password" id="password" name="password" class="form-control mb-3 w300px" placeholder="비밀번호">
+					<input type="text" id="loginId" name="loginId" class="form-control mb-2 w300px" placeholder="아이디" value="test">
+					<input type="password" id="password" name="password" class="form-control mb-3 w300px" placeholder="비밀번호" value="test">
 					<button type="button" id="loginBtn" class="btn login-btn w300px mb-3">로그인</button>
 					<p class="d-flex justify-content-center">
 						<a href="#" class="text-dark">ID/PW 찾기</a>
@@ -75,7 +75,7 @@
 			</div>
 			<div class="modal-footer">
 				<div class="sns-login">
-					<a href="#" id="kakaoBtn" title="카카오톡으로 로그인 선택"><img src="/resources/static/image/ico-kakao.png" alt="카카오톡"><span class="text-dark">카카오톡으로 로그인</span></a>
+					<a href="#" id="kakaoBtn" title="카카오톡으로 로그인 선택"><img src="/resources/static/image/kakao_login_medium_narrow.png" alt="카카오톡"></a>
 				</div>
 			</div>
 		</div>
