@@ -35,6 +35,7 @@ public class CodeGroupController {
 		return oneWeek.toString();
 	}
 
+	//검색 조건 디폴트 지정
 	public void setShearch(CodeGroupVo vo) throws Exception {
 		
 		vo.setShDelNy(vo.getShDelNy() == null ? 0 : vo.getShDelNy());

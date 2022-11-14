@@ -56,6 +56,10 @@
 		#ui-datepicker-div {
 			width : 320px;
 		}
+		
+		#idCheck {
+		   width: 80px;
+		}
 	</style>
 </head>
 <body>
@@ -72,7 +76,14 @@
 					<div class="d-flex h-100">
 						<div class="codeInfo col-6">
 							<div>이름<input type="text" name="name" id="name" class="form-control text-input" placeholder="이름" <c:if test="${not empty item.name }">value="${item.name  }"</c:if>></div>
-							<div>아이디<input type="text" name="loginId" id="loginId" class="form-control text-input" placeholder="아이디" <c:if test="${not empty item.loginId }">value="${item.loginId  }"</c:if>></div>
+							<div>아이디
+								<div class="d-flex">
+									<input type="text" name="loginId" id="loginId" class="form-control text-input" placeholder="아이디" <c:if test="${not empty item.loginId }">value="${item.loginId  }"</c:if>>
+									<button type="button" id="idCheck" class="btn btn-sm">중복확인</button>
+								</div>
+								<small class="text-danger d-none idFail">중복된 아이디 입니다.</small>
+								<small class="text-success d-none idSuccess">사용가능한 아이디 입니다.</small>
+							</div>
 							<div>비밀번호<input type="password" name="password" id="password" class="form-control text-input" placeholder="비밀번호"></div>
 							<div>비밀번호 확인<input type="password" name="passwordRe" id="passwordRe" class="form-control text-input" placeholder="비밀번호 확인"></div>
 							<span>이메일</span>
@@ -136,7 +147,7 @@
 							<div class="d-flex">
 								<button type="button" class="btn ueleteBtn" id="uelete">X</button>
 								<button type="button" class="btn deleteBtn" id="delete">삭제</button>
-								<button type="submit" class="btn saveBtn">수정</button>
+								<!-- <button type="submit" class="btn saveBtn">수정</button> -->
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -204,6 +215,16 @@
 	        }
 	    };
 	    
+	 	// 핸드폰번호 체크
+		function checkMobile(phoneNum) {
+			var regExp =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;
+			if(regExp.test(phoneNum)){
+				return true;
+			} else {
+				return false;
+			}
+		}
+	 	
 		$(document).ready(function(){
 			$("#birth").datepicker({
 				changeYear: true //option값 년 선택 가능
@@ -225,10 +246,6 @@
 				}
 			});
 			
-			$(".modal .createBtn").on("click",function(){
-				location.href="memberList.html"
-			});
-			
 			$("#postcode").on("click", function(){
 				execDaumPostcode();
 			})
@@ -241,8 +258,39 @@
 			var seq = $("input:hidden[name=seq]");
 			var form = $("form[name=form]");
 			
+			//체크안함 
+			var isIdCheck = false;
+			//중복
+			var isIdDuplicate = true;
+			
 			$(".saveBtn").on("click", function(){
+				var phone = $("#phone").val().trim().replaceAll("-","");
+				
 				if(seq.val() == 0 || seq.val() == "") { //insert
+					if(isIdCheck == false) {
+						alert("아이디 중복체크를 해주세요.");
+						return;
+					}
+				
+					if(isIdDuplicate == true) {
+						alert("아이디가 중복되었습니다.");
+						return;
+					}
+					
+					if(phone == null || phone == "") {
+						alert("휴대폰 번호를 입력하세요");
+						$("#phone").focus();
+						
+						return false;
+					} else {
+						if(checkMobile(phone)) {
+						//pass
+						} else {
+							alert("핸드폰번호를 다시 입력해주세요.")
+							return false;
+						}
+					}
+					
 					form.attr("action", "/admin/memberInst").submit();
 					alert("저장완료");
 				} else { //update
@@ -251,7 +299,43 @@
 				}
 				
 			});
-	    	
+			
+			$(".prevBtn").on("click", function(){
+				location.href="/admin/memberList";
+			})
+			
+			$("#idCheck").on("click", function(){
+				var loginId = $("#loginId").val().trim();
+				
+				if(loginId == null || loginId == "") {
+					alert("아이디를 입력하세요");
+					$("#loginId").focus();
+					
+					return false;
+				}
+				
+				$.ajax({
+					type:"get"
+					, url:"/member/idCheck"
+					, data:{"loginId":loginId}
+					, success:function(data) {
+						isIdCheck = true;
+						
+						if(data.duplication) {
+							isIdDuplicate = true;
+							$(".idFail").removeClass("d-none");
+							$(".idSuccess").addClass("d-none");
+						} else {
+							isIdDuplicate = false;
+							$(".idSuccess").removeClass("d-none");
+							$(".idFail").addClass("d-none");
+						}
+					}
+					, error:function(e){
+						alert("에러")
+					}
+				})
+			});
 		});
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

@@ -83,99 +83,11 @@
 							</select>
 							<input type="text" id="shValue" name="shValue" class="form-control text-input" placeholder="검색어" value="<c:out value="${vo.shValue }"/>">
 							<!-- <input type="submit" class="btn searchBtn"> -->
-							<button type="submit" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<button type="button" class="btn searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
 							<button type="button" class="btn resetBtn"><i class="fa-solid fa-rotate-right"></i></button>
 						</div>
 					</div>
 					<div class="memberList">
-						<div class="d-flex p-2 justify-content-between">
-							<div class="mt-2">
-								<span class="p-2">Total : ${shTotal }</span>
-							</div>
-							<div>
-								<button type="button" class="btn excelBtn"><i class="fa-solid fa-file-excel"></i></button>
-								<a href="#" class="btn createBtn"><i class="fa-solid fa-circle-plus"></i></a>
-							</div>
-						</div>
-						<table class="table text-center memberTable">
-							<thead>
-								<tr>
-									<th scope="col"><input type="checkbox" id="chkAll"></th>
-									<th scope="col">No</th>
-									<th scope="col">이름</th>
-									<th scope="col">아이디</th>
-									<th scope="col">성별</th>
-									<th scope="col">생년월일</th>
-									<th scope="col">이메일</th>
-									<th scope="col">전화번호</th>
-									<th scope="col">가입날짜</th>
-									<th scope="col">수정일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${fn:length(list) eq 0}">
-										<tr class="memberView">
-											<td colspan="9">There is no data</td>
-										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach items="${list }" var="list" varStatus="status">
-											<tr class="memberView" onclick="javascript:goForm(<c:out value="${list.seq }"/>)">
-												<th scope="col"><input type="checkbox" class="chk" data-seq="${list.seq }"></th>
-												<th scope="row">${seq }</th>
-												<td>${list.name }</td>
-												<td>${list.loginId }</td>
-												<%-- <td>
-													<c:choose>
-														<c:when test="${list.gender eq 0}">남</c:when>
-														<c:otherwise>여</c:otherwise>
-													</c:choose>
-												</td> --%>
-												<c:set var="listCodeGender" value="${CodeServiceImpl.selectListCachedCode('1000')}"/>
-												<td>
-													<c:forEach items="${listCodeGender}" var="listGender" varStatus="statusGender">
-														<c:if test="${list.gender eq listGender.seq}"><c:out value="${listGender.ccName }"/></c:if>
-													</c:forEach>
-												</td>
-												<%-- <td><fmt:formatDate value="${list.birth}" pattern="yyyy-MM-dd"/></td> --%>
-												<c:choose>
-													<c:when test="${list.loginId eq '카카오로그인' }">
-														<td>${list.birth}</td>
-													</c:when>
-													<c:when test="${empty list.birth }">
-														<td>${list.birth}</td>
-													</c:when>
-													<c:otherwise>
-														<c:set var="birth" value="${list.birth }" />
-														<td>${fn:substring(birth, 0, 4)}-${fn:substring(birth, 4, 6)}-${fn:substring(birth, 6, 8)}</td>
-													</c:otherwise>
-												</c:choose>
-												<td>${list.emailFull }</td>
-												<td>
-													<c:if test="${not empty list.phone }">
-														<c:set var="phone1" value="${fn:substring(list.phone,0,3)}" />
-														<c:set var="phone2" value="${fn:substring(list.phone,3,7)}" />
-														<c:set var="phone3" value="${fn:substring(list.phone,7,12)}" />
-														${phone1 }-${phone2 }-${phone3 }
-													</c:if>
-												</td>
-												<td><fmt:formatDate value="${list.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-												<td><fmt:formatDate value="${list.updatedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>
-								</c:choose>
-							</tbody>
-						</table>
-						<!-- pagination s -->
-						<%@include file="../../../include/xdmin/jsp/pagination.jsp"%>
-						<div class="d-flex justify-content-end">				
-							<div>
-								<button type="button" class="btn cancelBtn"><i class="fa-solid fa-xmark"></i></button>
-								<button type="button" class="btn deleteBtn" data-bs-toggle="modal" data-bs-target="#listDeleteModal" data-bs-whatever="true"><i class="fa-solid fa-trash-can"></i></button>
-							</div>
-						</div>
 					</div>
 					</form>
 				</section>
@@ -183,10 +95,14 @@
 		</div>
 	</div>
 	
-	<%@include file="../../../include/xdmin/jsp/deleteModal.jsp"%>
-	
 	<script>
 		$(document).ready(function(){
+			setLita();
+			
+			$(".searchBtn").on("click", function(){
+				setLita();
+			});
+			
 			/* var tableRow = document.getElementsByTagName('tr');
 			tableRowCount = tableRow.length -1;
 			console.log(tableRowCount);
@@ -194,20 +110,9 @@
 			var memberCount = document.getElementsByClassName('memberCount');
 			memberCount[0].innerHTML='<span class="p-2 memberCount">총 회원수 : ' + (tableRowCount) + '</span>'; */
 			
-			var form = $("form[name=form]");
-			var seq = $("input:hidden[name=seq]");
-			console.log(seq.val())
+			//var form = $("form[name=form]");
+			//var seq = $("input:hidden[name=seq]");
 			
-			goForm = function(keyValue) {
-		    	seq.val(keyValue);
-				form.attr("action", "/admin/memberRegForm").submit();
-			}
-			
-			goList = function(thisPage) {
-				$("input:hidden[name=thisPage]").val(thisPage);
-				form.attr("action", "/admin/memberList").submit();
-			}
-
 			$("#startDate").datepicker({
                 showButtonPanel: true, 
                 currentText: '오늘',
@@ -221,17 +126,27 @@
                 dayNamesMin:['월', '화', '수', '목', '금', '토', '일']
 			});
 			
-			$(".resetBtn").on("click", function(){
-				location.href="memberList";
-			});
+			var page = 0;
 			
-			$(".createBtn").on("click", function(){
-				goForm(0);
-			});
-			
-			$(".excelBtn").click(function() {
-				form.attr("action", "/admin/excelDownload").submit();
-			});
+			function setLita() {
+				$.ajax({
+					async: true 
+					,cache: false
+					,type: "post"
+					,url: "/admin/memberLita"
+					,data : $("#form").serialize()
+					,success: function(response) {
+						console.log(response)
+						$(".memberList").empty();
+						$(".memberList").append(response);
+						page++;
+						
+					}
+					,error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+			}
 			
 		});
 	</script>

@@ -98,7 +98,7 @@
 						</tr>
 						<tr>
 							<th>휴대폰 번호</th>
-							<td><input type="text" class="text-input" name="phone" id="phone"></td>
+							<td><input type="text" class="text-input" name="phone" id="phone" oninput="autoHyphen(this)"></td>
 						</tr>
 						<tr>
 							<th>아이디</th>
@@ -180,6 +180,23 @@
 	</div>
 	
 	<script>
+		const autoHyphen = (target) => {
+			target.value = target.value
+			   .replace(/[^0-9]/g, '')
+			   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
+		
+		// 핸드폰번호 체크
+		function checkMobile(phoneNum) {
+			var regExp =/(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;
+			if(regExp.test(phoneNum)){
+				return true;
+			} else {
+				return false;
+			}
+		}
+	
+		//생년월일 체크
 		function last_day(date_str) {
 		    var yyyyMMdd = String(date_str);
 		    var days = "31";
@@ -226,7 +243,7 @@
 				
 				var name = $("#name").val().trim();
 				var birth = $("#birth").val().trim();
-				var phone = $("#phone").val().trim();
+				var phone = $("#phone").val().trim().replaceAll("-","");
 				var loginId = $("#loginId").val().trim();
 				var password = $("#password").val().trim();
 				var passwordRe = $("#passwordRe").val().trim();
@@ -264,6 +281,13 @@
 					$("#phone").focus();
 					
 					return false;
+				} else {
+					if(checkMobile(phone)) {
+					//pass
+					} else {
+						alert("핸드폰번호를 다시 입력해주세요.")
+						return false;
+					}
 				}
 				
 				if(loginId == null || loginId == "") {

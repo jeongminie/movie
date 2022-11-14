@@ -53,7 +53,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/signupProc")
 	public String signup(Member dto) throws Exception {
-		
+		dto.setPhone(dto.getPhone().replace("-", ""));
 		int result = service.insert(dto);
 		
 		if(result == 0) {

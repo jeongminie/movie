@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header class="d-flex">
-	<a href="#" class="display-4 text-dark col-1" id="logo">Title</a>
-	<nav class="sub-menu col-11 d-flex align-items-center justify-content-end">
+	<a href="/admin/memberList" class="display-6 text-dark col-2 mt-2" id="logo">admin page</a>
+	<nav class="sub-menu col-10 d-flex align-items-center justify-content-end">
 		<ul class="nav">
 			<c:choose>
 				<c:when test="${not empty loginId}" >

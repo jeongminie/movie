@@ -40,6 +40,23 @@ public class AdminController {
 	
 	@RequestMapping(value="memberList")
 	public String memberList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+//		vo.setParamsPaging(service.selectMemberCount(vo));
+//		
+//		List<Member> list = service.selectList(vo);
+//		model.addAttribute("list", list);
+//		
+//		int shTotal = service.selectMemberCount(vo);
+//		model.addAttribute("shTotal", shTotal);
+//		
+//		System.out.println("vo.getShValue() : " + vo.getShValue());
+//		System.out.println("vo.getSeq() : " + vo.getSeq());
+		
+		return "infra/member/xdmin/memberList";
+		
+	}
+	
+	@RequestMapping(value="memberLita")
+	public String memberLita(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
 		vo.setParamsPaging(service.selectMemberCount(vo));
 		
 		List<Member> list = service.selectList(vo);
@@ -51,15 +68,17 @@ public class AdminController {
 		System.out.println("vo.getShValue() : " + vo.getShValue());
 		System.out.println("vo.getSeq() : " + vo.getSeq());
 		
-		return "infra/member/xdmin/memberList";
+		return "infra/member/xdmin/memberLita";
 		
 	}
 	
 	@RequestMapping(value="memberInst")
 	public String signup(MemberVo vo, Member dto, RedirectAttributes redirectAttributes) throws Exception {
 		int result = service.insert(dto);
+		
 		System.out.println("------------------" + dto.getSeq());
 		vo.setSeq(dto.getSeq());
+		
 		//vo 파라미터 리다이렉트 경로로 전달
 		redirectAttributes.addFlashAttribute("vo", vo);
 		
