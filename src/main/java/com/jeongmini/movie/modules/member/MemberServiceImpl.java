@@ -51,6 +51,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public int naverInsert(Member dto) throws Exception {
+		return dao.naverInsert(dto);
+	}
+	
+	@Override
 	public int update(Member dto) throws Exception {
 		String encryptPassword = EncryptUtils.md5(dto.getPwnow());
 		

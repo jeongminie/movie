@@ -15,6 +15,8 @@ public interface MemberService {
 	
 	public int kakaoInsert(Member dto) throws Exception;
 	
+	public int naverInsert(Member dto) throws Exception;
+	
 	public int update(Member dto) throws Exception;
 	
 	public int profileUploaded(Member dto) throws Exception;

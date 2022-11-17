@@ -14,7 +14,7 @@
 			<c:choose>
 				<c:when test="${not empty sessSeq}" >
 					<a href="#" class="mr-3 userName">${name } 님</a>
-					<a href="member/logout" class="logout">로그아웃</a>
+					<a href="#" class="logout" id="logoutBtn">로그아웃</a>
 				</c:when>
 				<c:otherwise>
 					<a href="#" class="mr-3 login" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</a>
@@ -60,6 +60,23 @@
 
 <script>
 	$(document).ready(function(){
+		
+		$("#logoutBtn").on("click", function() {
+			$.ajax({
+				type: "POST"
+				,url: "/member/logout"
+				,data: {}
+				,success : function(response) {
+					if (response.rt == "success") {
+						window.location.href = document.location.pathname;
+					} else {
+						localStorage.clear();
+						window.location.href = document.location.pathname;
+					}
+				}
+			});
+		});
+		
 		$("#mypage").on("click", function(){
 			var sessSeq = "${sessSeq}"
 			if(sessSeq == null || sessSeq == ''){

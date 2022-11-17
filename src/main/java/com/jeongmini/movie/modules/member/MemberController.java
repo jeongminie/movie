@@ -127,20 +127,37 @@ public class MemberController {
 		return result;
 	}
 	
+//	@RequestMapping(value="/member/logout")
+//	public String logout(HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		
+//		session.invalidate();
+//		
+//		String url = request.getHeader("referer");
+//		
+//		logger.info("로그아웃 완료");
+//		
+//		return "redirect:"+url;
+//	}
+	
 	@RequestMapping(value="/member/logout")
-	public String logout(HttpServletRequest request) {
+	@ResponseBody
+	public Map<String, Object> logout(HttpServletRequest request) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		HttpSession session = request.getSession();
 		
-//		session.removeAttribute("loginId");
-//		session.removeAttribute("name");
-		session.invalidate();
-		
-		String url = request.getHeader("referer");
-		
+		if (session.getAttribute("loginId").equals("네이버로그인")) {
+		    System.out.println("네이버 로그아웃 왜 안됨?");
+		    session.invalidate();
+		    result.put("rt", "naver");
+		} else {
+			session.invalidate();
+		    result.put("rt", "success");
+		}
 		
 		logger.info("로그아웃 완료");
 		
-		return "redirect:"+url;
+		return result;
 	}
 	
 	@RequestMapping(value="mypage")
@@ -257,6 +274,33 @@ public class MemberController {
 		}
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/member/naverLoginProc")
+	public Map<String, Object> naverLoginProc(Member dto, HttpServletRequest request) throws Exception {
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		Member naverLogin = service.snsLoginCheck(dto);
+		
+		System.out.println(dto.getPhone());
+		System.out.println(dto.getBirth());
+		System.out.println(dto.getName());
+		
+		System.out.println("test : " + dto.getToken());
+		
+		if (naverLogin == null) {
+			service.naverInsert(dto);
+			dto.setAdminNy(0);
+			
+			System.out.println("---------------" + dto.getAdminNy());
+            session(dto, request); 
+            result.put("rt", "success");
+		} else {
+			session(naverLogin, request);
+			result.put("rt", "success");
+		}
+		return result;
+	}
 
 	 public void session(Member dto, HttpServletRequest request) {
 		 HttpSession session = request.getSession();
@@ -268,7 +312,7 @@ public class MemberController {
 		 session.setAttribute("phone", dto.getPhone());
 		 session.setAttribute("snsImg", dto.getSnsImg());
 		 session.setAttribute("adminNy", dto.getAdminNy());
-//	     httpSession.setAttribute("sessSns", dto.getSns_type());
+	     //httpSession.setAttribute("sessSns", dto.getSns_type());
 	 }
 	
 

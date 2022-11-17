@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <style>
+<style>
 .modal {
 	border : 0px;
 }
@@ -48,6 +48,16 @@
     align-content: center;
 }
 
+.sns-login {
+	margin-left: 90px;
+}
+
+#naverBtn img {
+	width : 183px;
+	height: 45px;
+	margin-top: 10px;
+}
+
  </style>   
     
 <!-- modal -->
@@ -76,6 +86,7 @@
 			<div class="modal-footer">
 				<div class="sns-login">
 					<a href="#" id="kakaoBtn" title="카카오톡으로 로그인 선택"><img src="/resources/static/image/kakao_login_medium_narrow.png" alt="카카오톡"></a>
+					<a href="#" id="naverBtn" title="네이버로 로그인 선택"><img src="/resources/static/image/btnG_완성형.png" alt="네이버"></a>
 				</div>
 			</div>
 		</div>
@@ -93,12 +104,76 @@
 	<input type="hidden" name="token"/>
 </form>
 
+<!-- naver login -->
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	
 <!-- kakao login -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script>
+	//카카오
 	Kakao.init('07294d6c3c28278176fbea6c96ff7670'); // test 용
 	console.log(Kakao.isInitialized());
+
+	//네이버
+	var naverLogin = new naver.LoginWithNaverId(
+		{
+			clientId: "8jm_edv8XpFwiRCe5LWv",
+			callbackUrl: "http://localhost:8080",
+		}
+	);
+	naverLogin.init();
+	
+	$("#naverBtn").on("click", function(){
+		naverLogin.getLoginStatus(function (status) {
+			if (!status) {
+				naverLogin.authorize(); //네이버 로그인 팝업창 띄움
+			} else {
+			setLoginStatus();
+			}
+		});
+	})
+	
+	//네이버 로그인 입력 후 로그인화면 로드 될때 실행 이벤트
+	window.addEventListener('load', function () {
+		if (naverLogin.accessToken != null) {
+  			naverLogin.getLoginStatus(function (status) {
+  				if (status) {
+  					setLoginStatus();
+  				}
+			});
+		}
+	});
+	
+	function setLoginStatus() {
+		if (naverLogin.user.gender == 'M'){
+			$("input[name=gender]").val(90);
+		} else {
+			$("input[name=gender]").val(89);
+		} 
+		
+		$.ajax({
+			async: true
+			,cache: false
+			,type:"POST"
+			,url: "/member/naverLoginProc"
+			,data: {"name": naverLogin.user.name, "snsId": "네이버로그인", "phone": naverLogin.user.mobile, "email": naverLogin.user.email, "gender": $("input[name=gender]").val(), "birth": naverLogin.user.birthyear+"-"+naverLogin.user.birthday, "snsImg": naverLogin.user.profile_image}
+			,success : function(response) {
+				if (response.rt == "fail") {
+					alert("아이디와 비밀번호를 다시 확인 후 시도해 주세요.");
+					return false;
+				} else {
+					window.location.href = "/";
+					
+					return;
+				}
+			},
+			error : function(jqXHR, status, error) {
+				alert("알 수 없는 에러 [ " + error + " ]");
+			}
+		});
+	}
 	
 	$(document).ready(function(){
 		

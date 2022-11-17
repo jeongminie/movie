@@ -94,6 +94,33 @@
 		</selectKey>
 	</insert>
 	
+	<insert id="naverInsert">
+		INSERT INTO user (
+		   	loginId
+		    , phone
+		    , name
+		    , birth
+		    , emailFull
+		    , gender
+		    , snsImg
+		    , adminNy
+		    , delNy
+		) VALUES (
+		    #{snsId}
+		    , #{phone}
+		    , #{name}
+		    , #{birth}
+		    , #{emailFull}
+		    , #{gender}
+		    , #{snsImg}
+		    , 0
+		    , 0
+		)
+		<selectKey resultType="int" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
 	<update id="update">
 		UPDATE user
 		SET 

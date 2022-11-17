@@ -57,7 +57,7 @@
 						<div class="photo" id="myPhoto">
 							<div class="wrap">
 							<c:choose>
-								<c:when test="${member.loginId eq '카카오로그인'}">
+								<c:when test="${member.loginId eq '카카오로그인' and member.loginId eq '네이버로그인'}">
 									<button type="button" class="img">
 										<img id="test" src="${member.snsImg }" onerror="setEmptyImage(this)">
 									</button>
