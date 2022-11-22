@@ -28,7 +28,7 @@ public class CheckLoginSessionInterception extends HandlerInterceptorAdapter {
 				response.sendRedirect("/");
 				return false; 
 			} else if(session.getAttribute("adminNy").equals(0)) {
-				if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.equals("/member/memberList")) {
+				if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.startsWith("/admin")) {
 					response.sendRedirect("/");
 					return false;
 				} 

@@ -198,22 +198,8 @@
 	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
 	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
+	<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
 	
-	<!-- modal -->
-	<div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<span class="modal-title">알림</span>
-				</div>
-				<div class="modal-body">
-					<p>프로필 사진이 등록되었습니다.</p>
-					<button type="button" class="btn close-btn mb-3" data-bs-dismiss="modal" aria-label="Close">확인</button>
-				</div>
-			</div>
-		</div>
-	</div>
-		
 	<!-- 카카오 주소 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=07294d6c3c28278176fbea6c96ff7670&libraries=services"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -285,13 +271,45 @@
 			$(img).addClass('noImg');
 		}
 		
+		//이미지 미리보기(사용 x)
+		function readURL(input) {
+			var file = input.files[0];
+			
+			if(file.type.startsWith("image")) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$("img").attr("src", e.target.result); 
+				}
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				alert("이미지 파일만 가능합니다.")
+			}
+		}
+		
 		const autoHyphen = (target) => {
 			target.value = target.value
 			   .replace(/[^0-9]/g, '')
 			   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 		}
-	
+		
+		function pageBack(){
+			sessionStorage.setItem("sessAuth", "false");
+			$("#alertModal").find('.modal-body p').html('<p>인증시간이 초과되었습니다.<br>다시 인증해주세요</p>');
+			$("#alertModal").modal('show');
+			
+			$('#alertModal').on('hide.bs.modal', function() {
+				window.history.back();
+			});
+		}
+		
 		$(document).ready(function(){
+			setTimeout('pageBack()', 180000);
+			
+			if(sessionStorage.getItem("sessAuth") == "false" ) {
+				pageBack();
+			}
+			
 			$("#addProfileImgBtn").on("click", function(){
 				$("#profileUploaded").click();
 			});
@@ -315,16 +333,12 @@
 					dataType: "json",
 					success : function(data) {
 						setTimeout(function() {
+							$("#alertModal").find('.modal-body p').html('<p>프로필 사진이 등록되었습니다.</p>');
 							$("#alertModal").modal('show');
 						}, 3000);
 					}
 				});
 			});
-			
-			$('#alertModal').on('hide.bs.modal', function() {
-				location.reload();
-			});
-			
 			
 			$("#repwnew").on("keyup", function(){
 				var pwnew = $("#pwnew").val();
@@ -348,13 +362,15 @@
 				var address = $("#address").val().trim();
 				
 				if (pwnow == null || pwnow == ''){
-					alert("비밀번호를 입력해주세요.");
+					$("#alertModal").find('.modal-body p').html('<p>비밀번호를 입력해주세요.</p>');
+					$("#alertModal").modal('show');
 					$("#pwnow").focus();
 					return false;
 				}
 				
 				if(pwnew != null && repwnew != null && pwnew != repwnew) {
-					alert("비밀번호가 일치하지 않습니다.");
+					$("#alertModal").find('.modal-body p').html('<p>비밀번호가 일치하지 않습니다.</p>');
+					$("#alertModal").modal('show');
 					$("#repwnew").focus();
 					return false;
 				}
@@ -365,7 +381,7 @@
 					, data:{"phone":phone, "pwnow":pwnow, "pwnew":pwnew, "phone":phone, "email":email, "domain":domain, "postcode":postcode, "address":address}
 					, success:function(data) {
 						$("#alertModal").find('.modal-body p').text('회원정보 수정이 완료되었습니다.');
-						alert("회원정보 수정이 완료되었습니다.")
+						$("#alertModal").modal('show');
 					}
 				});
 			});

@@ -12,7 +12,7 @@
 
 #logo {
 	position: absolute;
-    left: 51%;
+    left: 51.5%;
     top: 23px;
     width: 140px;
     height: 90px;
@@ -73,6 +73,8 @@
 	</div>
 </header>
 
+<jsp:include page="../../../include/user/jsp/alterModal.jsp" />
+
 <script>
 	$(document).ready(function(){
 		$("#logoutBtn").on("click", function() {
@@ -94,7 +96,8 @@
 		$("#mypage").on("click", function(){
 			var loginId = "${loginId}"
 			if(loginId == null || loginId == ''){
-				alert("로그인이 필요한 서비스 입니다.")
+				$("#alertModal").find('.modal-body p').html('<p>로그인이 필요한 서비스입니다.</p>');
+				$("#alertModal").modal('show');
 				return;
 			} else {
 				location.href="../mypage";

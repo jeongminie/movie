@@ -129,7 +129,7 @@
 		    , postcode = #{postcode}
 		    , address = #{address}
 			<if test="pwnew != null and pwnew != ''">
-				,password = #{pwnew}
+			,password = #{pwnew}
 			</if>
 		WHERE 1=1
 			AND seq = #{seq}

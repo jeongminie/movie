@@ -117,7 +117,7 @@
 							<span>주소</span>
 							<div id="addressWrap">
 								<div class="d-flex">
-									<input type="text" class="form-control text-input mb-2 mr-2" name="postcode" id="postcode" placeholder="우편번호">
+									<input type="text" class="form-control text-input mb-2 mr-2" name="postcode" id="postcode" placeholder="우편번호" <c:if test="${not empty item.postcode }">value="${item.postcode }"</c:if>>
 									<button type="button" id="reset" class="btn btn-sm"><i class="fa-solid fa-trash"></i></button>
 								</div>
 								<input type="text" class="form-control text-input mb-2" name="address" id="address" placeholder="주소">

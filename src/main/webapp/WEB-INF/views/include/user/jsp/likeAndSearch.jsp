@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
 <script>
 	function processLike(movieCode) {
 		$.ajax({
@@ -39,16 +40,19 @@
 		
 		$(".alarmBtn").on("click", function(){
 			var movieCode = $(this).data("no");
+			var pathname = window.location.pathname.split("/")[2];
+			console.log(pathname)
 			
 			/* $("#form").submit(); */
 			
 			var loginId = "${loginId}"
 			
 			if(loginId == null || loginId == ''){
-				alert("로그인이 필요한 서비스 입니다.")
+				$("#alertModal").find('.modal-body p').html('<p>로그인 후 이용가능한 서비스입니다.</p>');
+				$("#alertModal").modal('show');
 				return false;
 			} else {
-				location.href="../movie/openAlarm?movieCode="+movieCode;
+				location.href="../movie/openAlarm?movieCode="+movieCode+"&pageType="+pathname;
 			}
 
 		});
@@ -69,7 +73,8 @@
 			var movieCode = $(this).data("no");
 			var usreSeq = "${sessSeq}"
 			if(usreSeq == null || usreSeq == '') {
-				alert("로그인 후 사용가능합니다.")
+				$("#alertModal").find('.modal-body p').html('<p>로그인 후 이용가능한 서비스입니다.</p>');
+				$("#alertModal").modal('show');
 			} else {
 				processLike(movieCode)
 			}

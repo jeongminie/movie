@@ -99,21 +99,7 @@
 	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
 	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
-	
-	<!-- modal -->
-	<div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content" role="document">
-				<div class="modal-header">
-					<span class="modal-title">알림</span>
-				</div>
-				<div class="modal-body">
-					<p>프로필 사진이 등록되었습니다.</p>
-					<button type="button" class="btn close-btn mb-3" data-bs-dismiss="modal" aria-label="Close">확인</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
 	
 	<script>
 		function setEmptyImage(img) {
@@ -165,6 +151,7 @@
 					dataType: "json",
 					success : function(data) {
 						setTimeout(function() {
+							$("#alertModal").find('.modal-body p').html('<p>프로필 사진이 등록되었습니다.</p>');
 							$("#alertModal").modal('show');
 						}, 3000);
 					}

@@ -189,7 +189,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/mypage/myinfo")
-	public String myinfoView(Model model) throws Exception {
+	public String myinfoView(Model model, HttpServletRequest request) throws Exception {
 		
 		return "infra/member/user/myinfo";
 	}

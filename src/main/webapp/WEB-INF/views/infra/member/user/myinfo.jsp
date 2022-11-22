@@ -37,15 +37,10 @@
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 	
 	<title>마이페이지</title>
-	
-	<style>
-		
-
-	</style>
 		
 </head>
 <body>
-	<div id="wrap">
+	<div id="wrap"> 
 		<jsp:include page="../../../include/user/jsp/header_white.jsp" />
 		<div class="page-util">
 			<div class="inner-wrap">
@@ -106,30 +101,12 @@
 			</div>
 		</div> <!-- innerwrap -->
 	</div>
-		
-		
+	<jsp:include page="../../../include/user/jsp/footer.jsp" />
+	
+	<jsp:include page="../../../include/user/jsp/loginModal.jsp" /> 
+	<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
 		
 	<script>
-		function setEmptyImage(img) {
-			img.src='/resources/static/image/noImg2.png';
-			$(img).addClass('noImg');
-		}
-		
-		function readURL(input) {
-			var file = input.files[0];
-			
-			if(file.type.startsWith("image")) {
-				var reader = new FileReader();
-
-				reader.onload = function (e) {
-					$("img").attr("src", e.target.result); 
-				}
-				reader.readAsDataURL(input.files[0]);
-			} else {
-				alert("이미지 파일만 가능합니다.")
-			}
-		}
-		
 		var timer = null;
 		var isRunning = false;
 		
@@ -159,91 +136,66 @@
 		}
 		
 		$(document).ready(function(){
-				 
-			$("#profileUploaded").change(function(e){
-				readURL(this);
-			});
-				
-			$(".fa-circle-plus").on("click", function(){
-				$("#profileUploaded").click();
-			});
-			
-			$("#profileUploaded").on("change", function(e){
-				console.log($("#profileUploaded")[0].files[0])
-			
-				/* $("#form").submit(); */
-				
- 				var formData = new FormData();
-				formData.append("profileUploaded", $("#profileUploaded")[0].files[0]);
-				
-				$.ajax({
-					type : "POST",
-					enctype:"mutipart/form-data",
-					url:"profileUploaded",
-					processData: false,
-					contentType: false,
-					data: formData,
-					dataType: "json",
-				});
-				
-				alert("프로필 사진이 등록되었습니다.")
-			})
-			
-		})
+			sessionStorage.setItem("sessAuth", "false" );
 		
-		$("#ibxSchPwdMblpCharCertNo").keyup(function(){
-			var inputLength = $(this).val().length;
-			
-			if(inputLength >= 4){
-				$("#btnSchPwdMblpCharCert").removeClass("disabled");
-				$("#btnSchPwdMblpCharCert").removeAttr("disabled");
-			} else {
-				$("#btnSchPwdMblpCharCert").addClass("disabled");
-				$("#btnSchPwdMblpCharCert").attr("disabled", "disabled");
-			}
-		})
-
-		$("#btnSchPwdMbCertNoSend").on("click", function(){
-			alert("인증번호를 전송하였습니다. 시간초과시 재전송을 눌러주세요.");
-			$("#btnSchPwdMbCertNoSend").html("재전송");
-			
-			var display = $("#schPwdtimer");
-			// 유효시간 설정
-			var leftSec = 180;
-			  
-			// 버튼 클릭 시 시간 연장
-			if (isRunning){
-				clearInterval(timer);
-				display.html("");
-				startTimer(leftSec, display);
-			}else{
-				startTimer(leftSec, display);
-			}
-			  
-			var phone = $("#ibxSchPwdMblpTelno").val();
-			
-			$.ajax({
-				type : "post",
-				url : "/check/sendSMS",
-				data : {"phone":phone},
-				success : function(response){
-					$("#btnSchPwdMblpCharCert").on("click", function(){
-						if(response.trim() == $("#ibxSchPwdMblpCharCertNo").val()) {
-							alert("인증이 완료되었습니다.");
-							$("#schPwdMblpCertRow").remove();
-							$("#btnSchPwdMbCertNoSend").attr("disabled", true);
-							
-							$("#ckBtn").removeAttr("disabled");
-							
-						} else {
-							alert("인증번호를 다시 입력해주세요.");
-						}
-						
-					})
+			$("#ibxSchPwdMblpCharCertNo").keyup(function(){
+				var inputLength = $(this).val().length;
+				
+				if(inputLength >= 4){
+					$("#btnSchPwdMblpCharCert").removeClass("disabled");
+					$("#btnSchPwdMblpCharCert").removeAttr("disabled");
+				} else {
+					$("#btnSchPwdMblpCharCert").addClass("disabled");
+					$("#btnSchPwdMblpCharCert").attr("disabled", "disabled");
 				}
 			})
-			
-		});
+	
+			$("#btnSchPwdMbCertNoSend").on("click", function(){
+				$("#alertModal").find('.modal-body p').html('인증번호를 전송하였습니다.<br>시간초과시 재전송을 눌러주세요.');
+				$("#alertModal").modal('show');
+				$("#btnSchPwdMbCertNoSend").html("재전송");
+				
+				var display = $("#schPwdtimer");
+				// 유효시간 설정
+				var leftSec = 180;
+				  
+				// 버튼 클릭 시 시간 연장
+				if (isRunning){
+					clearInterval(timer);
+					display.html("");
+					startTimer(leftSec, display);
+				}else{
+					startTimer(leftSec, display);
+				}
+				  
+				var phone = $("#ibxSchPwdMblpTelno").val();
+				
+				$.ajax({
+					type : "post",
+					url : "/check/sendSMS",
+					data : {"phone":phone},
+					success : function(response){
+						$("#btnSchPwdMblpCharCert").on("click", function(){
+							if(response.trim() == $("#ibxSchPwdMblpCharCertNo").val()) {
+								sessionStorage.setItem("sessAuth", "true" ); // 저장
+								$("#alertModal").find('.modal-body p').html('<p>인증이 완료되었습니다.</p>');
+								$("#alertModal").modal('show');
+								
+								$("#schPwdMblpCertRow").remove();
+								$("#btnSchPwdMbCertNoSend").attr("disabled", true);
+								
+								$("#ckBtn").removeAttr("disabled");
+							} else {
+								$("#alertModal").find('.modal-body p').html('<p>인증번호를 다시 입력해주세요.</p>');
+								$("#alertModal").modal('show');
+							}
+							
+						})
+					}
+				})
+				
+			});
+		})
 	
 	</script>
 	

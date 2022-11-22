@@ -58,6 +58,8 @@
 	</div>
 </header>
 
+<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
+
 <script>
 	$(document).ready(function(){
 		
@@ -80,7 +82,8 @@
 		$("#mypage").on("click", function(){
 			var sessSeq = "${sessSeq}"
 			if(sessSeq == null || sessSeq == ''){
-				alert("로그인이 필요한 서비스 입니다.")
+				$("#alertModal").find('.modal-body p').html('<p>로그인이 필요한 서비스입니다.</p>');
+				$("#alertModal").modal('show');
 				return;
 			} else {
 				location.href="../mypage";

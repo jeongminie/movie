@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="shortcut icon" type="image⁄x-icon" href="/resources/static/image/logo_black.png">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
@@ -50,7 +51,7 @@
 			<div class="cont-area">
 				<div>
 					<p class="boxo-tit">박스오피스</p>
-					<a href="#" class="more-movie">더 많은 영화 보기</a>
+					<a href="/movie/running" class="more-movie">더 많은 영화 보기</a>
 					<ul class="rank-list">
 						<c:forEach items="${list }" var="list" varStatus="status">
 							<li class="rank-item">
@@ -89,6 +90,7 @@
 	<jsp:include page="../../../include/user/jsp/footer.jsp" />
 	
 	<jsp:include page="../../../include/user/jsp/loginModal.jsp" />
+	<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
 	
 	<script>
 		$(document).ready(function(){
@@ -110,10 +112,11 @@
 				var loginId = "${loginId}"
 				
 				if(loginId == null || loginId == ''){
-					alert("로그인이 필요한 서비스 입니다.")
+					$("#alertModal").find('.modal-body p').html('<p>로그인이 필요한 서비스입니다.</p>');
+					$("#alertModal").modal('show');
 					return false;
 				} else {
-					location.href="../movie/openAlarm?movieCode="+movieCode;
+					location.href="../movie/openAlarm?movieCode="+movieCode+"&pageType=running";
 				}
 
 			});

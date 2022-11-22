@@ -314,7 +314,7 @@
 	               showButtonPanel: true, 
 	               currentText: '오늘',
 	               dateFormat: "yy-mm-dd",
-	               dayNamesMin:['월', '화', '수', '목', '금', '토', '일'],
+	               dayNamesMin:['일', '화', '수', '목', '금', '토', '월'],
 	               minDate : 0
 			});
 			
@@ -391,22 +391,36 @@
 				
 			}) */
 			
-			var movieNm = $("#movieNm").text().replace(" ","");
+			function ajax(movieNm, pageType, onairYn) {
+				$.ajax({
+					type : 'post',
+					url : 'http://127.0.0.1:5000/movieNo',
+					data : {"movieNm":movieNm,"pageType":pageType,"onairYn":onairYn},
+					success : function(data) {
+						$("#wrap").append("<input name='movieNo' type='hidden' value="+data+">")
+						console.log(data)
+					},
+					error : function() {
+						alert('메가박스에서 상영하지 않는 영화입니다.');
+						window.history.back();
+					}
+				})
+			}
 			
-			$.ajax({
-				type : 'post',
-				url : 'http://127.0.0.1:5000/movieNo',
-				data : {"movieNm":movieNm},
-				success : function(data) {
-					$("#wrap").append("<input name='movieNo' type='hidden' value="+data+">")
-					
-				},
-				error : function() {
-					alert('요청 실패쓰');
-				}
-			})
+			var movieNm = $("#movieNm").text();
+			
+			var query = window.location.search;
+			var param = new URLSearchParams(query);
+			var brchNo = param.get('pageType');
+			
+			if(brchNo == "running" || brchNo == "") {
+				ajax(movieNm, "ticketing", "N")
+			} else {
+				ajax(movieNm, "rfilmDe", "MSC02")
+			}
 				
 		});	
+		
 	</script>
 	
 </body>

@@ -1,64 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-.modal {
-	border : 0px;
-}
-
-.modal-content {
-	border : 0px;
-	border-radius: 0px;
-	width : 80%
-}
-
-.modal-header {
-	height : 25px;
-	background-color: #BEB4AF;
-	border-radius: 0px;
-	color : white;
-	align-items : center;
-	margin-bottom: 10px;
-}
-
-.login-btn {
-	border : 1px solid #DADADA;
-	width : 200px;
-	color : white;
-	background-color : #BEB4AF!important;
-	border : 0px;
-}
-  		
-.login-btn:hover {
-	color : white;
-	background-color : #BEB4AF;
-	border : 0px;
-}
-
-.btn-close {
-	color :white;
-}
-
-.w300px {
-	width : 300px !important;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-.sns-login {
-	margin-left: 90px;
-}
-
-#naverBtn img {
-	width : 183px;
-	height: 45px;
-	margin-top: 10px;
-}
-
- </style>   
+<link rel="stylesheet" href="/resources/static/css/modal.css">
     
 <!-- modal -->
 <div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
