@@ -380,8 +380,13 @@
 					, url:"/member/update"
 					, data:{"phone":phone, "pwnow":pwnow, "pwnew":pwnew, "phone":phone, "email":email, "domain":domain, "postcode":postcode, "address":address}
 					, success:function(data) {
-						$("#alertModal").find('.modal-body p').text('회원정보 수정이 완료되었습니다.');
-						$("#alertModal").modal('show');
+						if(data.result == "success") {
+							$("#alertModal").find('.modal-body p').text('회원정보 수정이 완료되었습니다.');
+							$("#alertModal").modal('show');
+						} else {
+							$("#alertModal").find('.modal-body p').text('현재 비밀번호가 일치하지않습니다.');
+							$("#alertModal").modal('show');
+						}
 					}
 				});
 			});
