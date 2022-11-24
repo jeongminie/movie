@@ -197,7 +197,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="myinfo" title="문의하기">문의하기</a>
+				<a href="/chat/" title="문의하기">문의하기</a>
 				<ul class="depth3">
 					<li class="on"><a href="/chat/" title="실시간 문의" onclick="addChat()">실시간 문의</a></li>
 				</ul>

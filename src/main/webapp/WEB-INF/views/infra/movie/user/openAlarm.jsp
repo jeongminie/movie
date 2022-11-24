@@ -240,6 +240,7 @@
 	<%-- <jsp:include page="../../../include/user/jsp/footer.jsp" /> --%>
 	
 	<%@ include file="../../../include/user/jsp/loginModal.jsp"%>
+	<%@ include file="../../../include/user/jsp/alterModal.jsp"%>
 	
 	<script>
 		function categoryChange(e) {
@@ -365,7 +366,8 @@
 					data : {"brchNo":brchNo, "theabKindCd":theabKindCd, "rpstMovieNo":rpstMovieNo, "movieNm":movieNm, "playDe":playDe, "phone":phone, "userSeq":userSeq},
 					success : function(data) {
 						if(data.result == "success") {
-							alert("알람신청이 완료되었습니다");
+							$("#alertModal").find('.modal-body p').text('알림신청이 완료되었습니다.');
+							$("#alertModal").modal('show');
 						} else {
 							alert("실패");
 						}
@@ -401,8 +403,8 @@
 						console.log(data)
 					},
 					error : function() {
-						alert('메가박스에서 상영하지 않는 영화입니다.');
-						window.history.back();
+						$("#alertModal").find('.modal-body p').text('메가박스에서 상영하지 않는 영화입니다.');
+						$("#alertModal").modal('show');
 					}
 				})
 			}
@@ -418,6 +420,10 @@
 			} else {
 				ajax(movieNm, "rfilmDe", "MSC02")
 			}
+			
+			$('#alertModal').on('hide.bs.modal', function() {
+				window.history.back();
+			});
 				
 		});	
 		

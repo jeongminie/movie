@@ -202,8 +202,6 @@
 				return;
 			}
 			
-			/* $("#login").submit(); */
-			
 			$.ajax({
 				type : 'post',
 				url : '/member/login',
@@ -221,6 +219,8 @@
 					alert("로그인실패");
 				}
 			})
+			
+			/* $("#login").submit(); */
 		})
 	});
 
