@@ -479,7 +479,6 @@
         };
 
 		addChat = function(){
-			
 					$.ajax({
 						url: '/chat/insChat'
 						,type: 'POST'
@@ -525,8 +524,12 @@
 							alert("ajax error..!");
 						}
 					});
-			
 				}
+		
+		function setEmptyImage(img) {
+			img.src='/resources/static/image/profile.jpg';
+			$(img).addClass('noImg');
+		}
     </script>
 </body>
 </html>

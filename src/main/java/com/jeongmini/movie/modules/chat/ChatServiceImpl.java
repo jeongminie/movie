@@ -33,9 +33,16 @@ public class ChatServiceImpl implements ChatService{
 		//리스트 리턴
 		return resultList;
 	}
+	
+	public Chat selectOneChat(Integer seq) throws Exception {
+		Chat dto = new Chat();
+		dto.setCuMember(seq);
+		
+		return dao.selectOneChat(dto);
+	}
 
 	@Override
-	public Chat createChat(int chatUserA, int chatUserB) throws Exception {
+	public Chat createChat(int chatUserA) throws Exception {
 		// TODO Auto-generated method stub
 		Chat dto = new Chat();
 		dao.insertChat(dto);
@@ -43,7 +50,7 @@ public class ChatServiceImpl implements ChatService{
 		dto.setCuMember(chatUserA);
 		dao.insertChatUser(dto);
 		
-		dto.setCuMember(chatUserB);
+		dto.setCuMember(52);
 		dao.insertChatUser(dto);
 		
 		return dao.selectOneChat(dto);

@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeongmini.movie.modules.movie.MovieVO;
+
 @Controller
 @RequestMapping(value="/chat/")
 public class ChatController {
@@ -24,28 +26,40 @@ public class ChatController {
 	public String chat(HttpServletRequest request,Model model) throws Exception {
 		HttpSession session = request.getSession();
 		List<Chat> list = service.selectChatListFromOne((Integer)session.getAttribute("sessSeq"));
+		Chat item = service.selectOneChat((Integer)session.getAttribute("sessSeq"));
 		
 		model.addAttribute("list", list);
+		model.addAttribute("item", item);
 		
-		return "infra/chat/user/chat";
+		return "infra/member/user/questions";
 	}
 
 	@ResponseBody
 	@RequestMapping(value="insChat")
 	public Map<String,Object> insChat(HttpServletRequest request,Chat dto) throws Exception {
-		
+		HttpSession session = request.getSession();
 		Map<String,Object> result = new HashMap<String,Object>();
 		
-		HttpSession session = request.getSession();
-		Chat newChat = service.createChat((Integer)session.getAttribute("sessSeq"),dto.getCuMember());
+		Chat item = service.selectOneChat((Integer)session.getAttribute("sessSeq"));
 		
-		if(newChat != null) {
-			result.put("rt", "success");
-			result.put("newChat", newChat);
+		if(item == null) {
+			Chat newChat = service.createChat((Integer)session.getAttribute("sessSeq"));
+			
+			if(newChat != null) {
+				result.put("rt", "success");
+				result.put("newChat", newChat);
+			}
+			else {
+				result.put("rt", "fail");
+			}
 		}
-		else
-			result.put("rt", "fail");
 		
 		return result;
+	}
+	
+	@RequestMapping(value="test")
+	public String test(Model model, MovieVO vo) throws Exception {
+		
+		return "infra/chat/user/chat";
 	}
 }

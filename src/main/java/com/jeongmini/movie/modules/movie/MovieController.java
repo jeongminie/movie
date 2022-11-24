@@ -130,4 +130,10 @@ public class MovieController {
 		return "infra/movie/xdmin/alarmList";
 	}
 	
+	@RequestMapping(value="movieDetail")
+	public String movieDetail(Model model, MovieVO vo) throws Exception {
+		
+		return "infra/movie/user/movieDetail";
+	}
+	
 }

@@ -187,7 +187,7 @@
 		
 <div class="lnb-area">
 	<nav id="lnb">
-		<p class="tit"><a href="/mypage" title="나의 메가박스">나의 메가박스</a></p>
+		<p class="tit"><a href="/mypage" title="나의 메가박스">마이페이지</a></p>
 		<ul>
 			<li><a href="/mypage/openAlarmList" titel="예매오픈 알림 신청 내역">예매오픈 알림 신청 내역</a></li>
 			<li>
@@ -196,6 +196,36 @@
 					<li class="on"><a href="/mypage/myinfo" title="개인정보 수정">개인정보 수정</a></li>
 				</ul>
 			</li>
+			<li>
+				<a href="myinfo" title="문의하기">문의하기</a>
+				<ul class="depth3">
+					<li class="on"><a href="/chat/" title="실시간 문의" onclick="addChat()">실시간 문의</a></li>
+				</ul>
+			</li>
 		</ul>
 	</nav>
 </div>
+
+<jsp:include page="../../../include/user/jsp/alterModal.jsp" /> 
+
+<script>
+	function addChat(){
+		$.ajax({
+			url: '/chat/insChat'
+			,type: 'POST'
+			,datatype:'json'
+			,data:{
+				cuMember : $("#cuMember").val()
+			}
+			,success:function(result){
+				console.log(result)
+				if(result.rt=="success"){
+					console.log("성공")
+				}
+			}
+			,error:function(){
+				console.log("ajax error..!");
+			}
+		});
+	}
+</script>
