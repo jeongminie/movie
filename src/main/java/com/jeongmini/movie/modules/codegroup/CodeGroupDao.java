@@ -17,6 +17,10 @@ public class CodeGroupDao {
 	@Resource(name = "sqlSession")
 	private SqlSession sqlSession;
 	
+	@Inject
+	@Resource(name = "sqlSessionOracle")
+	private SqlSession sqlSessionOracle;
+	
 	private static String namespace = "com.jeongmini.movie.modules.codegroup.CodeGroupMapper";
 	
 	public List<CodeGroup> selectList(CodeGroupVo vo) {
@@ -65,6 +69,12 @@ public class CodeGroupDao {
 		int result = sqlSession.delete(namespace + ".delete", vo);
 		
 		return result;
+	}
+	
+	//oracle Test
+	public List<CodeGroup> oracleTest() {
+		List<CodeGroup> list = sqlSessionOracle.selectList(namespace + ".oracleTest", "");
+		return list;
 	}
 	
 }

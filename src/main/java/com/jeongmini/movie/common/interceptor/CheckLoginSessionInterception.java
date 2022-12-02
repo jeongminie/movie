@@ -22,16 +22,23 @@ public class CheckLoginSessionInterception extends HandlerInterceptorAdapter {
 				return false;
 			} else if(uri.startsWith("/mypage")) {
 				response.sendRedirect("/");
+				return false;
 			}
 		} else {
-			if(uri.equals("/member/signup") ||  uri.equals("/member/signupCompleted")) {
+			if(uri.equals("/member/signup") || uri.equals("/member/signupCompleted")) {
 				response.sendRedirect("/");
 				return false; 
 			} else if(session.getAttribute("adminNy").equals(0)) {
-				if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.startsWith("/admin")) {
+				if(uri.startsWith("/code") || uri.startsWith("/codeGroup") || uri.startsWith("/admin") || uri.equals("/chat/answer")) {
 					response.sendRedirect("/");
 					return false;
 				} 
+			} else if(session.getAttribute("adminNy").equals(1)) {
+				if(uri.startsWith("/admin/login")) {
+					response.sendRedirect("/admin/memberList");
+					return false;
+				} 
+				
 			}
 		}
 		return super.preHandle(request, response, handler);

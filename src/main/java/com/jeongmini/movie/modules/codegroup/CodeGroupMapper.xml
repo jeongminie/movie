@@ -108,5 +108,12 @@
 			a.seq = #{seq}
 	</update>
 	
+	<!-- oracle Test -->
+	<select id="oracleTest" resultMap="resultMapObj">
+		SELECT
+			*
+		FROM 
+			codegroup 
+	</select>
 	
 </mapper>	

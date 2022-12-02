@@ -106,28 +106,6 @@ public class AdminController {
 		return "infra/member/xdmin/loginForm";
 	}
 	
-	
-	@RequestMapping(value="loginProc")
-	public String login(Member dto, MemberVo vo, Model model, HttpServletRequest request) throws Exception {
-		Member member = service.login(dto);
-		
-		if(member != null) {
-			logger.info("로그인성공 login ID : " + member.getLoginId() + " user name : " + member.getName());
-			
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("sessSeq", member.getSeq());
-			session.setAttribute("loginId", member.getLoginId());
-			session.setAttribute("name", member.getName());
-			session.setAttribute("adminNy", member.getAdminNy());
-			
-		} else {
-			logger.info("로그인 실패 ");
-		}
-		
-		return "redirect:../code/codeList";
-	}
-	
 	@RequestMapping(value="adminDelete")
 	@ResponseBody
 	public Map<String, Boolean> memberDelete(MemberVo vo) throws Exception {

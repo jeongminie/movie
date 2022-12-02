@@ -15,6 +15,9 @@ public class CodeGroup {
 	private Date createdAt;
 	private Date updatedAt;
 	private Integer cnt;
+	
+	private String seq_no;
+	private String codegroup_nm;
 
 	public Integer getSeq() {
 		return seq;
@@ -76,5 +79,19 @@ public class CodeGroup {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
+	
+	//oracle test
+	public String getSeq_no() {
+		return seq_no;
+	}
+	public void setSeq_no(String seq_no) {
+		this.seq_no = seq_no;
+	}
+	public String getCodegroup_nm() {
+		return codegroup_nm;
+	}
+	public void setCodegroup_nm(String codegroup_nm) {
+		this.codegroup_nm = codegroup_nm;
+	}
+	
 }

@@ -23,4 +23,6 @@ public interface CodeGroupService {
 	
 	public boolean delete(CodeGroupVo vo) throws Exception;
 	
+	public List<CodeGroup> oracleTest() throws Exception;
+	
 }

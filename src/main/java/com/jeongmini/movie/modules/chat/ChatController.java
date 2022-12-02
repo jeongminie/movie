@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jeongmini.movie.modules.movie.MovieVO;
 
 @Controller
-@RequestMapping(value="/chat/")
 public class ChatController {
 	
 	@Autowired
 	ChatServiceImpl service;
 
-	@RequestMapping(value="")
-	public String chat(HttpServletRequest request,Model model) throws Exception {
+	@RequestMapping(value="/chat/questions")
+	public String chat(HttpServletRequest request, Model model) throws Exception {
 		HttpSession session = request.getSession();
 		List<Chat> list = service.selectChatListFromOne((Integer)session.getAttribute("sessSeq"));
 		Chat item = service.selectOneChat((Integer)session.getAttribute("sessSeq"));
@@ -31,11 +30,23 @@ public class ChatController {
 		model.addAttribute("list", list);
 		model.addAttribute("item", item);
 		
-		return "infra/member/user/questions";
+		return "infra/chat/user/questions";
+	}
+	
+	@RequestMapping(value="/admin/answer")
+	public String test(HttpServletRequest request, Model model, MovieVO vo) throws Exception {
+		HttpSession session = request.getSession();
+		List<Chat> list = service.selectChatListFromOne((Integer)session.getAttribute("sessSeq"));
+		Chat item = service.selectOneChat((Integer)session.getAttribute("sessSeq"));
+		
+		model.addAttribute("list", list);
+		model.addAttribute("item", item);
+		
+		return "infra/chat/xdmin/answer";
 	}
 
 	@ResponseBody
-	@RequestMapping(value="insChat")
+	@RequestMapping(value="/chat/insChat")
 	public Map<String,Object> insChat(HttpServletRequest request,Chat dto) throws Exception {
 		HttpSession session = request.getSession();
 		Map<String,Object> result = new HashMap<String,Object>();
@@ -57,9 +68,5 @@ public class ChatController {
 		return result;
 	}
 	
-	@RequestMapping(value="test")
-	public String test(Model model, MovieVO vo) throws Exception {
-		
-		return "infra/chat/user/chat";
-	}
+	
 }

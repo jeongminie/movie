@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 	.inner-wrap {
 		width: 1100px;
@@ -196,12 +197,14 @@
 					<li class="on"><a href="/mypage/myinfo" title="개인정보 수정">개인정보 수정</a></li>
 				</ul>
 			</li>
-			<li>
-				<a href="/chat/" title="문의하기">문의하기</a>
-				<ul class="depth3">
-					<li class="on"><a href="/chat/" title="실시간 문의" onclick="addChat()">실시간 문의</a></li>
-				</ul>
-			</li>
+			<c:if test="${adminNy eq 0 }">
+				<li>
+					<a href="/chat/" title="문의하기">문의하기</a>
+					<ul class="depth3">
+						<li class="on" id="chat"><a href="#" title="실시간 문의">실시간 문의</a></li>
+					</ul>
+				</li>
+			</c:if>
 		</ul>
 	</nav>
 </div>
@@ -228,4 +231,13 @@
 			}
 		});
 	}
+	
+	$(document).ready(function(){
+		$("#chat").click(function(){
+			addChat();
+			setTimeout(function() {
+				location.href="/chat/questions";
+			}, 1500);
+		})
+	});
 </script>

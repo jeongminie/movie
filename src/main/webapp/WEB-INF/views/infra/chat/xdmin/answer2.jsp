@@ -295,9 +295,7 @@
 	                <div class="col-md-8 col-xl-6 chat">
 	                    <div class="card">	                       
 	                        <div id="chatBox" class="card-body msg_card_body">
-	
-													<!-- 채팅 메세지 박스 -->
-	
+							<!-- 채팅 메세지 박스 -->
 	                        </div>
 	                        <div class="card-footer">
 	                            <div class="input-group">
@@ -310,9 +308,6 @@
 	                    </div>
 	                </div>
 	            </div>
-	          
-	
-	            
             </form>
         </div>
 	</div>

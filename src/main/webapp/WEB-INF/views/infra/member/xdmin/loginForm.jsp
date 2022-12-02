@@ -122,7 +122,23 @@
 					return;
 				}
 				
-				$("#login").submit();
+				$.ajax({
+					type : 'post',
+					url : '/member/login',
+					data : {"loginId":loginId, "password":password},
+					success:function(data){
+						if(data.result == "success") {
+							location.href = "/admin/memberList";
+						} else {
+							alert("이메일과 비밀번호를 확인하세요");
+							$("#loginId").focus();
+							return;
+						}
+					},
+					error:function(e){
+						alert("로그인실패");
+					}
+				})
 			})
 		});
 	</script>

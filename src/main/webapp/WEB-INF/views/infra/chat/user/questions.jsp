@@ -160,7 +160,9 @@
                             console.log(writer);
                         
                             onValue(ref(db,'chat/'+chatSeq+'/'+timetable+'/'+writer),(snapshot3) => {
+								console.log(snapshot3);
                                 snapshot3.forEach((childSnapshot3) => {
+										console.log(childSnapshot3.val());
                                         const message = childSnapshot3.val()
                                         console.log(message);
                                             
@@ -229,7 +231,7 @@
         };
         
         $(document).ready(function(){
-        	selectChatRoom(${item.chatSeq})
+        	selectChatRoom(${item.chatSeq});
 		});
     </script>	
 	

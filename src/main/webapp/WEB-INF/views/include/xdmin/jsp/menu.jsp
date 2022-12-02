@@ -8,10 +8,10 @@
 			<c:choose>
 				<c:when test="${not empty loginId}" >
 					<a href="#" class="userName" style="margin-right: 10px">${name } 님</a>
-					<a href="../member/logout" class="logout">로그아웃</a>
+					<a href="#" class="logout" id="logoutBtn">로그아웃</a>
 				</c:when>
 				<c:otherwise>
-					<a href="../admin/login" class="mr-3 login">로그인</a>
+					<a href="/admin/login" class="mr-3 login">로그인</a>
 				</c:otherwise>
 			</c:choose>
 		</ul>                        
@@ -22,6 +22,7 @@
 		<nav class="main-nav">
 			<ul class="nav flex-column">
 				<li class="nav-item"><a href="../admin/memberList" class="nav-link">회원관리</a></li>
+				<li class="nav-item"><a href="../admin/answer" class="nav-link">실시간문의 관리</a></li>
 				<li class="nav-item"><a href="../movie/alarmList" class="nav-link">예매오픈 관리</a></li>				
 				<li class="nav-item"><a href="../movie/boxofficeApi" class="nav-link">박스오피스 API</a></li>
 				<li class="nav-item"><a href="../codeGroup/codeGroupList" class="nav-link">코드그룹관리</a></li>
@@ -44,4 +45,24 @@
 				<span>1:1문의</span>
 			</div>
 		</div>
- -->				
+ -->		
+ 
+<script>
+	$(document).ready(function(){
+		$("#logoutBtn").on("click", function() {
+			$.ajax({
+				type: "POST"
+				,url: "/member/logout"
+				,data: {}
+				,success : function(response) {
+					if (response.rt == "success") {
+						window.location.href = document.location.pathname;
+					} else {
+						localStorage.clear();
+						window.location.href = document.location.pathname;
+					}
+				}
+			});
+		});
+	});
+</script>		

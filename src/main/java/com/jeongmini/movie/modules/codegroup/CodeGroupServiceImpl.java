@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jeongmini.movie.common.util.Criteria;
-
 @Service
 public class CodeGroupServiceImpl implements CodeGroupService {
 	//CodeGroupService는 인터페이스로 아무 역할을 못함 여기서 상속받아서 함수 사용
@@ -80,6 +78,13 @@ public class CodeGroupServiceImpl implements CodeGroupService {
 		} else {
 			return true;
 		}
+	}
+	
+	@Override
+	public List<CodeGroup> oracleTest() throws Exception {
+		List<CodeGroup> list = dao.oracleTest(); 
+		
+		return list; 
 	}
 
 	
